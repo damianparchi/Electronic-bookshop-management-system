@@ -1,0 +1,133 @@
+html,
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 440px;
+  padding: 0px;
+  margin: 170px auto;
+}
+
+.loginForm {
+  font-family: "Rubik", sans-serif;
+  width: 100%;
+  background-color: rgb(203, 179, 223);
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+.loginForm .tytul {
+  line-height: 80px;
+  background: #8854d0;
+  border-radius: 5px 5px 0 0;
+  color: #fff;
+  text-align: right;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.loginForm form {
+  padding: 30px 25px 25px 20px;
+}
+
+.loginForm form .row {
+  height: 45px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+input[type="text"],
+input[type="password"] {
+  background-color: rgb(159, 102, 225);
+  color: #fff;
+  margin-left: 0px;
+  text-align: center;
+  color: white;
+}
+
+.loginForm form .row input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: 1px solid #7439c7;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  border-radius: 0px 5px 5px 0px;
+}
+
+form .row input::placeholder {
+  color: #fff;
+}
+
+form .row input:focus {
+  border-color: #8854d0;
+  box-shadow: inset 0px 0px 2px 2px rgba(26, 188, 156, 0.25);
+}
+
+.loginForm form .row i {
+  position: absolute;
+  width: 47px;
+  height: 100%;
+  background: #8854d0;
+  border: 2px solid #7439c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 5px 0 0 5px;
+  font-size: 18px;
+}
+
+.loginForm form .pass {
+  font-family: "Rubik", sans-serif;
+  margin: -8px 0 20px 0;
+}
+
+.loginForm form .pass a {
+  color: #8854d0;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+form .pass a:hover {
+  text-decoration: underline;
+}
+
+.loginForm form .button input {
+  padding-left: 0px;
+  background: #8854d0;
+  color: #fff;
+  border: 1px solid #8854d0;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 20px;
+
+  border-radius: 10px 10px 10px 10px;
+}
+
+form .button input {
+  border-radius: 0 0 0 0;
+}
+
+form .button input:hover {
+  background: #6c3daf;
+}
+
+.loginForm form .signup-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.loginForm form .signup-link a {
+  color: #8854d0;
+  text-decoration: none;
+}
+
+form .signup-link a:hover {
+  text-decoration: underline;
+}

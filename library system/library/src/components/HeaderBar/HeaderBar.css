@@ -1,16 +1,15 @@
-* {
-  font-family: "Courgette", cursive;
-  font-size: 36px;
-}
-
 .headerBar {
-  color: blue;
-  background-color: aquamarine;
+  color: #fff;
+  background-color: #8854d0;
   text-align: center;
   position: fixed;
-  height: 5%;
+  display: grid;
+  align-items: center;
+  height: 10%;
   left: 0;
   right: 0;
-  margin: 10px;
-  border-radius: 5px;
+  top: 0;
+  font-family: "Courgette", cursive;
+  font-size: 36px;
+  opacity: 0.9;
 }
