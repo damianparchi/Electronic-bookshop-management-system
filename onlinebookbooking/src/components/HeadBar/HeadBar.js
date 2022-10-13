@@ -13,16 +13,16 @@ export default function HeadBar() {
         </Link>
         <div className="Bars" />
         <div className="NavMenu">
-          <Link className="NavLink" to="/ksiazki" activeStyle>
+          <Link className="NavLink" to="/ksiazki">
             Książki
           </Link>
-          <Link className="NavLink" to="/rezerwacje" activeStyle>
+          <Link className="NavLink" to="/rezerwacje">
             Rezerwacje
           </Link>
-          <Link className="NavLink" to="/kontakt" activeStyle>
+          <Link className="NavLink" to="/kontakt">
             Kontakt
           </Link>
-          <Link className="NavLink" to="/informacje" activeStyle>
+          <Link className="NavLink" to="/informacje">
             Informacje
           </Link>
         </div>
