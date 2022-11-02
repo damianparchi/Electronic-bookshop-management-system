@@ -27,7 +27,7 @@ export default function HeadBar() {
           </Link>
         </div>
         <div className="NavBtn">
-          <Link className="NavBtnLink" to="/zalogujsie">
+          <Link className="NavBtnLink" to="/login">
             Zaloguj się
           </Link>
         </div>

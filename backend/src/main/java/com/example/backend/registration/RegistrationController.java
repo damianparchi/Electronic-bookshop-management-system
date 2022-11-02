@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "api/v1/registration")
 @AllArgsConstructor
 public class RegistrationController {
@@ -15,6 +16,10 @@ public class RegistrationController {
         return registrationService.register(request);
     }
 
+    @GetMapping(value = "/login")
+    public String login() {
+        return
+    }
     @GetMapping(path = "confirm")
     public String confirm(@RequestParam("token") String token) {
         return registrationService.confirmToken(token);
