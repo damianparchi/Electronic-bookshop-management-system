@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {FlexLayoutModule} from "@angular/flex-layout"
 import { MatRadioModule } from '@angular/material/radio';
 import {MatInputModule} from "@angular/material/input";
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './Components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { RegisterComponent } from './register/register.component';
     BottomBarComponent,
     LoginComponent,
     RegisterComponent,
-    
+
   ],
   imports: [
     BrowserModule,
