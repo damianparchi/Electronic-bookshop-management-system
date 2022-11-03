@@ -1,9 +1,11 @@
-<mat-toolbar color="warn">
-  <span><mat-icon class="logo">menu_book</mat-icon>Księgarnia</span>
+<mat-toolbar style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
+  <a mat-raised-button
+    ><mat-icon routerLink="home" class="logo">menu_book</mat-icon>Księgarnia</a
+  >
   <div class="breaker"></div>
-  <a mat-button>Home</a>
+  <a mat-button routerLink="home">Home</a>
   <a mat-button>Wyszukaj</a>
   <a mat-button>Koszyk</a>
-  <a mat-button>Lista życzeń</a>
-  <a mat-raised-button color="accent">Zaloguj się</a>
+  <a mat-button routerLink="wishlist">Lista życzeń</a>
+  <a mat-raised-button color="dark" routerLink="login">Zaloguj się</a>
 </mat-toolbar>

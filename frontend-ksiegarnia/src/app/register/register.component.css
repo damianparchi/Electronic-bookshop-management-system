@@ -1,0 +1,10 @@
+.registerdiv mat-card{
+  padding: 0px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  max-width: 440px;
+  padding: 0px;
+  margin: 170px auto;
+
+}

@@ -1,9 +1,9 @@
 .bottom {
-  background-color: #2e1d1e;
-  padding: 10px;
+  background-color: #403f3f;
   font-family: Lato;
-  padding-left: 90px;
   color: white;
-  bottom: 0px;
+  position: absolute;
+  text-align: center;
   width: 100%;
+  bottom: 0;
 }

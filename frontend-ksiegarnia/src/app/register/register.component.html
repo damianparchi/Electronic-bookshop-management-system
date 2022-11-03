@@ -1,0 +1,29 @@
+<div class="registerdiv">
+    <mat-card fxFlex="25">
+      <mat-toolbar style="background-color: #403f3f; color: white;">Zarejestruj się!</mat-toolbar>
+      <form fxLayoutAlign="stretch" fxLayout="column" class="loginform">
+        <mat-form-field>
+          <input matInput placeholder="Nazwa użytkownika">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Email użytkownika">
+        </mat-form-field>
+        
+        
+        <div class="example-container">
+            <mat-form-field >
+                <mat-label>Hasło</mat-label>
+                <input matInput  type="password" minlength="5" name="password">
+            </mat-form-field>
+            <mat-form-field style="width: 220px; padding-left: 10px;">
+                <mat-label>Potwierdź Hasło</mat-label>
+                <input name="confirmPassword" matInput  type="password">
+               
+            </mat-form-field>
+        </div>
+      </form>
+      Posiadasz konto?
+      <a [routerLink]="['/login']">Zaloguj się!</a>
+      <button mat-raised-button type="submit">Zarejestruj</button>
+    </mat-card>
+  </div>

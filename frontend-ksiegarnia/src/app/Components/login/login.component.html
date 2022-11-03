@@ -1,0 +1,20 @@
+<div class="logindiv">
+  <mat-card fxFlex="25">
+    <mat-toolbar style="background-color: #403f3f; color: white;">Zaloguj się!</mat-toolbar>
+    <form fxLayoutAlign="stretch" fxLayout="column" class="loginform">
+      <mat-form-field>
+        <input matInput placeholder="email">
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput type="password" placeholder="password">
+      </mat-form-field>
+      
+    </form>
+    Nie masz konta?
+    <a [routerLink]="['/register']">Zarejestruj się!</a>
+    <button mat-raised-button type="submit">Zaloguj</button>
+  </mat-card>
+</div>
+
+
