@@ -15,7 +15,7 @@ function App() {
           <header className="App-header">
             <Routes>
               <Route exact path="/ksiazki" element={<Home />} />
-              <Route exact path="/zalogujsie" element={<Login />} />
+              <Route exact path="/login" element={<Login />} />
               <Route exact path="/rejestracja" element={<Register />} />
             </Routes>
           </header>

@@ -3,7 +3,27 @@ import "../Login/Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
 
-export default function Login() {
+function Login() {
+  console.log("hello!");
+
+  const reqBody = {
+    firstName: "micha",
+    lastName: "michowa",
+    username: "michaa",
+    email: "micha@micha.eu",
+    password: "micha",
+  };
+
+  fetch("/api/auth/login", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "post",
+    body: JSON.stringify(reqBody),
+  })
+    .then((response) => console.log(response))
+    .then((data) => console.log(data));
+
   return (
     <div className="container">
       <div className="loginForm">
@@ -51,3 +71,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default Login;
