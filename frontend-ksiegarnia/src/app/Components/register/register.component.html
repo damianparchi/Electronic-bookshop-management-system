@@ -1,29 +1,31 @@
 <div class="registerdiv">
     <mat-card fxFlex="25">
       <mat-toolbar style="background-color: #403f3f; color: white;">Zarejestruj się!</mat-toolbar>
-      <form fxLayoutAlign="stretch" fxLayout="column" class="loginform">
+
+
+      <form fxLayoutAlign="stretch" fxLayout="column" class="loginform" (ngSubmit)="userRegister()" >
         <mat-form-field>
-          <input matInput placeholder="Nazwa użytkownika">
+          <input matInput placeholder="Nazwa użytkownika" id="username" name="username" [(ngModel)]="user.userId">
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="Email użytkownika">
+            <input matInput placeholder="Email użytkownika" id="email" name="email" [(ngModel)]="user.email">
         </mat-form-field>
-        
-        
+
+
         <div class="example-container">
             <mat-form-field >
                 <mat-label>Hasło</mat-label>
-                <input matInput  type="password" minlength="5" name="password">
+                <input matInput  type="password" minlength="5" name="password" id="password" name="password" [(ngModel)]="user.password">
             </mat-form-field>
             <mat-form-field style="width: 220px; padding-left: 10px;">
                 <mat-label>Potwierdź Hasło</mat-label>
-                <input name="confirmPassword" matInput  type="password">
-               
+                <input name="confirmPassword" matInput  type="password" name="password" id="cpassword" name="cpassword" [(ngModel)]="user.cpassword">
+
             </mat-form-field>
         </div>
+      <button mat-raised-button type="submit">Zarejestruj</button>
       </form>
       Posiadasz konto?
       <a [routerLink]="['/login']">Zaloguj się!</a>
-      <button mat-raised-button type="submit">Zarejestruj</button>
     </mat-card>
   </div>

@@ -29,8 +29,8 @@ public class UserServiceImplementation implements UserService {
     public boolean register(UserDto information) {
         User user = iUserRepository.getUser(information.getEmail());
         if (user == null){
-            users.setCreatedDate(LocalDateTime.now());
-            users.setVerified(false);
+//            users.setCreatedDate(LocalDateTime.now());
+//            users.setVerified(false);
             String epassword = information.getPassword();
             users.setPassword(epassword);
             System.out.println("password is" + epassword);

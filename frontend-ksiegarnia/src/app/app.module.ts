@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import {HttpClientModule} from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainPanelComponent } from './Components/main-panel/main-panel.component';
@@ -17,6 +18,7 @@ import {FlexLayoutModule} from "@angular/flex-layout"
 import { MatRadioModule } from '@angular/material/radio';
 import {MatInputModule} from "@angular/material/input";
 import { RegisterComponent } from './Components/register/register.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { RegisterComponent } from './Components/register/register.component';
     MatFormFieldModule,
     MatRadioModule,
     MatInputModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
