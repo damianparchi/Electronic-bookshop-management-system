@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface IUserRepository {
 
-    User save(User user);
+    User save(User users);
     User getUser(String email);
     List<User> getUser();
 }

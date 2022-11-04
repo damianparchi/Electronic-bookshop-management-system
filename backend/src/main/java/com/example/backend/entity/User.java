@@ -3,20 +3,25 @@ package com.example.backend.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Data
 @Entity
-@Table(name="userregister")
 public class User {
 
     @Id
-    private String  userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long  userId;
+    private String username;
     private String  email;
     private String  password;
-    private String  cpassword;
+    private Long mobileNumber;
+    private LocalDateTime createdDate;
+    private boolean isVerified;
+    private String role;
 
 }
