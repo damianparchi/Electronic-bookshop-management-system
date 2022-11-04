@@ -1,29 +1,57 @@
 <div class="registerdiv">
     <mat-card fxFlex="25">
       <mat-toolbar style="background-color: #403f3f; color: white;">Zarejestruj się!</mat-toolbar>
+      <form style="padding: 10px" fxLayoutAlign="stretch" fxLayout="column" class="loginform" (ngSubmit)="userRegister()">
+          <mat-form-field appearance="outline">
+            <mat-label>Nazwa użytkownika</mat-label>
+                <input matInput placeholder="Nazwa użytkownika" id="username" minlength="3" maxlength="20" name="username" [formControl]="username" required [(ngModel)]="user.username">
+            <mat-error *ngIf="mobileNumber.invalid">{{getErrorNameMessage()}}</mat-error>
+            <mat-icon style="color: #e1e4e4;" matSuffix>account_circle</mat-icon>
+          </mat-form-field>
 
-
-      <form fxLayoutAlign="stretch" fxLayout="column" class="loginform" (ngSubmit)="userRegister()" >
-        <mat-form-field>
-          <input matInput placeholder="Nazwa użytkownika" id="username" name="username" [(ngModel)]="user.userId">
+          <mat-form-field appearance="outline">
+            <mat-label>Email użytkownika</mat-label>
+                <input matInput placeholder="pat@example.com" id="email" name="email" required [(ngModel)]="user.email" [formControl]="email">
+            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            <mat-icon style="color: #e1e4e4;" matSuffix>email</mat-icon>
         </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="Email użytkownika" id="email" name="email" [(ngModel)]="user.email">
-        </mat-form-field>
-
 
         <div class="example-container">
-            <mat-form-field >
-                <mat-label>Hasło</mat-label>
-                <input matInput  type="password" minlength="5" name="password" id="password" name="password" [(ngModel)]="user.password">
-            </mat-form-field>
-            <mat-form-field style="width: 220px; padding-left: 10px;">
-                <mat-label>Potwierdź Hasło</mat-label>
-                <input name="confirmPassword" matInput  type="password" name="password" id="cpassword" name="cpassword" [(ngModel)]="user.cpassword">
 
+            <mat-form-field appearance="outline" style="width: 220px;">
+              <mat-label>Hasło</mat-label>
+                  <input #password="ngModel" required matInput [type]="hide ? 'password' : 'text'" minlength="5" name="password" id="password" name="password" [(ngModel)]="user.password" pattern="^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$">
+                <mat-error>Hasło zbyt słabe</mat-error>
+              <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
             </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 220px; padding-left: 6px;">
+              <mat-label>Potwierdź Hasło</mat-label>
+                  <input #password="ngModel" name="confirmPassword" matInput pattern="{{password.value}}" type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="user.confirmPassword">
+              <mat-error>Hasła muszą być takie same</mat-error>
+              <mat-icon style="color: #e1e4e4;" matSuffix>password</mat-icon>
+            </mat-form-field>
+
         </div>
-      <button mat-raised-button type="submit">Zarejestruj</button>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Numer Telefonu</mat-label>
+              <input pattern="^[2-9]\d{8}$" [(ngModel)]="user.mobileNumber" [formControl]="mobileNumber" minlength="9" maxlength="9" name="mobileNumber" matInput placeholder="Numer telefonu" required>
+          <mat-error *ngIf="mobileNumber.invalid">{{getErrorMobileMessage()}}</mat-error>
+          <mat-icon style="color: #e1e4e4;" matSuffix>phone</mat-icon>
+        </mat-form-field>
+
+        <h4 style="width: 35%; margin: auto">Zarejestruj jako:</h4>
+
+        <mat-radio-group [(ngModel)]="user.role" name="role" style="height: 25%; margin: auto">
+          <mat-radio-button value="user" required="required"> Nabywca </mat-radio-button> &nbsp;
+          <mat-radio-button value="seller" required="required"> Sprzedawca </mat-radio-button> &nbsp;
+        </mat-radio-group>
+
+        <button class="buttonconfirm" mat-raised-button type="submit" style="width: 35%; margin: auto;">Zarejestruj</button>
+
       </form>
       Posiadasz konto?
       <a [routerLink]="['/login']">Zaloguj się!</a>
