@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserServiceService} from "../../Services/user-service.service";
-import {User} from "../../Services/user";
-import {FormControl, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+
 
 @Component({
   selector: 'app-register',
@@ -9,48 +10,48 @@ import {FormControl, Validators} from "@angular/forms";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  mobileNumber = new FormControl('', [Validators.required, Validators.pattern(new RegExp("[2-8 ]{8}"))]);
-  username = new FormControl('', [Validators.required])
   hide = true;
+  public error = '';
+  message = null;
+  public userr = {
+    username: null,
+    email: null,
+    password: null,
+    confirmPassword: null,
+    phoneNumber: null,
+    role: null,
+  };
 
-  user: User = new User();
 
-  constructor(private userServiceService: UserServiceService
+  constructor(private user: UserServiceService,
+              private route: Router,
+              private matSnakeBar: MatSnackBar
   ) {
   }
 
   ngOnInit(): void {
   }
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'Podaj email';
-    }
-    return this.email.hasError('email') ? 'Niepoprawny email' : '';
+  handleError(error) {
+    //wyswietl error
+    this.error = error.error.message;
   }
 
-  getErrorMobileMessage() {
-    if (this.mobileNumber.hasError('required')) {
-      return 'Podaj nr tel';
-    }
-    return this.mobileNumber.hasError('pattern') ? 'Zły numer' : '';
+  onSubmit() {
+    this.user.signUp(this.userr).subscribe(
+      data => this.handleResponse(data),
+      error => this.handleError(error)
+    );
   }
 
-  getErrorNameMessage() {
-    if (this.mobileNumber.hasError('required')) {
-      return 'Podaj nazwę użytkownika';
-    }
-    return this.mobileNumber.hasError('pattern') ? 'Zła nazwa użytkownika' : '';
+  handleResponse(data) {
+    this.message = data.message;
+    //przejdz na localhost/login
+    this.route.navigateByUrl('/login');
+    //message
+    this.matSnakeBar.open('Zarejestrowano pomyślnie! Możesz się zalogować!', 'ok', {
+      duration: 5000
+    });
 
   }
-
-  userRegister() {
-    console.log(this.user);
-    this.userServiceService.registerUser(this.user).subscribe(data => {
-      alert("Zarejestrowano pomyślnie!")
-    }, error => alert("Nie udało się zarejestrować!"));
-  }
-
-
 }

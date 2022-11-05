@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {User} from "./user";
-import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +13,8 @@ export class UserServiceService {
     headers: new HttpHeaders({ 'content-type': 'application/json' })
   };
 
-  registerUser(user: User): Observable<Object> {
-    console.log(user);
-    return this.httpClient.post(`${this.baseUrl}`, user);
+  public signUp(data: any) {
+    console.log(data);
+    return this.httpClient.post(`${this.baseUrl}`, data);
   }
 }
