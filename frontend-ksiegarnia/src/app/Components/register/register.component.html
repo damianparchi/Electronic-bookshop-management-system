@@ -47,7 +47,7 @@
 
             <mat-form-field appearance="outline" style="width: 220px;">
               <mat-label>Hasło</mat-label>
-                  <input #password="ngModel" required matInput #confirmpassword="ngModel" [type]="hide ? 'password' : 'text'" minlength="5" name="password" id="password" name="password" [(ngModel)]="userr.password" pattern="^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$">
+                  <input #password="ngModel" required matInput #confirmpassword="ngModel" [type]="hide ? 'password' : 'text'" minlength="5" id="password" name="password" [(ngModel)]="userr.password" pattern="^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$">
                 <mat-error>Proszę podać hasło</mat-error>
               <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -56,7 +56,7 @@
 
             <mat-form-field appearance="outline" style="width: 220px; padding-left: 6px;">
               <mat-label>Potwierdź Hasło</mat-label>
-                  <input #password="ngModel" name="confirmPassword" matInput pattern="{{password.value}}" type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="userr.confirmPassword">
+                  <input #password="ngModel" name="confirmPassword" matInput pattern="{{password.value}}" type="password" id="confirmPassword" [(ngModel)]="userr.confirmPassword">
               <mat-error>Hasła muszą być takie same</mat-error>
               <mat-icon style="color: #e1e4e4;" matSuffix>password</mat-icon>
             </mat-form-field>
@@ -73,7 +73,7 @@
         <h4 style="width: 35%; margin: auto">Zarejestruj jako:</h4>
 
         <mat-radio-group [(ngModel)]="userr.role" name="role" style="height: 25%; margin: auto">
-          <mat-radio-button value="userr" required="required"> Nabywca </mat-radio-button> &nbsp;
+          <mat-radio-button value="user" required="required"> Nabywca </mat-radio-button> &nbsp;
           <mat-radio-button value="seller" required="required"> Sprzedawca </mat-radio-button> &nbsp;
         </mat-radio-group>
 

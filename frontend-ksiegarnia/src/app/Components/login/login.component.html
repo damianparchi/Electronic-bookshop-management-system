@@ -1,19 +1,32 @@
 <div class="logindiv">
   <mat-card fxFlex="25">
     <mat-toolbar style="background-color: #403f3f; color: white;">Zaloguj się!</mat-toolbar>
-    <form fxLayoutAlign="stretch" fxLayout="column" class="loginform">
-      <mat-form-field>
-        <input matInput placeholder="email">
+    <form fxLayoutAlign="stretch" fxLayout="column" class="loginform" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" fxLayout="column" style="width: 100%;">
+        <mat-label>Podaj swój email</mat-label>
+        <input id="email" email required matInput #emailId="ngModel" type="email" placeholder="Email" [(ngModel)]="credentials.email" name="email">
+        <mat-icon style="color: #e1e4e4;" matSuffix>email</mat-icon>
       </mat-form-field>
-      
-      <mat-form-field>
-        <input matInput type="password" placeholder="password">
+
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Podaj swoje hasło</mat-label>
+        <input id="password" minlength="3" required [(ngModel)]="credentials.password" name="password" matInput [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon style="color: #e1e4e4;">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
       </mat-form-field>
-      
+
+      <h2>Zaloguj jako:</h2>
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="credentials.role" name="role">
+        <mat-radio-button id="userRadioBtn" value="user" required="required"> User </mat-radio-button> &nbsp;
+        <mat-radio-button id="sellerRadioBtn" value="seller" required="required">Seller </mat-radio-button> &nbsp;
+        <mat-radio-button id="adminRadioBtn" value="admin" required="required"> Admin </mat-radio-button>
+      </mat-radio-group>
+
+    <button mat-raised-button type="submit">Zaloguj</button>
     </form>
     Nie masz konta?
     <a [routerLink]="['/register']">Zarejestruj się!</a>
-    <button mat-raised-button type="submit">Zaloguj</button>
   </mat-card>
 </div>
 

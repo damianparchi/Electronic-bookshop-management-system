@@ -12,13 +12,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './Components/login/login.component';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {FlexLayoutModule} from "@angular/flex-layout"
 import { MatRadioModule } from '@angular/material/radio';
 import {MatInputModule} from "@angular/material/input";
 import { RegisterComponent } from './Components/register/register.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { HomePageComponent } from './Components/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -27,24 +28,26 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     BottomBarComponent,
     LoginComponent,
     RegisterComponent,
+    HomePageComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatRadioModule,
-    MatInputModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatRadioModule,
+        MatInputModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        MatSnackBarModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent],
 })
