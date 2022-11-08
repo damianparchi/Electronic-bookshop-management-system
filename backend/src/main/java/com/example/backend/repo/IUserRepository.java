@@ -11,4 +11,6 @@ public interface IUserRepository {
     User save(User users);
     User getUser(String email);
     List<User> getUser();
+
+    User getUserById(Long id);
 }

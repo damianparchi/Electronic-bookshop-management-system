@@ -43,5 +43,14 @@ public class UserRepositoryImplementation implements IUserRepository {
         return  usersList;
     }
 
+    @Override
+    public User getUserById(Long userId) {
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("FROM User where userId=:userId");
+        query.setParameter("userId", userId);
+        return (User) query.uniqueResult();
+
+    }
+
 
 }
