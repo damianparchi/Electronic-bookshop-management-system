@@ -20,6 +20,11 @@ import {MatInputModule} from "@angular/material/input";
 import { RegisterComponent } from './Components/register/register.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HomePageComponent } from './Components/home-page/home-page.component';
+import { BooklistComponent } from './Components/booklist/booklist.component';
+import { SellerComponent } from './Components/seller/seller.component';
+import { BookaddComponent } from './Components/bookadd/bookadd.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -29,6 +34,9 @@ import { HomePageComponent } from './Components/home-page/home-page.component';
     LoginComponent,
     RegisterComponent,
     HomePageComponent,
+    BooklistComponent,
+    SellerComponent,
+    BookaddComponent,
 
   ],
     imports: [
@@ -46,7 +54,9 @@ import { HomePageComponent } from './Components/home-page/home-page.component';
         FlexLayoutModule,
         HttpClientModule,
         MatSnackBarModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatTooltipModule
     ],
   providers: [],
   bootstrap: [AppComponent],

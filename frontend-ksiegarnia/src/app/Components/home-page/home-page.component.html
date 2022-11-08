@@ -1,0 +1,15 @@
+<app-main-panel></app-main-panel>
+<p>{{name}} home-page works!</p>
+
+<div *ngIf="!isSeller && !isAdmin">
+  <app-booklist></app-booklist>
+
+</div>
+
+<div *ngIf="isSeller">
+  <app-seller></app-seller>
+  <router-outlet></router-outlet>
+</div>
+
+<app-bottom-bar></app-bottom-bar>
+

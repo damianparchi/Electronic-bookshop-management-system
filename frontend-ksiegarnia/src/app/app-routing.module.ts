@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent },
   { path: 'wishlist', component: MainPanelComponent },
   { path: 'home/login', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 ];
 
