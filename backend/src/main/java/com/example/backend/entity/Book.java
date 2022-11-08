@@ -17,9 +17,9 @@ public class Book {
     private Long userId;
     private String bookName;
     private Long quantityOfBooks;
-    private Double price;
-    private String authorName;
-    private String bookDescription;
+    private Double cost;
+    private String author;
+    private String bookDesc;
     private String image;
 
 }
