@@ -41,6 +41,7 @@ export class BookaddComponent implements OnInit {
   bookDesc = new FormControl(this.addbook.bookDesc, [
     Validators.pattern("[a-zA-Z ]*"),
     Validators.minLength(10),
+    Validators.maxLength(100),
     Validators.required,
   ]);
 
@@ -102,7 +103,8 @@ export class BookaddComponent implements OnInit {
 
   bookDescVal() {
     return this.bookDesc.hasError("required") ? "Krótki opis książki jest wymagany! " :
-      this.bookDesc.hasError("minlength") ? "Opis wymaga minimum 10 znaków!" : "";
+      this.bookDesc.hasError("minlength") ? "Opis wymaga minimum 10 znaków!" :
+        this.bookDesc.hasError("maxlength") ? "Opis to maksimum 100 znaków!" : "";
   }
 
 }

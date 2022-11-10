@@ -28,9 +28,12 @@ mat-card {
   border-color: rgb(240, 238, 238);
   margin-bottom: 20px;
 }
+mat-card-title {
+  background: #f5f5f5 0% 0% no-repeat padding-box;
+}
 .mat-card-title.mat-card-title {
   display: flex;
-  height: 200px;
+  height: 230px;
   width: 215px;
 }
 .bookname {
