@@ -11,14 +11,15 @@ import { CommonModule } from '@angular/common';
 
 export class Book {
   [x: string]: any;
-  bookId: any;
+  bookId: number;
   Book: string;
   bookDesc: string;
   author: string;
   bookName: string;
   cost: number;
   quantityOfBooks: number;
-  image: string;
+  bookCover: string;
+  status: string;
 
 
 

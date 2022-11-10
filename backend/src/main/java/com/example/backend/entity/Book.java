@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -16,10 +17,11 @@ public class Book {
     private Long bookId;
     private Long userId;
     private String bookName;
-    private Long quantityOfBooks;
-    private Double cost;
     private String author;
+    private Double cost;
+    private Long quantityOfBooks;
+    private String status;
     private String bookDesc;
-    private String image;
+    private String bookCover;
 
 }
