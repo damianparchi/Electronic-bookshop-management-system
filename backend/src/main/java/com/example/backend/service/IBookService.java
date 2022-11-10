@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface IBookService {
 
-    boolean addBooks(String imageName, BookDto information, String token);
+    boolean addBooks(String bookCover, BookDto information, String token);
 
 
     List<Book> getBookInfo(String token);
+
+    boolean deleteBook(long bookId, String token);
 
 }

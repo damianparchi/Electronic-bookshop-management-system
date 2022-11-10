@@ -18,10 +18,10 @@ public class BookController {
     @Autowired
     IBookService iBookService;
 
-    @PostMapping("books/{imageName}")
-    public ResponseEntity<BookResponse> addBook(@PathVariable String imageName, @RequestBody BookDto information,@RequestHeader("token") String token) {
+    @PostMapping("books/{bookCover}")
+    public ResponseEntity<BookResponse> addBook(@PathVariable String bookCover, @RequestBody BookDto information,@RequestHeader("token") String token) {
 
-        boolean res=iBookService.addBooks(imageName,information,token);
+        boolean res=iBookService.addBooks(bookCover,information,token);
         if(res)
             return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse(200, "Książka dodana pomyślnie!"));
         else
@@ -32,6 +32,14 @@ public class BookController {
     public ResponseEntity<BookResponse> getBooks(@RequestHeader("token") String token) {
         List<Book> books = iBookService.getBookInfo(token);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("szczegoly ksiazki: ", books));
+    }
+
+    @DeleteMapping("books/{bookId}")
+    public ResponseEntity<BookResponse> deleteBook(@PathVariable long bookId, @RequestHeader("token") String token) {
+        boolean odp = iBookService.deleteBook(bookId, token);
+        if (odp)
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse(202, "Książka usunięta!"));
+        return null;
     }
 
 }

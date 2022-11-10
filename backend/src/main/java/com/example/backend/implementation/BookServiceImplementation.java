@@ -35,7 +35,7 @@ public class BookServiceImplementation implements IBookService {
 
     @Transactional
     @Override
-    public boolean addBooks(String imageName,BookDto information,String token)
+    public boolean addBooks(String bookCover,BookDto information,String token)
     {
         Long id;
 
@@ -44,40 +44,66 @@ public class BookServiceImplementation implements IBookService {
         if(userInfo != null)
         {
             String userRole = userInfo.getRole();
-            System.out.println("actual Role is " + userRole);
+            System.out.println("Aktualna rola: " + userRole);
             String fetchRole = userRole;
             if (fetchRole.equals("seller") )
             {
                 Book book=bookImplementation.fetchbyBookName(information.getBookName());
-                System.out.println("Book name "+information.getBookName());
-                if(book ==null)
+                System.out.println("Książka: "+information.getBookName());
+                if(book == null)
                 {
                     bookinfo = modelMapper.map(information, Book.class);
+                    bookinfo.setUserId(id);
                     bookinfo.setBookName(information.getBookName());
                     bookinfo.setAuthor(information.getAuthor());
+                    bookinfo.setStatus("W oczekiwaniu...");
+                    bookinfo.setBookCover(bookCover);
                     bookinfo.setCost(information.getCost());
-                    bookinfo.setImage(imageName);
-                    //bookinfo.set("OnHold");
                     bookinfo.setQuantityOfBooks(information.getQuantityOfBooks());
-                    //bookinfo.setCreatedDateAndTime(LocalDateTime.now());
-                    bookinfo.setUserId(id);
                     bookImplementation.save(bookinfo);
                     return true;
                 }
                 else
                 {
-                    throw new BookisExisting("Book is already exist Exception..");
+                    throw new BookisExisting("Książka już istnieje");
                 }
             }
             else
             {
-                throw new UserException("Your are not Authorized User");
+                throw new UserException("Konto nie posiada roli sprzedawcy");
             }
 
         } else {
-            throw new UserException("User doesn't exist");
+            throw new UserException("User nie istnieje");
         }
 
+    }
+
+    @javax.transaction.Transactional
+    @Override
+    public boolean deleteBook(long bookId, String token) {
+        Long userId;
+
+        userId = (long) generator.parseJWT(token);
+        User userInfo = iUserRepository.getUserById(userId);
+        if (userInfo != null) {
+            String userRole = userInfo.getRole();
+            String fetchRole = userRole;
+
+            if (fetchRole.equals("seller") ) {
+                Book info = bookImplementation.fetchbyId(bookId);
+                if (info != null) {
+                    bookImplementation.deleteByBookId(bookId);
+                    return true;
+                }
+            } else {
+                throw new UserException("Twoje konto nie posiada roli sprzedawcy!");
+            }
+        } else {
+            throw new UserException("User nie istnieje");
+        }
+
+        return false;
     }
 
     @Transactional
@@ -91,7 +117,7 @@ public class BookServiceImplementation implements IBookService {
             List<Book> books = bookImplementation.getAllBooks(id);
             return books;
         } else {
-            throw new UserException("User doesn't exist");
+            throw new UserException("User nie istnieje");
         }
 
     }

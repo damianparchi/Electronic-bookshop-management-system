@@ -1,6 +1,7 @@
 package com.example.backend.repo.implementation;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,11 @@ public interface BookImplementation extends JpaRepository<Book, Long> {
     List<Book> getAllBooks(long id);
     @Query("from Book where book_name=:name")
     Book fetchbyBookName(String name);
+
+    @Query("from Book where book_id=:id")
+    Book fetchbyId(Long id);
+
+    @Modifying
+    @Query("delete from Book where book_id=:id")
+    void deleteByBookId(long id);
 }
