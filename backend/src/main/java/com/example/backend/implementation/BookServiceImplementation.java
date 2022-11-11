@@ -1,6 +1,7 @@
 package com.example.backend.implementation;
 
 import com.example.backend.dto.BookDto;
+import com.example.backend.dto.BookEditDTO;
 import com.example.backend.entity.User;
 import com.example.backend.entity.Book;
 import com.example.backend.exception.BookisExisting;
@@ -100,6 +101,47 @@ public class BookServiceImplementation implements IBookService {
                 throw new UserException("Twoje konto nie posiada roli sprzedawcy!");
             }
         } else {
+            throw new UserException("User nie istnieje");
+        }
+
+        return false;
+    }
+
+    @Override
+
+    public boolean editBook(long bookId, BookEditDTO information, String token) {
+
+        Long userId;
+
+        userId = (long) generator.parseJWT(token);
+        User userInfo = iUserRepository.getUserById(userId);
+        if(userInfo != null)
+        {
+            String userRole = userInfo.getRole();
+            String fetchRole = userRole;
+
+            if (fetchRole.equals("seller") )
+            {
+                Book info = bookImplementation.fetchbyId(bookId);
+                if(info!=null)
+                {
+                    info.setBookId(bookId);
+                    info.setBookName(information.getBookName());
+                    info.setQuantityOfBooks(information.getQuantityOfBooks());
+                    info.setCost(information.getCost());
+                    info.setAuthor(information.getAuthor());
+                    info.setBookDesc(information.getBookDesc());
+
+                    bookImplementation.save(info);
+                    return true;
+                }
+            }
+            else
+            {
+                throw new UserException("Twoje konto nie posiada roli sprzedawcy!");
+            }
+        }
+        else {
             throw new UserException("User nie istnieje");
         }
 

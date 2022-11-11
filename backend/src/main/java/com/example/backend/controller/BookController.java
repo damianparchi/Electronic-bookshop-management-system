@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.BookDto;
+import com.example.backend.dto.BookEditDTO;
 import com.example.backend.service.IBookService;
 import com.example.backend.response.BookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,14 @@ public class BookController {
         boolean odp = iBookService.deleteBook(bookId, token);
         if (odp)
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse(202, "Książka usunięta!"));
+        return null;
+    }
+
+    @PutMapping("books/{bookId}")
+    public ResponseEntity<BookResponse> editBook(@PathVariable("bookId") long bookId,@RequestBody BookEditDTO information,@RequestHeader("token") String token){
+        boolean res =iBookService.editBook(bookId,information,token);
+        if(res)
+            return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse(200, "Książka edytowania pomyślnie!"));
         return null;
     }
 
