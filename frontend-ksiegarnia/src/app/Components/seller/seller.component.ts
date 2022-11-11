@@ -4,8 +4,8 @@ import {BookaddComponent} from "../bookadd/bookadd.component";
 import {BookService} from "../../Services/book.service";
 import {ActivatedRoute} from "@angular/router";
 import {AddBookCoverComponent} from "../add-book-cover/add-book-cover.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ConfirmDialogComponent} from "../../confirm-dialog/confirm-dialog.component";
+import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
+import {EditBookComponent} from "../edit-book/edit-book.component";
 
 @Component({
   selector: 'app-seller',
@@ -15,7 +15,6 @@ import {ConfirmDialogComponent} from "../../confirm-dialog/confirm-dialog.compon
 export class SellerComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private service: BookService,
-              private matsnackbar: MatSnackBar,
               private _route:ActivatedRoute) { }
 
   sellerBooks: boolean = false;
@@ -44,19 +43,32 @@ export class SellerComponent implements OnInit {
       if (confirmed) {
         this.service.deleteBook(bookId).subscribe((message) => {
           if (message.statusCode === 202) {
-            this.matsnackbar.open('Book Deleted Successfully', 'OK', {
-              duration: 4000,
-            });
+            console.log("usunięto")
           } else {
-            this.matsnackbar.open('Error in Book Deletion', 'ok', { duration: 4000 });
+            console.log("error")
           }
         });
       }
     });
   }
 
-  verifyBook(){
-
+  editBook(book: any): void {
+    const dialogRef = this.dialog.open(EditBookComponent, {
+      width: '25rem',
+      height: 'auto',
+      panelClass: 'custom-dialog-container',
+      data: {
+        bookName: book.bookName,
+        author: book.author,
+        cost: book.cost,
+        quantityOfBooks: book.quantityOfBooks,
+        bookDesc: book.bookDesc,
+        bookId: book.bookId,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 
   getallBooks() {
@@ -89,7 +101,7 @@ export class SellerComponent implements OnInit {
       panelClass: 'custom-dialog-container',
       data: { bookId },
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((resp) => {
       console.log('The dialog was closed');
     });
   }

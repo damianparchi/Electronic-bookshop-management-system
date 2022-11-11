@@ -25,6 +25,8 @@ import { SellerComponent } from './Components/seller/seller.component';
 import { BookaddComponent } from './Components/bookadd/bookadd.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { ConfirmDialogComponent } from './Components/confirm-dialog/confirm-dialog.component';
+import { EditBookComponent } from './Components/edit-book/edit-book.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     BooklistComponent,
     SellerComponent,
     BookaddComponent,
+    ConfirmDialogComponent,
+    EditBookComponent,
 
   ],
     imports: [
@@ -56,7 +60,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatSnackBarModule,
         ReactiveFormsModule,
         MatDialogModule,
-        MatTooltipModule
+        MatTooltipModule,
     ],
   providers: [],
   bootstrap: [AppComponent],

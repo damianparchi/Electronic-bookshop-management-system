@@ -25,7 +25,7 @@
                 <div class="quantityofBooks">Ilość dostępnych książek: {{ book.quantityOfBooks }}</div>
                 <div class="desc">Krótki opis: {{ book.bookDesc }}</div>
                 <div style="display: flex; margin: auto;">
-                    <button id="editBtn" style="width: 5rem; outline: none;color: white;border-radius: 5px; background-color: rgba(245,197,20,0.8);" mat-raised-button>
+                    <button id="editBtn" (click)="editBook(book)" style="width: 5rem; outline: none;color: white;border-radius: 5px; background-color: rgba(245,197,20,0.8);" mat-raised-button>
                       Edytuj
                     </button>
                     <button id="deleteBtn" style="margin-left: 10px; width: 5rem; color: white; outline: none; border-radius: 5px; background-color: rgba(255,0,0,0.8);" (click)="deleteBook(book.bookId)" mat-raised-button>

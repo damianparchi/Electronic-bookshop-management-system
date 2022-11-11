@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {BookService} from "../Services/book.service";
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -13,7 +12,7 @@ export class ConfirmDialogComponent implements OnInit {
   cancelButtonText = "Cancel"
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private dialogRef: MatDialogRef<ConfirmDialogComponent>, private service: BookService) {
+    private dialogRef: MatDialogRef<ConfirmDialogComponent>) {
     if(data){
       this.message = data.message || this.message;
       if (data.buttonText) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {HttpServiceService} from './http-service.service'
 
@@ -17,9 +17,29 @@ export class BookService {
     return this.httpService.get(`${this.baseUrl}/books/`, {headers: new HttpHeaders({token: localStorage?.['token']})});
   }
 
-  addBook(book: any, imageName: string): Observable<any> {
+  addBook(book: any, bookCover: string): Observable<any> {
     return this.httpService
-      .post(`${this.baseUrl}/books/${imageName}`, book, {headers: new HttpHeaders({token: localStorage?.['token']})})
+      .post(`${this.baseUrl}/books/${bookCover}`, book, {headers: new HttpHeaders({token: localStorage?.['token']})})
+  }
+
+  deleteBook(bookId: any): Observable<any> {
+    return this.httpService
+      .delete(`${this.baseUrl}/books/${bookId}`, {headers: new HttpHeaders({token: localStorage?.['token']})})
+      .pipe(
+        tap(() => {
+          window.location.reload();
+        })
+      );
+  }
+
+  updateBook(bookId: any, book: any): Observable<any> {
+    return this.httpService
+      .put(`${this.baseUrl}/books/${bookId}`, book, {headers: new HttpHeaders({token: localStorage?.['token']})})
+      .pipe(
+        tap(() => {
+          window.location.reload();
+        })
+      );
   }
 
 }
