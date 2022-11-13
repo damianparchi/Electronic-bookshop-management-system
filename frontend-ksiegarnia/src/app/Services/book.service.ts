@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, tap} from "rxjs";
+import {Observable, Subject, tap} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {HttpServiceService} from './http-service.service'
 
@@ -24,22 +24,22 @@ export class BookService {
 
   deleteBook(bookId: any): Observable<any> {
     return this.httpService
-      .delete(`${this.baseUrl}/books/${bookId}`, {headers: new HttpHeaders({token: localStorage?.['token']})})
-      .pipe(
-        tap(() => {
-          window.location.reload();
-        })
-      );
+      .delete(`${this.baseUrl}/books/${bookId}`, {headers: new HttpHeaders({token: localStorage?.['token']})});
   }
 
   updateBook(bookId: any, book: any): Observable<any> {
     return this.httpService
-      .put(`${this.baseUrl}/books/${bookId}`, book, {headers: new HttpHeaders({token: localStorage?.['token']})})
-      .pipe(
-        tap(() => {
-          window.location.reload();
-        })
-      );
+      .put(`${this.baseUrl}/books/${bookId}`, book, {headers: new HttpHeaders({token: localStorage?.['token']})});
+  }
+
+  private searchBookData = new Subject<any>();
+
+  getSearchBookData(): Observable<any> {
+    return this.searchBookData.asObservable();
+  }
+
+  public getAllConfirmedBooks(page: any, sortby ?: string, orderBy ?: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/books/confirmed`);
   }
 
 }

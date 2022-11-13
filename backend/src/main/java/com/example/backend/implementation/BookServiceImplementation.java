@@ -10,14 +10,17 @@ import com.example.backend.repo.implementation.BookImplementation;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.backend.util.JwtGenerator;
 import com.example.backend.repo.IUserRepository;
 import com.example.backend.exception.UserException;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -40,14 +43,13 @@ public class BookServiceImplementation implements IBookService {
     {
         Long id;
 
-        id = (long) generator.parseJWT(token);
+        id = generator.parseJWT(token);
         User userInfo = iUserRepository.getUserById(id);
         if(userInfo != null)
         {
             String userRole = userInfo.getRole();
             System.out.println("Aktualna rola: " + userRole);
-            String fetchRole = userRole;
-            if (fetchRole.equals("seller") )
+            if (userRole.equals("seller") )
             {
                 Book book=bookImplementation.fetchbyBookName(information.getBookName());
                 System.out.println("Książka: "+information.getBookName());
@@ -80,18 +82,15 @@ public class BookServiceImplementation implements IBookService {
 
     }
 
-    @javax.transaction.Transactional
+    @Transactional
     @Override
     public boolean deleteBook(long bookId, String token) {
-        Long userId;
-
-        userId = (long) generator.parseJWT(token);
+        long userId = generator.parseJWT(token);
         User userInfo = iUserRepository.getUserById(userId);
         if (userInfo != null) {
             String userRole = userInfo.getRole();
-            String fetchRole = userRole;
 
-            if (fetchRole.equals("seller") ) {
+            if (userRole.equals("seller") ) {
                 Book info = bookImplementation.fetchbyId(bookId);
                 if (info != null) {
                     bookImplementation.deleteByBookId(bookId);
@@ -111,9 +110,7 @@ public class BookServiceImplementation implements IBookService {
 
     public boolean editBook(long bookId, BookEditDTO information, String token) {
 
-        Long userId;
-
-        userId = (long) generator.parseJWT(token);
+        long userId = generator.parseJWT(token);
         User userInfo = iUserRepository.getUserById(userId);
         if(userInfo != null)
         {
@@ -162,5 +159,23 @@ public class BookServiceImplementation implements IBookService {
             throw new UserException("User nie istnieje");
         }
 
+    }
+
+    @Override
+    public List<Book> getAllConfirmedBooks() {
+        List<Book> approvedBooks = bookImplementation.getAllConfirmedBooks();
+        return approvedBooks;
+    }
+
+
+    @Override
+    public Page<Book> getBookConfirm(Optional<String> searchByBookName, Optional<Integer> page, Optional<String> sortBy, Optional<String> order) {
+        if (order.equals(Optional.ofNullable("asc"))) {
+            return bookImplementation.findByBookName(searchByBookName.orElse("_"),
+                    PageRequest.of(page.orElse(0), 12, Sort.Direction.ASC, sortBy.orElse("book_id")));
+        } else {
+            return bookImplementation.findByBookName(searchByBookName.orElse("_"),
+                    PageRequest.of(page.orElse(0), 12, Sort.Direction.DESC, sortBy.orElse("book_id")));
+        }
     }
 }

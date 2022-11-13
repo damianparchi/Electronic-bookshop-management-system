@@ -5,12 +5,14 @@ import com.example.backend.dto.BookEditDTO;
 import com.example.backend.service.IBookService;
 import com.example.backend.response.BookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.backend.entity.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -49,6 +51,17 @@ public class BookController {
         if(res)
             return ResponseEntity.status(HttpStatus.CREATED).body(new BookResponse(200, "Książka edytowania pomyślnie!"));
         return null;
+    }
+
+    @GetMapping("books/confirmed")
+    public ResponseEntity<BookResponse> getAllConfirmedBooks(@RequestParam Optional<String> searchByBooKName, @RequestParam Optional<Integer> page, @RequestParam Optional<String> sortBy, @RequestParam Optional<String> order) {
+        Page<Book> books = iBookService.getBookConfirm(searchByBooKName, page, sortBy, order);
+        if (books != null)
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body(new BookResponse("Potwierdzone książki", books));
+        else
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body(new BookResponse(400, "Brak potwierdzonych książek"));
     }
 
 }
