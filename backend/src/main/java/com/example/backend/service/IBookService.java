@@ -13,7 +13,6 @@ public interface IBookService {
 
     boolean addBooks(String bookCover, BookDto information, String token);
 
-
     List<Book> getBookInfo(String token);
 
     boolean deleteBook(long bookId, String token);
@@ -22,5 +21,5 @@ public interface IBookService {
 
     List<Book> getAllConfirmedBooks();
     Page<Book> getBookConfirm(Optional<String> searchByBookName, Optional<Integer> page, Optional<String> sortBy, Optional<String> order);
-
+    boolean editBookStatus(long bookId, String status, String token);
 }

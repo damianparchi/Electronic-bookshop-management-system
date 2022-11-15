@@ -64,4 +64,17 @@ public class BookController {
                     .body(new BookResponse(400, "Brak potwierdzonych książek"));
     }
 
+    @PutMapping("books/{bookId}/{status}")
+    public ResponseEntity<BookResponse> editBookStatus(@PathVariable long bookId, @PathVariable String status,  @RequestHeader("token") String token) {
+        boolean res = iBookService.editBookStatus(bookId, status, token);
+        if (res)
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body(new BookResponse(202, "Status został zmieniony"));
+        else
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body(new BookResponse(400, "Status nie został zmieniony"));
+    }
+
+
+
 }

@@ -19,5 +19,4 @@ export class UserServiceService {
     return this.httpClient.post(`${this.baseUrl}/user/login`, data);
   }
 
-
 }

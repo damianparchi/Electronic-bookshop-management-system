@@ -178,4 +178,22 @@ public class BookServiceImplementation implements IBookService {
                     PageRequest.of(page.orElse(0), 12, Sort.Direction.DESC, sortBy.orElse("book_id")));
         }
     }
+
+    @Override
+    @Transactional
+    public boolean editBookStatus(long bookId, String status, String token) {
+        long userId = generator.parseJWT(token);
+
+        User user = iUserRepository.getUserById(userId);
+        if(user != null) {
+            Book info = bookImplementation.fetchbyId(bookId);
+            if(info != null) {
+                bookImplementation.updateBookStatusByBookId(status, bookId);
+                return true;
+            }
+        } else {
+            throw new UserException("User nie istnieje!");
+        }
+        return false;
+    }
 }

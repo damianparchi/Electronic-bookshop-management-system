@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Observable, Subject, tap} from "rxjs";
+import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {HttpServiceService} from './http-service.service'
+import {HttpServiceService} from '../httpService/http-service.service'
 
 @Injectable({
   providedIn: 'root'
@@ -32,13 +32,14 @@ export class BookService {
       .put(`${this.baseUrl}/books/${bookId}`, book, {headers: new HttpHeaders({token: localStorage?.['token']})});
   }
 
-  private searchBookData = new Subject<any>();
+  sendAgain(bookId: any, status: any): Observable<any> {
+    console.log('url ', `${this.baseUrl}/books/${bookId}/${status}`);
 
-  getSearchBookData(): Observable<any> {
-    return this.searchBookData.asObservable();
+    return this.httpService
+      .put(`${this.baseUrl}/books/${bookId}/${status}`, ' ', {headers: new HttpHeaders({token: localStorage?.['token']})})
   }
 
-  public getAllConfirmedBooks(page: any, sortby ?: string, orderBy ?: string): Observable<any> {
+  public getAllConfirmedBooks(): Observable<any> {
     return this.http.get(`${this.baseUrl}/books/confirmed`);
   }
 
