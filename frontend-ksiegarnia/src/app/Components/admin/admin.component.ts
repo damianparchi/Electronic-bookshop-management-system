@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Book} from "../../Model/book.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {AdminServiceService} from "../../Services/admin-service.service";
+import {AdminServiceService} from "../../Services/admin/admin-service.service";
 import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 

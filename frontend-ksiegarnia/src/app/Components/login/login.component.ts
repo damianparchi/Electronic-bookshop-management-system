@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {UserServiceService} from "../../Services/user-service.service";
-import {TokenService} from "../../Services/token.service";
+import {UserServiceService} from "../../Services/user/user-service.service";
+import {TokenService} from "../../Services/token/token.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
   handleResponse(data) {
     this.token.handle(data);
     console.log(data);
-    this.token.signedIn(true);
+    this.token.signedIn();
     this.matSnackBar.open('Zalogowano pomyślnie!', 'ok', {
       duration: 5000
     });

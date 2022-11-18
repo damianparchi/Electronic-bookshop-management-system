@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TokenService} from "../../Services/token.service";
+import {TokenService} from "../../Services/token/token.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -41,7 +41,7 @@ export class MainPanelComponent implements OnInit {
     console.log('wylogowanie');
     event.preventDefault();
     this.token.remove();
-    this.token.signedIn(false);
+    this.token.signedIn();
     this.route.navigateByUrl('/home/login');
     this.matsnackbar.open('Wylogowano pomyślnie!', 'ok', {
       duration: 5000

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BookService} from "../../Services/book.service";
+import {BookService} from "../../Services/book/book.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";

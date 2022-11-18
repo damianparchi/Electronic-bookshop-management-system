@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {Book} from "../../Model/book.model";
-import {BookService} from "../../Services/book.service";
+import {BookService} from "../../Services/book/book.service";
 import {ActivatedRoute} from "@angular/router";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
