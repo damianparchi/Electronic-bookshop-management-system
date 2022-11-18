@@ -1,0 +1,52 @@
+<div class="main-container">
+  <div class="container">
+    <div *ngIf="bookList.length!=0">
+
+    </div>
+    <br>
+    <div class="alert alert-danger text-justify" *ngIf="bookList.length==0">There is not any books to display please add some book and approved it</div>
+
+    <div class="list-books">
+
+      <div *ngFor="let book of bookList">
+
+        <mat-card class="tooltip1">
+          <mat-card-title matTooltip="{{book.bookName}}" (click)="Detail(book.bookId)">
+            <img alt="" class="bookCover" src="assets\okladki\{{book.bookCover}}" />
+          </mat-card-title>
+          <mat-card-content>
+            <div class="brak" *ngIf="!book.quantityOfBooks">Obecnie brak na stanie</div>
+            <div class="bookName">Tytuł: {{ book.bookName }}</div>
+            <span class="tooltiptext"><h2>Opis książki</h2>{{ book.bookDesc }}</span>
+            <div class="author">Autor: {{ book.author }}</div>
+            <div class="cost">Cena:  {{ book.cost }}zł</div>
+            <div class="quantityofBooks" *ngIf="book.quantityOfBooks < 5 && book.quantityOfBooks; else elsecondition ">
+              Zostały tylko {{ book.quantityOfBooks }} sztuki. Spiesz się!
+            </div>
+            <ng-template #elsecondition>
+              <div class="sztuk">Sztuk: </div>
+              <div class="quantity" *ngIf="book.quantityOfBooks "> {{ book.quantityOfBooks }}</div>
+              <div *ngIf="!book.quantityOfBooks "></div>
+            </ng-template>
+            <div class="cart-buttons" *ngIf="book.quantityOfBooks && value[book.bookId] !=book.bookId ">
+              <div>
+                <button class="addtobag" (click) ="addingToBasket(book.bookId)" mat-button>Do koszyka</button>
+              </div>
+              <div>
+                <button mat-button class="wishlist">Życzenia</button>
+              </div>
+            </div>
+            <div class="addedbtn " *ngIf="!book.quantityOfBooks">
+              <button class="addedbtn" mat-button>Życzenia</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div class="title">
+        <span style="font-size: 17px; color: gray;">
+              ({{ size }} &nbsp;książki)
+        </span>
+    </div>
+  </div>
+</div>
