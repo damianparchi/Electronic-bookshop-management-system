@@ -33,7 +33,7 @@ export class TokenService {
     sessionStorage.clear();
   }
 
-  signedIn(value: boolean){
+  signedIn(){
     if (this.get()!=null){
       return this.signIn = true;
     }
