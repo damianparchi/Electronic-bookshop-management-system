@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.BasketDTO;
 import com.example.backend.entity.BasketProduct;
 import com.example.backend.response.Response;
 import com.example.backend.service.BasketService;
@@ -31,8 +32,29 @@ public class BasketController {
 
     @GetMapping("ksiegarnia/basket/bookSumUp")
     public ResponseEntity<Response> getBooksCount(@RequestHeader(name="token") String token) throws Exception {
-        int cartdetails = basketService.getBookSumUp(token);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("Liczba ksiazek w koszyku", 200,cartdetails));
+        int basketDetails = basketService.getBookSumUp(token);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("Liczba ksiazek w koszyku", 200, basketDetails));
+    }
+
+    @DeleteMapping("ksiegarnia/basket/deleteBooksFromBasket/{bookId}")
+    public ResponseEntity<Response> deleteBooksFromBasket(@RequestHeader(name="token") String token ,@PathVariable Long bookId) throws Exception {
+        System.out.println("jjjjjjjjjjj"+ token + bookId);
+        boolean basketDetails = basketService.deleteBook(token,bookId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("book removed from cart", 200,basketDetails));
+    }
+
+    @PutMapping("ksiegarnia/basket/minusBook")
+    public ResponseEntity<Response> minusBook(@RequestHeader(name="token") String token,@RequestParam("bookId") Long bookId,@RequestBody BasketDTO bookAmount) throws Exception {
+        BasketProduct basketDetails = basketService.minusBook(token, bookId, bookAmount);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body
+                (new Response("odjęto 1 książkę", 200, basketDetails));
+    }
+
+    @PutMapping("ksiegarnia/basket/plusBook")
+    public ResponseEntity<Response> descreaseBooksQuantity(@RequestHeader(name="token") String token,@RequestParam("bookId") Long bookId,@RequestBody BasketDTO bookAmount) throws Exception {
+        BasketProduct basketDetails = basketService.plusBook(token, bookId, bookAmount);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body
+                (new Response("decreased 1 quantity of book ", 200, basketDetails));
     }
 
 

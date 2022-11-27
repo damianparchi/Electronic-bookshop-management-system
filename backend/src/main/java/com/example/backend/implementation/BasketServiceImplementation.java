@@ -1,11 +1,13 @@
 package com.example.backend.implementation;
 
+import com.example.backend.dto.BasketDTO;
 import com.example.backend.entity.Amount;
 import com.example.backend.entity.BasketProduct;
 import com.example.backend.entity.Book;
 import com.example.backend.entity.User;
 import com.example.backend.exception.UserException;
 import com.example.backend.repo.UserRepository;
+import com.example.backend.repo.implementation.AmountRepository;
 import com.example.backend.repo.implementation.BookImplementation;
 import com.example.backend.service.BasketService;
 import com.example.backend.util.JwtGenerator;
@@ -32,6 +34,9 @@ public class BasketServiceImplementation implements BasketService {
     @Autowired
     private BookImplementation bookImplementation;
 
+    @Autowired
+    private AmountRepository amountRepository;
+
     public User booksInBasket(Book book, User user) {
         long amount = 1;
         BasketProduct product = new BasketProduct();
@@ -41,8 +46,8 @@ public class BasketServiceImplementation implements BasketService {
         product.setCreatedAt(LocalDateTime.now());
         product.setBooksList(booklist);
         ArrayList<Amount> amountDetails = new ArrayList<Amount>();
-        AmountsOfBooks.setbooksAmount(amount);
-        AmountsOfBooks.setCost(book.getCost());
+        AmountsOfBooks.setBooksAmount(amount);
+        AmountsOfBooks.setTotalCost(book.getCost());
         amountDetails.add(AmountsOfBooks);
         product.setBooksAmount(amountDetails);
         user.getBooksInBasket().add(product);
@@ -116,6 +121,107 @@ public class BasketServiceImplementation implements BasketService {
             return counterBooks;
         }
         return 0;
+    }
+
+    @Transactional
+    @Override
+    public BasketProduct minusBook(String token, Long bookId, BasketDTO bookAmount) {
+        Long id = generator.parseJWT(token);
+        Long amountId = bookAmount.getAmountId();
+        Long amount = bookAmount.getAmountOfBook();
+
+        User user = userRepository.findById(id).get();
+        if (user != null) {
+            Book book = bookImplementation.findById(bookId).get();
+            if(user != null) {
+                double totalCost = book.getCost() * (amount - 1);
+                boolean notExist = false;
+                for (BasketProduct prod: user.getBooksInBasket()) {
+                    if(!prod.getBooksList().isEmpty()) {
+                        notExist = prod.getBooksList().stream().noneMatch(books -> books.getBookId().equals(bookId));
+                        if(!notExist) {
+                            Amount amountDetails = amountRepository.findById(amountId).orElseThrow(null);
+                            amountDetails.setBooksAmount(amount - 1);
+                            amountDetails.setTotalCost(totalCost);
+                            Long ile = amountDetails.getBooksAmount();
+                            int i = ile.intValue();
+                            if(i>=0) {
+                                if (i==0) {
+                                    deleteBook(token, bookId);
+                                }
+                                amountRepository.save(amountDetails);
+                                return prod;
+                            }
+                            throw new UserException("Zła ilość.");
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteBook(String token, Long bookId) {
+        Long id = generator.parseJWT(token);
+        User user = userRepository.findById(id).get();
+        if (user != null) {
+            Book book = bookImplementation.findById(bookId).get();
+            if (book != null) {
+                Optional<Amount> amount = amountRepository.findById(id);
+                for (BasketProduct prod : user.getBooksInBasket()) {
+                    boolean exitsBookInCart = prod.getBooksList().stream()
+                            .noneMatch(books -> books.getBookId().equals(bookId));
+                    if (!exitsBookInCart) {
+                        userRepository.save(user);
+                        prod.getBooksAmount().remove(amount);
+                        prod.getBooksList().remove(book);
+                        prod.getBooksAmount().clear();
+                        boolean users = userRepository.save(user).getBooksInBasket() != null ? true : false;
+                        if (user != null) {
+                            return users;
+                        }
+                    }
+
+                }
+            }
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public BasketProduct plusBook(String token, Long bookId, BasketDTO bookAmount) {
+        Long id = generator.parseJWT(token);
+
+        Long amountId = bookAmount.getAmountId();
+        Long amount = bookAmount.getAmountOfBook();
+        User user = userRepository.findById(id).get();
+        if(user != null) {
+            Book book = bookImplementation.findById(bookId).get();
+            if(book != null) {
+                double totalCost = book.getCost() * (amount + 1);
+                boolean notExist = false;
+                for (BasketProduct prod : user.getBooksInBasket()) {
+                    if (!prod.getBooksList().isEmpty()) {
+                        notExist = prod.getBooksList().stream().noneMatch(books -> books.getBookId().equals(bookId));
+
+                        if(!notExist) {
+                            Amount amountDetails = amountRepository.findById(amountId).orElseThrow(null);
+                            amountDetails.setBooksAmount(amount + 1);
+                            amountDetails.setTotalCost(totalCost);
+                            if (amountDetails.getBooksAmount()<= book.getQuantityOfBooks()) {
+                                amountRepository.save(amountDetails);
+                                return prod;
+                            }
+                            throw new UserException("Nie ma wystarczającej ilości książek");
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 }
