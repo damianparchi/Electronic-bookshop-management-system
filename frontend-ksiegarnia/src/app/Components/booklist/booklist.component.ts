@@ -19,7 +19,6 @@ export class BooklistComponent implements OnInit {
   bookSearch: any;
   error = null;
   CurrentPageNo: 0;
-  totalPage: Array<number>;
   book: Book = new Book();
   constructor(private router: Router, private bookService: BookService,
               private matsnackbar: MatSnackBar, private basket: BasketService) { }
@@ -40,16 +39,9 @@ export class BooklistComponent implements OnInit {
 
   approvedBookServiceMethod() {
     this.bookService.getAllConfirmedBooks().subscribe((response: any) => {
-      console.log(response);
-      console.log('Books are the' + response.object);
-      this.bookList = response.object.content;
-      this.size = response.object.totalElements;
-      this.CurrentPageNo = response.object.pageable.pageNumber;
-      this.totalPage = new Array(response.object.totalPages);
-      console.log('Total pages is: ' + this.totalPage);
-      console.log('total books are ' + this.size);
-      console.log('curret page number is ' + this.CurrentPageNo);
-      console.log('Books are  ', this.bookList.length);
+      this.bookList = response.obj.content;
+      this.size = response.obj.totalElements;
+      this.CurrentPageNo = response.obj.pageable.pageNumber;
     });
   }
 
@@ -79,9 +71,10 @@ export class BooklistComponent implements OnInit {
 
   private handleResponse(data: any) {
     console.log(data);
-    this.matsnackbar.open('Book added successfully Into Cart' , 'ok', {
+    this.matsnackbar.open('Dodano książkę do koszyka.' , 'ok', {
       duration: 5000
     });
+    window.location.reload();
   }
 
 }

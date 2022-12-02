@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Book} from "../../Model/book.model";
 import {Dane} from "../../Model/dane.model"
 import {Router} from "@angular/router";
@@ -6,6 +6,7 @@ import {BasketService} from "../../Services/basket/basket.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormControl, Validators} from "@angular/forms";
 import {UserServiceService} from "../../Services/user/user-service.service";
+import {CheckoutService} from "../../Services/checkout/checkout.service";
 
 @Component({
   selector: 'app-basket',
@@ -13,18 +14,21 @@ import {UserServiceService} from "../../Services/user/user-service.service";
   styleUrls: ['./basket.component.css']
 })
 export class BasketComponent implements OnInit {
+  constructor(private basketService: BasketService,
+              private router: Router,
+              private matsnackbar: MatSnackBar,
+              private userService: UserServiceService,
+              private checkout: CheckoutService) { }
 
   length: any = sessionStorage.length;
   books: Book = new Book();
   error: null;
   book: any[] = [];
   quantity = 1;
-  bookDesc = {
-    cost: null,
-    amountId: null,
-    amountOfBook : null
-  };
+  si: any = sessionStorage.length;
+
   value: any = [];
+  @Output() output: EventEmitter<any> = new EventEmitter();
   daneUzytkownika: Dane = new Dane();
   imie = new FormControl('', [Validators.required]);
   nazwisko = new FormControl('', [Validators.required]);
@@ -34,14 +38,25 @@ export class BasketComponent implements OnInit {
   nrMieszkaniaDomu = new FormControl('', [Validators.required]);
   kodPocztowy = new FormControl('', [Validators.required]);
 
+  userdataId: any;
+  key: any;
+  bookDesc = {
+    cost: null,
+    amountId: null,
+    amountOfBook : null
+  };
 
-  constructor(private basketService: BasketService, private router: Router, private matsnackbar: MatSnackBar, private userService: UserServiceService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.daneUzytkownika.imie = (localStorage.getItem('Name'));
+    this.userdataId = null;
+    this.putUserDataInsideForms(this.daneUzytkownika);
+    this.getUserData();
+
+
     this.getBooksFromBasket();
     this.getBasketItems();
   }
-
 
   getBasketItems() {
     this.basketService.getBasketItemsCount().subscribe((response: any) => {
@@ -53,7 +68,7 @@ export class BasketComponent implements OnInit {
   getBooksFromBasket() {
     this.basketService.getBooksInBasket().subscribe((Response) => {
       this.book = Response.obj;
-      for (const i of this.book) {
+      for (let i of this.book) {
         this.quantity = i.booksAmount[0].booksAmount;
       }
     });
@@ -67,21 +82,36 @@ export class BasketComponent implements OnInit {
     this.basketService.plusBooks(bookId, this.bookDesc).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error));
-    console.log('Book id' + bookId);
+    console.log('id ksiazki: ' + bookId);
     window.location.reload();
   }
 
   minusBtn(bookId: any, amountDesc:any) {
-    console.log('decreasing items');
     this.bookDesc.amountId = amountDesc.amount_id;
     this.bookDesc.cost =  amountDesc.booksAmount;
     this.bookDesc.amountOfBook = amountDesc.booksAmount;
+    console.log('zmniejsz ilosc ksiazki');
     this.basketService.minusBooks(bookId, this.bookDesc).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
     );
-    console.log('Book id ' + bookId);
+    console.log('id ksiazki: ' + bookId);
     window.location.reload();
+  }
+
+  handleResponse(data: any): void {
+    console.log(data);
+    this.matsnackbar.open(data.message , 'ok', {
+      duration: 5000
+    });
+  }
+
+  handleError(error: any) {
+    this.error = error.error.message;
+    console.log('error', this.error);
+    this.matsnackbar.open(error.error.message, 'ok', {
+      duration: 5000
+    });
   }
 
   removeBookFromBasket(key) {
@@ -98,20 +128,33 @@ export class BasketComponent implements OnInit {
     console.log('usunieta ksiazka: ', key);
   }
 
-  handleResponse(data: any): void {
-    console.log(data);
-    this.matsnackbar.open(data.message , 'ok', {
-      duration: 5000
+  confirmOrder(bookId: any) {
+    console.log("zamowienie ksiazki: ", bookId);
+    this.checkout.checkout(bookId, this.userdataId).subscribe(
+      data => this.handleResponseCheckout(data),
+      error => this.handleError(error)
+    );
+  }
+
+  getUserData() {
+    this.userService.getUserData().subscribe((odp) => {
+      console.log('Info o uzyt:', odp);
+      for (let i of odp.obj) {
+        this.putUserDataInsideForms(i);
+        console.log('userdata info:', i);
+        this.userdataId = i.userdataId;
+      }
     });
   }
 
-  handleError(error: any) {
-    this.error = error.error.message;
-    console.log(error);
-    console.log('error', this.error);
-    this.matsnackbar.open(error.error.message, 'ok', {
-      duration: 5000
-    });
+  putUserDataInsideForms(userData: Dane) {
+    this.imie.setValue(userData.imie);
+    this.nazwisko.setValue(userData.nazwisko);
+    this.numerTel.setValue(userData.nrTel);
+    this.Miasto.setValue(userData.miasto);
+    this.Ulica.setValue(userData.ulica);
+    this.nrMieszkaniaDomu.setValue(userData.nrMieszkaniaDomu);
+    this.kodPocztowy.setValue(userData.kodPocztowy);
   }
 
   change = false;
@@ -155,15 +198,20 @@ export class BasketComponent implements OnInit {
     window.location.reload();
   }
 
-  confirmOrder(bookId: any) {
-    // zamowienie
+
+
+  handleResponseCheckout(data: any): void {
+    console.log('dataaaa', data);
+    this.matsnackbar.open(data.message , 'ok', {
+      duration: 5000
+    });
+    this.router.navigateByUrl('checkoutFinish');
   }
 
   goback2(){
     window.location.reload();
   }
 
-  adressId: any;
   saveData(){
     this.daneUzytkownika.imie = this.imie.value;
     this.daneUzytkownika.nazwisko = this.nazwisko.value;
@@ -173,16 +221,19 @@ export class BasketComponent implements OnInit {
     this.daneUzytkownika.nrMieszkaniaDomu = this.nrMieszkaniaDomu.value;
     this.daneUzytkownika.kodPocztowy = this.kodPocztowy.value;
 
-    if (this.adressId === null) {
+    if (this.userdataId === null || this.userdataId === undefined) {
+      console.log('info ustawione' + this.daneUzytkownika);
       this.userService.addUserData(this.daneUzytkownika).subscribe((Response) => {
         console.log('UserData: ', Response);
+        window.location.reload();
       });
-    } else {
-      console.log("smthng wrong")
 
+    } else {
+      this.daneUzytkownika.userdataId = this.userdataId;
+      console.log('userdataID ustawione' + this.userdataId);
+      this.userService.updateUserData(this.daneUzytkownika).subscribe((Response) => {
+        console.log('userdata info aktualne', Response);
+      });
     }
   }
-
-
-
 }

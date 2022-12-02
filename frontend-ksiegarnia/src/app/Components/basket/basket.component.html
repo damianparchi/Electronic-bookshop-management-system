@@ -1,4 +1,4 @@
-<app-main-panel></app-main-panel>
+<app-main-panel [output]="si"></app-main-panel>
 <div class="main-container">
   <div class="row">
     <div class="column1" *ngIf="!change">
@@ -8,7 +8,7 @@
       <hr>
       <div fxLayout="row" fxLayoutAlign="space-around center"  *ngFor="let books of book">
         <mat-card-title>
-          <img class="bookCover" src="assets\okladki\{{books.booksList[0].bookCover}}">
+          <img alt="" class="bookCover" src="assets\okladki\{{books.booksList[0].bookCover}}">
         </mat-card-title>
         <div fxLayout="column" fxLayoutAlign="center center">
         <div class="details">
@@ -66,15 +66,15 @@
             <div fxFlex="45">
               <mat-form-field appearance="outline">
                 <mat-label>Imie</mat-label>
-                <input matInput [formControl]="imie" placeholder="Imie" matInput autocomplete="off" required>
-                <mat-error required>Proszę podać poprawne imię</mat-error>
+                <input matInput [formControl]="imie" placeholder="Imie" autocomplete="off" required>
+                <mat-error>Proszę podać poprawne imię</mat-error>
               </mat-form-field>
             </div>
             <div fxFlex="45">
               <mat-form-field appearance="outline">
                 <mat-label>Nazwisko</mat-label>
                 <input [formControl]="nazwisko" matInput required/>
-                <mat-error required>Proszę podać poprawne nazwisko</mat-error>
+                <mat-error>Proszę podać poprawne nazwisko</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -82,23 +82,23 @@
             <div fxFlex="45">
               <mat-form-field appearance="outline">
                 <mat-label>Numer Telefonu</mat-label>
-                <input [formControl]="numerTel" matInput autocomplete="off" required/>
-                <mat-error required>Proszę podać poprawny numer telefonu</mat-error>
+                <input [formControl]="numerTel" maxlength="9" matInput autocomplete="off" required/>
+                <mat-error>Proszę podać poprawny numer telefonu</mat-error>
               </mat-form-field>
             </div>
             <div fxFlex="45">
               <mat-form-field appearance="outline">
                 <mat-label>Miasto</mat-label>
                 <input [formControl]="Miasto" matInput autocomplete="off" required/>
-                <mat-error required>Proszę podać poprawne miasto</mat-error>
+                <mat-error>Proszę podać poprawne miasto</mat-error>
               </mat-form-field>
             </div>
           </div>
-          <div>
+          <div >
             <mat-form-field appearance="outline">
               <mat-label>Ulica</mat-label>
               <input [formControl]="Ulica" matInput autocomplete="off" required/>
-              <mat-error required>Proszę podać poprawną ulicę</mat-error>
+              <mat-error>Proszę podać poprawną ulicę</mat-error>
             </mat-form-field>
           </div>
           <div class="dane">
@@ -106,23 +106,23 @@
               <mat-form-field appearance="outline">
                 <mat-label>Nr Mieszkania/Domu</mat-label>
                 <input [formControl]="nrMieszkaniaDomu" matInput required/>
-                <mat-error required>Proszę podać poprawny nr mieszkania/domu</mat-error>
+                <mat-error>Proszę podać poprawny nr mieszkania/domu</mat-error>
               </mat-form-field>
             </div>
             <div fxFlex="45">
               <mat-form-field appearance="outline">
                 <mat-label>Kod pocztowy</mat-label>
                 <input [formControl]="kodPocztowy" matInput autocomplete="off" required/>
-                <mat-error required>Proszę podać poprawny kod pocztowy</mat-error>
+                <mat-error>Proszę podać poprawny kod pocztowy</mat-error>
               </mat-form-field>
             </div>
           </div>
-
         </mat-card-content>
           <hr>
           <div fxLayoutAlign="space-around center" *ngIf="!change1" (click)="dwieFun()">
             <button class="btnadres" (click)="goback2()">Powróć</button>
-            <button class="btnadres" [disabled] = "imie.invalid || nazwisko.invalid ||  numerTel.invalid || Miasto.invalid || Ulica.invalid || nrMieszkaniaDomu.invalid || kodPocztowy.invalid " (click)="saveData()">Dalej</button>
+            <button class="btnadres" (click)="saveData()" [disabled] = "imie.invalid || nazwisko.invalid ||  numerTel.invalid || Miasto.invalid || Ulica.invalid || nrMieszkaniaDomu.invalid || kodPocztowy.invalid">Dalej </button>
+
           </div>
 
         </div>
@@ -137,7 +137,7 @@
       <hr>
         <div *ngFor="let books of book " fxLayout="row" fxLayoutAlign="space-around center">
           <mat-card-title>
-            <img class="bookCover" src="assets\okladki\{{books.booksList[0].bookCover}}">
+            <img alt="" class="bookCover" src="assets\okladki\{{books.booksList[0].bookCover}}">
           </mat-card-title>
           <div fxLayout="column" fxLayoutAlign="center center">
             <div class="tytuł">
