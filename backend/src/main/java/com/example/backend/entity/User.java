@@ -22,8 +22,16 @@ public class User {
     private boolean isVerified;
     private String role;
 
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = UserData.class)
+    @JoinColumn(name = "userId")
+    private List<UserData> userData;
+
     @OneToMany(cascade = CascadeType.ALL, targetEntity = BasketProduct.class)
     @JoinColumn(name = "userId")
     private List<BasketProduct> BooksInBasket;
+
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Checkout.class)
+    @JoinColumn(name = "userId")
+    private List<Checkout> checkoutBooksDesc;
 
 }
