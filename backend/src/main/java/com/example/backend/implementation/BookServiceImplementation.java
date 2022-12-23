@@ -172,10 +172,10 @@ public class BookServiceImplementation implements IBookService {
     public Page<Book> getBookConfirm(Optional<String> searchByBookName, Optional<Integer> page, Optional<String> sortBy, Optional<String> order) {
         if (order.equals(Optional.ofNullable("asc"))) {
             return bookImplementation.findByBookName(searchByBookName.orElse("_"),
-                    PageRequest.of(page.orElse(0), 12, Sort.Direction.ASC, sortBy.orElse("book_id")));
+                    PageRequest.of(page.orElse(0), 10, Sort.Direction.ASC, sortBy.orElse("book_id")));
         } else {
             return bookImplementation.findByBookName(searchByBookName.orElse("_"),
-                    PageRequest.of(page.orElse(0), 12, Sort.Direction.DESC, sortBy.orElse("book_id")));
+                    PageRequest.of(page.orElse(0), 10, Sort.Direction.DESC, sortBy.orElse("book_id")));
         }
     }
 

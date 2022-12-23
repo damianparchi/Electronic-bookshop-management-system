@@ -8,7 +8,7 @@
 
     <div class="list-books">
 
-      <div *ngFor="let book of bookList">
+      <div *ngFor="let book of bookList | search: bookSearch">
 
         <mat-card class="tooltip1">
           <mat-card-title matTooltip="{{book.bookName}}" (click)="Detail(book.bookId)">
@@ -45,8 +45,21 @@
     </div>
     <div class="title">
         <span style="font-size: 17px; color: gray;">
-              ({{ size }} &nbsp;książki)
+              ({{ size }} dostępnych książek)
         </span>
     </div>
+    <div class="container text-center" >
+      <div class="pagination" *ngIf="bookList.length!=0">
+        <a (click)="previos($event)">
+          <mat-icon *ngIf="this.page == 0 ? false : true" style="color: #403f3f; margin-top: -1px">keyboard_arrow_left</mat-icon>
+        </a>
+        <div style="font-size: 17px; color: gray;">strona {{this.page + 1}}</div>
+        <a (click)="next($event)"  href="#">
+          <mat-icon *ngIf="this.page < 1 ? true : false" style="color: #403f3f; margin-top: -1px">keyboard_arrow_right</mat-icon>
+        </a>
+
+      </div>
+    </div>
+
   </div>
 </div>

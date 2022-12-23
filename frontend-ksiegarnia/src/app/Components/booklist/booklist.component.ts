@@ -15,7 +15,7 @@ export class BooklistComponent implements OnInit {
   size: number;
   selectedValue = 'relevance';
   value: any = [];
-  page: number;
+  page = 0;
   bookSearch: any;
   error = null;
   CurrentPageNo: 0;
@@ -25,6 +25,7 @@ export class BooklistComponent implements OnInit {
 
   ngOnInit(): void {
     this.getallApprovedBooks();
+    this.getSearchBookData();
   }
 
   Detail(bookId) {
@@ -34,11 +35,11 @@ export class BooklistComponent implements OnInit {
   }
 
   getallApprovedBooks() {
-    this.approvedBookServiceMethod();
+    this.approvedBookServiceMethod(this.page, 'book_id', 'asc');
   }
 
-  approvedBookServiceMethod() {
-    this.bookService.getAllConfirmedBooks().subscribe((response: any) => {
+  approvedBookServiceMethod(page ?: any, order?: string, sortby?: string) {
+    this.bookService.getAllConfirmedBooks(page, order, sortby).subscribe((response: any) => {
       this.bookList = response.obj.content;
       this.size = response.obj.totalElements;
       this.CurrentPageNo = response.obj.pageable.pageNumber;
@@ -76,6 +77,40 @@ export class BooklistComponent implements OnInit {
     });
     window.location.reload();
   }
+
+  booksearch:any;
+
+  getSearchBookData() {
+    this.bookService.getSearchBookData().subscribe((message) => {
+      console.log('search data', message.books);
+      this.bookSearch = message.books;
+    });
+  }
+
+  totalPage: Array<number>;
+
+  SetPage(i, event: any) {
+    event.preventDefault();
+    this.page = i;
+    console.log('page number you want is' + i);
+    this.getallApprovedBooks();
+  }
+
+  previos(event: any) {
+    event.preventDefault();
+    this.page = this.page - 1;
+    console.log('current page from previous' + 'next' + this.page);
+    this.getallApprovedBooks();
+  }
+
+  next(event: any) {
+    event.preventDefault();
+    this.page = this.page + 1;
+    console.log('current page from next ' + 'next' + this.page);
+    this.getallApprovedBooks();
+  }
+
+
 
 }
 

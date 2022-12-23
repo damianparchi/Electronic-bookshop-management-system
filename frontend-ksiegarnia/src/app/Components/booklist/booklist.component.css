@@ -12,6 +12,7 @@
   width: 105%;
   flex-wrap: wrap;
   flex-direction: row;
+  margin-bottom: -10px;
 
 }
 
@@ -34,7 +35,8 @@ mat-card-title {
 }
 
 .title {
-  text-align: right;
+  text-align: left;
+  float: left;
 }
 
 .mat-card-title.mat-card-title {
@@ -202,4 +204,8 @@ h2{
   border: 1px solid #e0d6d6;
   outline: none;
   border-radius: 2px;
+}
+
+.pagination{
+  float: right;
 }
