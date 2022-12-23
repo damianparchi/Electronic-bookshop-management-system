@@ -32,4 +32,15 @@ export class AdminServiceService {
     return this.httpService.put(this.baseUrl + "/admin/confirmBook/" + bookId + '?' + 'status=' + status, '', this.httpOptions);
   }
 
+  getCheckouts(): Observable<any> {
+    return this.httpService.get(this.baseUrl + "/admin/checkouts/", {});
+  }
+  private _autoRefresh$ = new Subject();
+
+  get autoRefresh$() {
+    return this._autoRefresh$;
+  }
+
+
+
 }
