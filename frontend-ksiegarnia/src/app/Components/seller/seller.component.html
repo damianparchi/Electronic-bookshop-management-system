@@ -10,7 +10,7 @@
         <div *ngFor=" let book of books" [className]="">
           <mat-card  style="display: flex;flex-direction: row; width: auto; padding: 1rem;" matTooltip="{{ book.bookName }}">
             <div>
-              <mat-card-title style="padding: 1rem" (click)="OnPicDialog(book.bookId)">
+              <mat-card-title style="padding: 1rem">
                 <img class="bookCover" src="/assets/okladki/{{book.bookCover}}" alt="" />
               </mat-card-title>
             </div>
@@ -24,7 +24,7 @@
                 <div class="bookname">Tytuł książki:<br><div class="bookTitle"> {{ book.bookName }}</div></div>
                 <div class="author">Autor: {{ book.author }}</div>
                 <div class="cost">Cena: {{ book.cost }}</div>
-                <div class="quantityofBooks">Ilość dostępnych książek: {{ book.amountOfBook }}</div>
+                <div class="quantityofBooks">Ilość dostępnych książek: {{ book.quantityOfBooks }}</div>
                 <div class="desc">Krótki opis: {{ book.bookDesc }}</div>
                 <div class="CardButtons">
                     <button id="editBtn" (click)="editBook(book)" mat-raised-button>

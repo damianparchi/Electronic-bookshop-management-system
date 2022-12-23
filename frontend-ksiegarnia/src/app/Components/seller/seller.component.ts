@@ -3,7 +3,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {BookaddComponent} from "../bookadd/bookadd.component";
 import {BookService} from "../../Services/book/book.service";
 import {ActivatedRoute} from "@angular/router";
-import {AddBookCoverComponent} from "../add-book-cover/add-book-cover.component";
 import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
 import {EditBookComponent} from "../edit-book/edit-book.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -97,7 +96,7 @@ export class SellerComponent implements OnInit {
     this.sellerBooks=true;
     this.orderBooks=false;
     this.service.getallBooks().subscribe( response => {
-      this.books = response.object;
+      this.books = response.obj;
       console.log('Wszystki ksiazki ', this.books);
     });
 
@@ -115,17 +114,6 @@ export class SellerComponent implements OnInit {
 
   getUserName() {
     this.name = localStorage.getItem('Name');
-  }
-
-  OnPicDialog(bookId): void {
-    const dialogRef = this.dialog.open(AddBookCoverComponent, {
-      width: '25rem',
-      panelClass: 'custom-dialog-container',
-      data: { bookId },
-    });
-    dialogRef.afterClosed().subscribe((resp) => {
-      console.log('The dialog was closed');
-    });
   }
 
 }

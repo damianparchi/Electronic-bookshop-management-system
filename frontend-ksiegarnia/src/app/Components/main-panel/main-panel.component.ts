@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TokenService} from "../../Services/token/token.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {BasketService} from "../../Services/basket/basket.service";
+import {BookService} from "../../Services/book/book.service";
 
 @Component({
   selector: 'app-main-panel',
@@ -15,10 +17,23 @@ export class MainPanelComponent implements OnInit {
   isUser = false;
   isSeller = false;
   isAdmin = false;
+  length: any;
+  @Input() output: any;
+  @Output() toggleEvent = new EventEmitter<boolean>();
+  opened = false;
+  bookName: string;
+
+  ontoggel(input: any) {
+    console.log('input' + input);
+    this.toggleEvent.emit(input);
+    this.opened = !this.opened;
+  }
 
   constructor(private token: TokenService,
               private route: Router,
-              private matsnackbar: MatSnackBar) { }
+              private matsnackbar: MatSnackBar,
+              private basketService: BasketService,
+              private BookService: BookService) { }
 
   ngOnInit(): void {
 
@@ -35,6 +50,20 @@ export class MainPanelComponent implements OnInit {
   if(this.role === 'admin') {
     this.isAdmin = true;
   }
+
+  this.getCartItemCount();
+}
+
+  bookSearch() {
+    // console.log(this.bookName);
+    this.BookService.setSearchBookData(this.bookName);
+  }
+
+getCartItemCount() {
+    this.basketService.getBasketItemsCount().subscribe((odp:any) => {
+      this.length = odp.obj;
+
+    });
 }
 
   logout(event: MouseEvent) {

@@ -27,6 +27,16 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { ConfirmDialogComponent } from './Components/confirm-dialog/confirm-dialog.component';
 import { EditBookComponent } from './Components/edit-book/edit-book.component';
+import { AdminComponent } from './Components/admin/admin.component';
+import { BasketComponent } from './Components/basket/basket.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatTableModule} from "@angular/material/table";
+import { CheckoutInfoComponent } from './Components/checkout-info/checkout-info.component';
+import { SearchbooksComponent } from './Components/searchbooks/searchbooks.component';
+import { SearchPipe } from './Components/searchbooks/search.pipe';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { CheckoutsListComponent } from './Components/checkouts-list/checkouts-list.component';
+import { CheckouthistoryComponent } from './Components/checkouthistory/checkouthistory.component';
 
 @NgModule({
   declarations: [
@@ -41,27 +51,37 @@ import { EditBookComponent } from './Components/edit-book/edit-book.component';
     BookaddComponent,
     ConfirmDialogComponent,
     EditBookComponent,
+    AdminComponent,
+    BasketComponent,
+    CheckoutInfoComponent,
+    SearchbooksComponent,
+    SearchPipe,
+    CheckoutsListComponent,
+    CheckouthistoryComponent,
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCardModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        MatFormFieldModule,
-        MatRadioModule,
-        MatInputModule,
-        FlexLayoutModule,
-        HttpClientModule,
-        MatSnackBarModule,
-        ReactiveFormsModule,
-        MatDialogModule,
-        MatTooltipModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatInputModule,
+    FlexLayoutModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatBadgeModule,
+    MatTableModule,
+    MatPaginatorModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -57,11 +57,9 @@ public class BookController {
     public ResponseEntity<BookResponse> getAllConfirmedBooks(@RequestParam Optional<String> searchByBooKName, @RequestParam Optional<Integer> page, @RequestParam Optional<String> sortBy, @RequestParam Optional<String> order) {
         Page<Book> books = iBookService.getBookConfirm(searchByBooKName, page, sortBy, order);
         if (books != null)
-            return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body(new BookResponse("Potwierdzone książki", books));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse("Potwierdzone książki", books));
         else
-            return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body(new BookResponse(400, "Brak potwierdzonych książek"));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new BookResponse(400, "Brak potwierdzonych książek"));
     }
 
     @PutMapping("books/{bookId}/{status}")

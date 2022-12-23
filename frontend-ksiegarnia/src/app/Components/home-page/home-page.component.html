@@ -1,9 +1,11 @@
 <app-main-panel></app-main-panel>
-<p>{{name}} home-page works!</p>
 
-<div *ngIf="!isSeller && !isAdmin">
+<div *ngIf="!isAdmin && !isSeller">
   <app-booklist></app-booklist>
+</div>
 
+<div *ngIf="isAdmin">
+  <app-admin></app-admin>
 </div>
 
 <div *ngIf="isSeller">

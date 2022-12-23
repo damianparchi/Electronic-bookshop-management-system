@@ -1,23 +1,34 @@
 <mat-toolbar *ngIf="!isUser && !isSeller && !isAdmin" style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
-  <a mat-raised-button
-    ><mat-icon routerLink="home" class="logo">menu_book</mat-icon>Księgarnia</a>
-    <h1>Witaj</h1>
+  <a mat-button routerLink="/home"><mat-icon class="logo">menu_book</mat-icon>Księgarnia</a>
+
+  <h1>Witaj</h1>
     <div class="breaker"></div>
     <a mat-button routerLink="wishlist">Lista życzeń</a>
     <a mat-button routerLink="home">Home</a>
-    <button mat-raised-button color="dark" routerLink="login">Zaloguj się!</button>
+    <button mat-raised-button color="dark" routerLink="/login">Zaloguj się!</button>
 </mat-toolbar>
 
 
-<mat-toolbar *ngIf="isUser || isSeller || isAdmin" style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
-  <a mat-raised-button
-  ><mat-icon routerLink="home" class="logo">menu_book</mat-icon>Księgarnia</a>
-    <h1>Witaj {{username}}!</h1>
+<mat-toolbar *ngIf="isUser" style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
+  <a mat-raised-button routerLink="/home"
+  ><mat-icon class="logo">menu_book</mat-icon>Księgarnia</a>
+    <div style="margin-left: 150px">Witaj {{username}}!</div>
+  <input style="margin: 0 0 0 25%; text-align: center" type="text" placeholder="Wyszukaj książkę..." [(ngModel)]="bookName" (input)="bookSearch()"/>
       <div class="breaker"></div>
-      <a mat-button routerLink="home">Home</a>
-      <a mat-button>Wyszukaj</a>
-      <a mat-button>Koszyk</a>
-      <a mat-button routerLink="wishlist">Lista życzeń</a>
-        <button mat-raised-button color="dark" (click)="logout($event)" [routerLink]="['']">Wyloguj się!</button>
 
+      <a mat-button routerLink="/basket">Zamówienia<mat-icon matBadge="{{ length }}" matBadgeSize="small">shopping_cart</mat-icon></a>
+      <a mat-button routerLink="/history">Historia zamówień<mat-icon matBadge="{{ length }}" matBadgeSize="small">shopping_cart</mat-icon></a>
+        <button mat-raised-button color="dark" (click)="logout($event)" [routerLink]="['']">Wyloguj się!</button>
+</mat-toolbar>
+
+
+<mat-toolbar *ngIf="isAdmin || isSeller" style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
+  <a mat-raised-button routerLink="/home"
+  ><mat-icon class="logo">menu_book</mat-icon>Księgarnia</a>
+  <div style="margin-left: 150px">Witaj {{username}}!</div>
+<!--  <input style="margin: 0 0 0 25%; text-align: center" type="text" placeholder="Wyszukaj książkę..." [(ngModel)]="bookName" (input)="bookSearch()"/>-->
+  <div class="breaker"></div>
+
+  <a mat-button routerLink="/checkouts">Zamówienia<mat-icon matBadgeSize="small">shopping_cart</mat-icon></a>
+  <button mat-raised-button color="dark" (click)="logout($event)" [routerLink]="['']">Wyloguj się!</button>
 </mat-toolbar>

@@ -29,7 +29,7 @@ export class AdminComponent implements OnInit {
   getUnconfirmedBooks(status: string) {
     this.adminService.getUnconfirmedBooks('W oczekiwaniu...').subscribe(
       (response: any) => {
-        this.books = response.object;
+        this.books = response.obj;
       },
       (error: any) => {
         this.matsnackbar.open(error.error.message, 'error', {duration: 5000});
