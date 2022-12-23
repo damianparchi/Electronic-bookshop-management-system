@@ -32,4 +32,10 @@ export class UserServiceService {
     return this.httpClient.put(`${this.baseUrl}/userdata/update`, userData, {headers: new HttpHeaders({token: localStorage?.['token']})});
   }
 
+  getCheckoutHistory(token: string): Observable<any> {
+    console.log('order status url');
+    console.log(this.httpClient.get(`${this.baseUrl}/userbooks/${token}`, {headers: new HttpHeaders({token: localStorage?.['token']})}));
+    return this.httpClient.get(`${this.baseUrl}/userbooks/${token}`, {headers: new HttpHeaders({token: localStorage?.['token']})});
+  }
+
 }
