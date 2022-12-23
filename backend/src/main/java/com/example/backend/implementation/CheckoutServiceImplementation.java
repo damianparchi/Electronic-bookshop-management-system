@@ -4,6 +4,7 @@ import com.example.backend.entity.*;
 import com.example.backend.exception.UserException;
 import com.example.backend.repo.UserRepository;
 import com.example.backend.repo.implementation.BookImplementation;
+import com.example.backend.repo.implementation.CheckoutRepository;
 import com.example.backend.service.BasketService;
 import com.example.backend.service.CheckoutService;
 import com.example.backend.util.JwtGenerator;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,9 @@ public class CheckoutServiceImplementation implements CheckoutService {
 
     @Autowired
     private BookImplementation bookImplementation;
+
+    @Autowired
+    private CheckoutRepository checkoutRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -95,6 +100,23 @@ public class CheckoutServiceImplementation implements CheckoutService {
             }
         }
         throw new UserException("brak uzytkownika");
+    }
+
+    public List<Checkout> getCheckouts() {
+
+        List<Checkout> checkoutIds = checkoutRepository.getCheckout();
+        return checkoutIds;
+    }
+
+    @Transactional
+    @Override
+    public List<Checkout> getOrderList(String token) {
+        long id = generator.parseJWT(token);
+        User userdetails = userRepository.findById(id)
+                .orElseThrow(null);
+
+        return userdetails.getCheckoutBooksDesc();
+
     }
 
 
