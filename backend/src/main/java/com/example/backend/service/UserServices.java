@@ -18,6 +18,10 @@ public interface UserServices {
     //boolean update(PasswordUpdate information, String token);
     List<User> getUser();
 
+    String getUserInfo(String token);
+
     User login(LoginInfo information);
+
+    //List<User> getUserInfo(String information);
     //User getSingleUser(String token);
 }

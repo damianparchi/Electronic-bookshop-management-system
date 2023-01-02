@@ -10,4 +10,6 @@ public interface CheckoutService {
     List<Checkout> getCheckouts();
 
     List<Checkout> getOrderList(String token);
+
+    int updateCheckoutStatus(String status, long checkoutId);
 }

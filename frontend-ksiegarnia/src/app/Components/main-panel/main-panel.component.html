@@ -18,17 +18,30 @@
 
       <a mat-button routerLink="/basket">Zamówienia<mat-icon matBadge="{{ length }}" matBadgeSize="small">shopping_cart</mat-icon></a>
       <a mat-button routerLink="/history">Historia zamówień<mat-icon matBadge="{{ length }}" matBadgeSize="small">shopping_cart</mat-icon></a>
-        <button mat-raised-button color="dark" (click)="logout($event)" [routerLink]="['']">Wyloguj się!</button>
+        <button mat-raised-button color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się!</button>
 </mat-toolbar>
 
 
-<mat-toolbar *ngIf="isAdmin || isSeller" style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
+<mat-toolbar *ngIf="isSeller" style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
   <a mat-raised-button routerLink="/home"
   ><mat-icon class="logo">menu_book</mat-icon>Księgarnia</a>
   <div style="margin-left: 150px">Witaj {{username}}!</div>
 <!--  <input style="margin: 0 0 0 25%; text-align: center" type="text" placeholder="Wyszukaj książkę..." [(ngModel)]="bookName" (input)="bookSearch()"/>-->
   <div class="breaker"></div>
 
-  <a mat-button routerLink="/checkouts">Zamówienia<mat-icon matBadgeSize="small">shopping_cart</mat-icon></a>
-  <button mat-raised-button color="dark" (click)="logout($event)" [routerLink]="['']">Wyloguj się!</button>
+  <a mat-button routerLink="/checkouts">Moja Sprzedaż<mat-icon matBadgeSize="small">shopping_cart</mat-icon></a>
+  <a mat-button (click)="addBook()" >Sprzedaj Książkę<mat-icon matBadgeSize="small">book</mat-icon></a>
+  <button mat-raised-button color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się!</button>
+</mat-toolbar>
+
+<mat-toolbar *ngIf="isAdmin" style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
+  <a mat-raised-button routerLink="/home"
+  ><mat-icon class="logo">menu_book</mat-icon>Księgarnia</a>
+  <div style="margin-left: 150px">Witaj {{username}}!</div>
+<!--  <input style="margin: 0 0 0 25%; text-align: center" type="text" placeholder="Wyszukaj książkę..." [(ngModel)]="bookName" (input)="bookSearch()"/>-->
+  <div class="breaker"></div>
+
+  <a mat-button routerLink="/checkouts">Książki sprzedane<mat-icon matBadgeSize="small">shopping_cart</mat-icon></a>
+  <a mat-button (click)="addBook()" >Sprzedaj Książkę<mat-icon matBadgeSize="small">book</mat-icon></a>
+  <button mat-raised-button color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się!</button>
 </mat-toolbar>

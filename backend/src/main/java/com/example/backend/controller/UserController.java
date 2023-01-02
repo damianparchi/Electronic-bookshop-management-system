@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.entity.Book;
 import com.example.backend.entity.Checkout;
 import com.example.backend.entity.User;
+import com.example.backend.entity.UserData;
 import com.example.backend.exception.UserException;
 import com.example.backend.implementation.BookServiceImplementation;
 import com.example.backend.request.LoginInfo;
@@ -36,6 +37,7 @@ public class UserController {
     @Autowired
     private CheckoutService checkoutService;
 
+
     @PostMapping("/register")
     public ResponseEntity<Response> registration(@RequestBody UserDto information) {
         boolean wynik = service.register(information);
@@ -65,6 +67,17 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("placed orderlist", 200, orderdetails));
 
     }
+
+    @GetMapping("/userinfo/{token}")
+    public ResponseEntity<Response> getUserInformation(@RequestHeader String token) {
+        String result = service.getUserInfo(token);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("get userinfo", 200, result));
+    }
+
+
+
+
+
 
 
   //  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MX0.0rHyLThGA_06cwyfLSZpIGV90ZVbNKiejUB671MRnetaeFeOpivTFe9yOrQBC_3QtNWHHjEAnasHi-ADPnR7OQ

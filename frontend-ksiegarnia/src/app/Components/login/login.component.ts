@@ -12,6 +12,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class LoginComponent implements OnInit {
   public error = null;
   public hide = true;
+  userinfo: any;
+  roletoken: any;
   public credentials = {
     email: null,
     password: null,
@@ -25,6 +27,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.roletoken = localStorage.getItem('token');
   }
 
   handleError(error: { error: any; }) {
@@ -47,25 +50,41 @@ export class LoginComponent implements OnInit {
 
   handleResponse(data) {
     this.token.handle(data);
-    console.log(data);
     this.token.signedIn();
     this.matSnackBar.open('Zalogowano pomyślnie!', 'ok', {
+      
       duration: 5000
     });
-    if (this.credentials.role === 'admin') {
-      localStorage.setItem('role', 'admin');
-      this.route.navigateByUrl('home');
-      return;
+    
+    
+    this.user.getUserInfo(this.roletoken).subscribe( response => {
+      this.userinfo = response.obj;
+      console.log('UserRole: ', response.obj);
+      this.credentials.role = response.obj;
+      console.log(this.credentials.role);
+      if (this.credentials.role === 'admin') {
+        localStorage.setItem('role', 'admin');
+        this.route.navigateByUrl('home');
+        return;
+      }
+      if (this.credentials.role === 'seller') {
+        localStorage.setItem('role', 'seller');
+        this.route.navigateByUrl('home');
+        return;
+      }
+      if (this.credentials.role === 'user') {
+        console.log(this.credentials.role)
+        localStorage.setItem('role', 'user');
+        this.route.navigateByUrl('home');
+        return;
+      }
+      
     }
-    if (this.credentials.role === 'seller') {
-      localStorage.setItem('role', 'seller');
-      this.route.navigateByUrl('home');
-      return;
-    }
-    if (this.credentials.role === 'user') {
-      localStorage.setItem('role', 'user');
-      this.route.navigateByUrl('home');
-      return;
-    }
+    
+    
+  );
+  
+  
+    
   }
 }

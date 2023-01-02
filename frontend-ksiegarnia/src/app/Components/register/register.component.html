@@ -1,5 +1,5 @@
 <div class="registerdiv">
-    <mat-card fxFlex="25">
+    <mat-card fxFlex="40">
       <mat-toolbar style="background-color: #403f3f; color: white;">Zarejestruj się!</mat-toolbar>
       <form #regForm=ngForm style="padding: 10px" fxLayoutAlign="stretch" fxLayout="column" (ngSubmit)="onSubmit()">
 <!--angularowa validacja-->
@@ -45,7 +45,7 @@
 
         <div class="example-container">
 
-            <mat-form-field appearance="outline" style="width: 220px;">
+            <mat-form-field appearance="outline" style="width: 200px;">
               <mat-label>Hasło</mat-label>
                   <input #password="ngModel" required matInput #confirmpassword="ngModel" [type]="hide ? 'password' : 'text'" minlength="5" id="password" name="password" [(ngModel)]="userr.password" pattern="^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$">
                 <mat-error>Proszę podać hasło</mat-error>
@@ -54,7 +54,7 @@
               </button>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" style="width: 220px; padding-left: 6px;">
+            <mat-form-field appearance="outline" style="width: 200px; padding-left: 5px;">
               <mat-label>Potwierdź Hasło</mat-label>
                   <input #password="ngModel" name="confirmPassword" matInput pattern="{{password.value}}" type="password" id="confirmPassword" [(ngModel)]="userr.confirmPassword">
               <mat-error>Hasła muszą być takie same</mat-error>
@@ -70,12 +70,20 @@
           <mat-icon style="color: #e1e4e4;" matSuffix>phone</mat-icon>
         </mat-form-field>
 
-        <h4 style="width: 35%; margin: auto">Zarejestruj jako:</h4>
+        <!-- <h4 style="width: 35%; margin: auto">Zarejestruj jako:</h4> -->
 
-        <mat-radio-group [(ngModel)]="userr.role" name="role" style="height: 25%; margin: auto">
+        <!-- <mat-radio-group [(ngModel)]="userr.role" name="role" style="height: 25%; margin: auto">
           <mat-radio-button value="user" required="required"> Nabywca </mat-radio-button> &nbsp;
           <mat-radio-button value="seller" required="required"> Sprzedawca </mat-radio-button> &nbsp;
-        </mat-radio-group>
+        </mat-radio-group> -->
+
+        <mat-form-field appearance="fill">
+          <mat-label>Zarejestruj jako:</mat-label>
+          <select matNativeControl required aria-label="Select an option" [(ngModel)]="userr.role" name="role" style="height: 25%; margin: auto">
+            <option value="user" required="true">Użytkownik</option>
+            <option value="seller" required="true">Sprzedawca</option>
+          </select>
+        </mat-form-field>
 
         <button [disabled]="!userr.role || !regForm.valid" id="registrationBtn" mat-raised-button type="submit" style="width: 35%; margin: auto;">Zarejestruj</button>
 

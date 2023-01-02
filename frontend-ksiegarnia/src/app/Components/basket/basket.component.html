@@ -1,6 +1,8 @@
 <app-main-panel></app-main-panel>
 <div class="main-container">
   <div class="row">
+    <div class="alert alert-danger text-justify" *ngIf="length==0">Brak książek w koszyku.</div>
+    <div *ngIf="length!=0">
     <div class="column1" *ngIf="!change">
       <mat-label class="matlabel">
         Koszyk({{length}} art.)
@@ -18,7 +20,7 @@
           <div class="cena">Cena za szt.: {{books.booksList[0].cost}}</div>
 
         </div>
-</div>
+    </div>
         <div>
           <div style="display: flex; flex-direction: row;margin-bottom: 10px; ">
             <div style="height: 20px; width: 20px;">
@@ -156,6 +158,7 @@
       <hr>
         <button class="button" (click)="goback3()">Cofnij</button>
       </div>
+  </div>
   </div>
   </div>
   <router-outlet></router-outlet>

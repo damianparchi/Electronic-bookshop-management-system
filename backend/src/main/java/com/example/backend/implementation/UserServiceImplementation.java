@@ -25,12 +25,15 @@ public class UserServiceImplementation implements UserServices {
 
     @Autowired
     private IUserRepository iUserRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
     private BCryptPasswordEncoder encoder;
     @Autowired
-    private JwtGenerator generate;
+    private JwtGenerator generator;
 
     @Override
     public List<User> getUser() {
@@ -50,7 +53,7 @@ public class UserServiceImplementation implements UserServices {
             users.setPassword(ppassword);
             users.setVerified(false);
             users = iUserRepository.save(users);
-            System.out.println("wygenerowany token:" + generate.jwtToken(users.getUserId()));
+            System.out.println("wygenerowany token:" + generator.jwtToken(users.getUserId()));
             return true;
         } else {
             throw new UserException("Uzytkownik o takim emailu juz istnieje");
@@ -63,17 +66,19 @@ public class UserServiceImplementation implements UserServices {
         if(users!=null) {
             String userRole = information.getRole();
             String fetchRole = users.getRole();
-            if(fetchRole.equals(userRole)) {
+            String fetchEmail = users.getEmail();
+            String userEmail = information.getEmail();
+            if(fetchEmail.equals(userEmail) && users.getRole().equals("user")) {
                 User userInfo = verifyPassword(users, information);
-                log.info("zalogowano jako: "+ userRole);
+                log.info("zalogowano jako: "+ users.getRole());
                 return userInfo;
-            } else if (fetchRole.equals(userRole)) {
+            } else if (fetchEmail.equals(userEmail) && users.getRole().equals("seller")) {
                 User userinfo = verifyPassword(users, information);
-                log.info("zalogowano jako: "+ userRole);
+                log.info("zalogowano jako: "+ users.getRole());
                 return userinfo;
-            } else if (fetchRole.equals(userRole)) {
+            } else if (fetchEmail.equals(userEmail) && users.getRole().equals("admin")) {
                 User userInfo = verifyPassword(users, information);
-                log.info("zalogowano jako: " +userRole);
+                log.info("zalogowano jako: " +users.getRole());
                 return userInfo;
 
             } else {
@@ -88,7 +93,7 @@ public class UserServiceImplementation implements UserServices {
     public User verifyPassword(User users, LoginInfo info) {
         if((users.isVerified() == true)) {
             if(encoder.matches(info.getPassword(), users.getPassword())) {
-                System.out.println("token: " + generate.jwtToken(users.getUserId()));
+                System.out.println("token: " + generator.jwtToken(users.getUserId()));
                 return users;
             } else {
                 throw new UserException("Złe hasło!");
@@ -97,5 +102,16 @@ public class UserServiceImplementation implements UserServices {
             System.out.println("weryfikacja");
             throw new UserException("Weryfikuj email id");
         }
+    }
+
+    @Transactional
+    @Override
+    public String getUserInfo(String token) {
+        long id = generator.parseJWT(token);
+        User userinfo = userRepository.findById(id)
+                .orElseThrow(null);
+
+        return userinfo.getRole();
+
     }
 }

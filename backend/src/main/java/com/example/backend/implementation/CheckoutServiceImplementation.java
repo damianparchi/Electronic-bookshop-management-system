@@ -119,5 +119,12 @@ public class CheckoutServiceImplementation implements CheckoutService {
 
     }
 
+    @Transactional
+    @Override
+    public int updateCheckoutStatus(String status, long checkoutId) {
+        int changedCheckoutStatus = checkoutRepository.CheckoutStatusDefault(status,checkoutId);
+        return changedCheckoutStatus;
+    }
+
 
 }

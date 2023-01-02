@@ -15,9 +15,14 @@ export class UserServiceService {
     return this.httpClient.post(`${this.baseUrl}/register`, data);
   }
 
+  public getUserInfo(token: string): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}/userinfo/${token}`, {headers: new HttpHeaders({token: localStorage?.['token']})});
+  }
+
   public logIn(data: any) {
     console.log(data);
     return this.httpClient.post(`${this.baseUrl}/user/login`, data);
+    
   }
 
   public addUserData(userData: any) {

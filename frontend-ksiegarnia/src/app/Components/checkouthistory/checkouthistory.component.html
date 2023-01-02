@@ -5,7 +5,7 @@
 
     </div>
     <br>
-    <div class="alert alert-danger text-justify" *ngIf="orderList.length==0">Brak książek do wyświetlenia. Dodaj książkę i zatwierdź ją żeby wyświetlić</div>
+    <div class="alert alert-danger text-justify" *ngIf="orderList.length==0">Brak książek w historii zamówień.</div>
     <div class="list-books">
       <div *ngFor="let book of orderList">
         <div *ngIf="isUser">

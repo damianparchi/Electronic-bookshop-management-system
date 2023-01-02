@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {BasketService} from "../../Services/basket/basket.service";
 import {BookService} from "../../Services/book/book.service";
+import { MatDialog } from '@angular/material/dialog';
+import { BookaddComponent } from '../bookadd/bookadd.component';
 
 @Component({
   selector: 'app-main-panel',
@@ -30,6 +32,7 @@ export class MainPanelComponent implements OnInit {
   }
 
   constructor(private token: TokenService,
+              private dialog: MatDialog,
               private route: Router,
               private matsnackbar: MatSnackBar,
               private basketService: BasketService,
@@ -66,12 +69,22 @@ getCartItemCount() {
     });
 }
 
+addBook() {
+  const dialogRef = this.dialog.open(BookaddComponent, {
+    width: '25rem',
+    panelClass: 'custom-dialog-container',
+  });
+  dialogRef.afterClosed().subscribe((resp) => {
+    console.log('zamknij');
+  });
+}
+
   logout(event: MouseEvent) {
     console.log('wylogowanie');
     event.preventDefault();
     this.token.remove();
     this.token.signedIn();
-    this.route.navigateByUrl('/home/login');
+    this.route.navigateByUrl('/login');
     this.matsnackbar.open('Wylogowano pomyślnie!', 'ok', {
       duration: 5000
     });

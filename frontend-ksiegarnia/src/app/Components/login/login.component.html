@@ -1,7 +1,7 @@
 <div class="logindiv">
   <mat-card fxFlex="25">
     <mat-toolbar style="background-color: #403f3f; color: white;">Zaloguj się!</mat-toolbar>
-    <form fxLayoutAlign="stretch" fxLayout="column" class="loginform" (ngSubmit)="onSubmit()">
+    <form #logForm=ngForm fxLayoutAlign="stretch" fxLayout="column" class="loginform" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" fxLayout="column" style="width: 100%;">
         <mat-label>Podaj swój email</mat-label>
         <input id="email" email required matInput #emailId="ngModel" type="email" placeholder="Email" [(ngModel)]="credentials.email" name="email">
@@ -16,14 +16,22 @@
         </button>
       </mat-form-field>
 
-      <h2>Zaloguj jako:</h2>
-      <mat-radio-group aria-label="Select an option" [(ngModel)]="credentials.role" name="role">
-        <mat-radio-button id="userRadioBtn" value="user" required="required"> User </mat-radio-button> &nbsp;
-        <mat-radio-button id="sellerRadioBtn" value="seller" required="required">Seller </mat-radio-button> &nbsp;
+      <!-- <h2>Zaloguj jako:</h2>
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz role:</mat-label>
+        <select matNativeControl required aria-label="Select an option" [(ngModel)]="credentials.role" name="role">
+          <option value="user">Użytkownik</option>
+          <option value="seller">Sprzedawca</option>
+          <option value="admin">Admin</option>
+        </select>
+      </mat-form-field> -->
+      <!-- <mat-radio-group aria-label="Select an option" [(ngModel)]="credentials.role" name="role">
+        <mat-radio-button id="userRadioBtn" value="user" required="required"> Użytkownik </mat-radio-button> &nbsp;
+        <mat-radio-button id="sellerRadioBtn" value="seller" required="required"> Sprzedawca </mat-radio-button> &nbsp;
         <mat-radio-button id="adminRadioBtn" value="admin" required="required"> Admin </mat-radio-button>
-      </mat-radio-group>
+      </mat-radio-group> -->
 
-    <button mat-raised-button type="submit">Zaloguj</button>
+      <button [disabled]="!logForm.valid" id="loginBtn" mat-raised-button type="submit" style="width: 35%; margin: auto;">Zaloguj</button>
     </form>
     Nie masz konta?
     <a [routerLink]="['/register']">Zarejestruj się!</a>

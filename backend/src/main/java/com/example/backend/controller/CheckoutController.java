@@ -33,4 +33,14 @@ public class CheckoutController {
         return ResponseEntity.status(HttpStatus.OK).body(new Response("checkout lists: ",200,orderinfo));
 
     }
+
+    @ApiOperation(value = "Change Order Status by admin ")
+    @PutMapping(value = "bookstore/orderStatusByAdmin")
+    public ResponseEntity<Response> updateCheckoutStatus(@RequestParam String status,@RequestParam long checkoutId,@RequestHeader("token") String token) throws Exception {
+
+        int orderStatusResult = checkoutService.updateCheckoutStatus(status,checkoutId);
+        System.out.println("orderStatusResult :"+orderStatusResult);
+        return ResponseEntity.status(HttpStatus.OK).body(new Response(checkoutId+" order status updated ",200,orderStatusResult));
+
+    }
 }

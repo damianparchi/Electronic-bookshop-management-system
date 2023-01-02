@@ -49,7 +49,7 @@ public class BookServiceImplementation implements IBookService {
         {
             String userRole = userInfo.getRole();
             System.out.println("Aktualna rola: " + userRole);
-            if (userRole.equals("seller") )
+            if (userRole.equals("seller") || (userRole.equals("admin")))
             {
                 Book book=bookImplementation.fetchbyBookName(information.getBookName());
                 System.out.println("Książka: "+information.getBookName());
