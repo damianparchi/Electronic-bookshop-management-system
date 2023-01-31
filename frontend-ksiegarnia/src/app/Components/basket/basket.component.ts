@@ -30,13 +30,17 @@ export class BasketComponent implements OnInit {
   value: any = [];
   @Output() output: EventEmitter<any> = new EventEmitter();
   daneUzytkownika: Dane = new Dane();
-  imie = new FormControl('', [Validators.required]);
-  nazwisko = new FormControl('', [Validators.required]);
-  numerTel = new FormControl('', [Validators.required, Validators.pattern('[0-9]{9,9}')]);
-  Miasto = new FormControl('', [Validators.required]);
-  Ulica = new FormControl('', [Validators.required]);
-  nrMieszkaniaDomu = new FormControl('', [Validators.required]);
-  kodPocztowy = new FormControl('', [Validators.required]);
+  name = new FormControl('', [Validators.required]);
+  surname = new FormControl('', [Validators.required]);
+  mobilePhone = new FormControl('', [Validators.required, Validators.pattern('[0-9]{9,9}')]);
+  city = new FormControl('', [Validators.required]);
+  street = new FormControl('', [Validators.required]);
+  houseApartmentNr = new FormControl('', [Validators.required]);
+  postcode = new FormControl('', [Validators.required]);
+  province = new FormControl('', [Validators.required]);
+  cardNumber = new FormControl('', [Validators.required, Validators.minLength(12), Validators.maxLength(16), Validators.pattern('[0-9]*')]);
+  expirationDate = new FormControl('', [Validators.required, Validators.pattern('[0-9]{2}/[0-9]{2}')]);
+  cvvnumber = new FormControl('', [Validators.required, Validators.pattern('^[0-9]{3}'), Validators.maxLength(3), Validators.minLength(3)]);
 
   userdataId: any;
   key: any;
@@ -47,16 +51,18 @@ export class BasketComponent implements OnInit {
   };
 
 
+
+
   ngOnInit() {
-    this.daneUzytkownika.imie = (localStorage.getItem('Name'));
+    // this.daneUzytkownika.imie = (localStorage.getItem('Name'));
     this.userdataId = null;
     this.putUserDataInsideForms(this.daneUzytkownika);
     this.getUserData();
 
-
     this.getBooksFromBasket();
     this.getBasketItems();
   }
+
 
   getBasketItems() {
     this.basketService.getBasketItemsCount().subscribe((response: any) => {
@@ -148,13 +154,17 @@ export class BasketComponent implements OnInit {
   }
 
   putUserDataInsideForms(userData: Dane) {
-    this.imie.setValue(userData.imie);
-    this.nazwisko.setValue(userData.nazwisko);
-    this.numerTel.setValue(userData.nrTel);
-    this.Miasto.setValue(userData.miasto);
-    this.Ulica.setValue(userData.ulica);
-    this.nrMieszkaniaDomu.setValue(userData.nrMieszkaniaDomu);
-    this.kodPocztowy.setValue(userData.kodPocztowy);
+    this.name.setValue(userData.name);
+    this.surname.setValue(userData.surname);
+    this.mobilePhone.setValue(userData.mobilePhone);
+    this.city.setValue(userData.city);
+    this.street.setValue(userData.street);
+    this.houseApartmentNr.setValue(userData.houseApartmentNr);
+    this.postcode.setValue(userData.postcode);
+    this.province.setValue(userData.province);
+    this.cardNumber.setValue(userData.cardNumber);
+    this.expirationDate.setValue(userData.expirationDate);
+    this.cvvnumber.setValue(userData.cvvnumber);
   }
 
   change = false;
@@ -213,13 +223,17 @@ export class BasketComponent implements OnInit {
   }
 
   saveData(){
-    this.daneUzytkownika.imie = this.imie.value;
-    this.daneUzytkownika.nazwisko = this.nazwisko.value;
-    this.daneUzytkownika.nrTel = this.numerTel.value;
-    this.daneUzytkownika.miasto = this.Miasto.value;
-    this.daneUzytkownika.ulica = this.Ulica.value;
-    this.daneUzytkownika.nrMieszkaniaDomu = this.nrMieszkaniaDomu.value;
-    this.daneUzytkownika.kodPocztowy = this.kodPocztowy.value;
+    this.daneUzytkownika.name = this.name.value;
+    this.daneUzytkownika.surname = this.surname.value;
+    this.daneUzytkownika.mobilePhone = this.mobilePhone.value;
+    this.daneUzytkownika.city = this.city.value;
+    this.daneUzytkownika.street = this.street.value;
+    this.daneUzytkownika.houseApartmentNr = this.houseApartmentNr.value;
+    this.daneUzytkownika.postcode = this.postcode.value;
+    this.daneUzytkownika.province = this.province.value;
+    this.daneUzytkownika.cardNumber = this.cardNumber.value;
+    this.daneUzytkownika.expirationDate = this.expirationDate.value;
+    this.daneUzytkownika.cvvnumber = this.cvvnumber.value;
 
     if (this.userdataId === null || this.userdataId === undefined) {
       console.log('info ustawione' + this.daneUzytkownika);

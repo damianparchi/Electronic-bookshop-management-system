@@ -78,7 +78,7 @@ public class BasketServiceImplementation implements BasketService {
                 }
                 Optional<Book> bookInBasket = books.stream().filter(t -> t.getBookId() == bookId).findFirst();
                 if (bookInBasket.isPresent()) {
-                    throw null;
+                    throw new UserException("Książka już jest w koszyku!");
                 } else {
                     User userDesc = this.booksInBasket(book, user);
                     return userRepository.save(userDesc).getBooksInBasket();
