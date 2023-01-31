@@ -45,16 +45,35 @@ public class UserDataServiceImplementation implements UserDataService {
         User user = userRepository.findById(id).orElseThrow(null);
         UserData addUserData= userDataRepository.findById(userData.getUserdataId()).get();
         addUserData.setUserdataId((userData.getUserdataId()));
-        addUserData.setImie(userData.getImie());
-        addUserData.setNazwisko(userData.getNazwisko());
-        addUserData.setNrTel(userData.getNrTel());
-        addUserData.setMiasto(userData.getMiasto());
-        addUserData.setUlica(userData.getUlica());
-        addUserData.setNrMieszkaniaDomu(userData.getNrMieszkaniaDomu());
-        addUserData.setKodPocztowy(userData.getKodPocztowy());
+        addUserData.setName(userData.getName());
+        addUserData.setSurname(userData.getSurname());
+        addUserData.setMobilePhone(userData.getMobilePhone());
+        addUserData.setCity(userData.getCity());
+        addUserData.setStreet(userData.getStreet());
+        addUserData.setHouseApartmentNr(userData.getHouseApartmentNr());
+        addUserData.setProvince(userData.getProvince());
+        addUserData.setPostcode(userData.getPostcode());
+        addUserData.setCardNumber(userData.getCardNumber());
+        addUserData.setExpirationDate(userData.getExpirationDate());
+        addUserData.setCvvnumber(userData.getCvvnumber());
         userDataRepository.save(addUserData);
         user.getUserData().add(addUserData);
         return addUserData;
+    }
+
+    @Override
+    public UserData getUserInfo(Long userdataId) {
+        UserData userData = userDataRepository.getbyId(userdataId);
+        if (userData != null) {
+            return userData;
+        }
+        return null;
+    }
+
+    @Override
+    public List<UserData> getUsersData() {
+        List<UserData> alluserinfo = userDataRepository.getUsersData();
+        return alluserinfo;
     }
 
     @Override
@@ -71,5 +90,6 @@ public class UserDataServiceImplementation implements UserDataService {
         }
         return null;
     }
+
 
 }

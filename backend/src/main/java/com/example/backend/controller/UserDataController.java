@@ -2,10 +2,14 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.UpdateUserDataDTO;
 import com.example.backend.dto.UserDataDTO;
+import com.example.backend.entity.Book;
 import com.example.backend.entity.User;
 import com.example.backend.entity.UserData;
+import com.example.backend.response.BookResponse;
+import com.example.backend.response.UserDataResponse;
 import com.example.backend.service.UserDataService;
 import com.example.backend.response.Response;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +36,17 @@ public class UserDataController {
     @GetMapping("/userdata/info")
     public ResponseEntity<Response> getUserDataByUserId(@RequestHeader String token) {
         List<UserData> result = userDataService.getUserDataByUserId(token);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("get userinfo", 200, result));
+        if(result != null) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("get userinfo", 200, result));
+
+        }
+        return null;
+    }
+
+    @GetMapping("/usersdata/info")
+    public ResponseEntity<Response> getAllUsersData() {
+        List<UserData> result = userDataService.getUsersData();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("get usersinfo", 200, result));
     }
 
     @PutMapping("/userdata/update")
@@ -40,4 +54,13 @@ public class UserDataController {
         UserData userDataS = userDataService.updateUserData(userData, token);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("edycja powiodła się", 200, userDataS));
     }
+
+    @GetMapping("/userdatainfo/{userdataId}")
+    public ResponseEntity<UserDataResponse> getUserDataInformation(@PathVariable("userdataId") Long userdataId) {
+        UserData info = userDataService.getUserInfo(userdataId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new UserDataResponse("userdataId getting", info));
+    }
+
+
+
 }

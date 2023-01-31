@@ -4,11 +4,15 @@ import lombok.Data;
 
 @Data
 public class UserDataDTO {
-    private String imie;
-    private String nazwisko;
-    private String nrTel;
-    private String Miasto;
-    private String Ulica;
-    private String nrMieszkaniaDomu;
-    private String kodPocztowy;
+    private String name;
+    private String surname;
+    private String mobilePhone;
+    private String city;
+    private String street;
+    private String houseApartmentNr;
+    private String postcode;
+    private String province;
+    private String cardNumber;
+    private String expirationDate;
+    private String cvvnumber;
 }

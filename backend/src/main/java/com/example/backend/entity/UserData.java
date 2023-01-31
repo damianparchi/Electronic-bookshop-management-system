@@ -12,23 +12,31 @@ public class UserData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userdataId;
-
-    private String imie;
-    private String nazwisko;
-    private String nrTel;
-    private String Miasto;
-    private String Ulica;
-    private String nrMieszkaniaDomu;
-    private String kodPocztowy;
+    private String name;
+    private String surname;
+    private String mobilePhone;
+    private String City;
+    private String Street;
+    private String houseApartmentNr;
+    private String postcode;
+    private String province;
+    private String cardNumber;
+    private String expirationDate;
+    private String cvvnumber;
 
     public UserData(UserDataDTO userDataDTO) {
-        this.imie = userDataDTO.getImie();
-        this.nazwisko = userDataDTO.getNazwisko();
-        this.nrTel = userDataDTO.getNrTel();
-        this.Miasto = userDataDTO.getMiasto();
-        this.Ulica = userDataDTO.getUlica();
-        this.nrMieszkaniaDomu = userDataDTO.getNrMieszkaniaDomu();
-        this.kodPocztowy = userDataDTO.getKodPocztowy();
+        this.name = userDataDTO.getName();
+        this.surname = userDataDTO.getSurname();
+        this.mobilePhone = userDataDTO.getMobilePhone();
+        this.City = userDataDTO.getCity();
+        this.Street = userDataDTO.getStreet();
+        this.houseApartmentNr = userDataDTO.getHouseApartmentNr();
+        this.postcode = userDataDTO.getPostcode();
+        this.province = userDataDTO.getProvince();
+        this.cardNumber = userDataDTO.getCardNumber();
+        this.expirationDate = userDataDTO.getExpirationDate();
+        this.cvvnumber = userDataDTO.getCvvnumber();
+
 
     }
 

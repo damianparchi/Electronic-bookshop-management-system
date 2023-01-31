@@ -2,10 +2,8 @@ package com.example.backend.service;
 
 import com.example.backend.dto.UpdateUserDataDTO;
 import com.example.backend.dto.UserDataDTO;
-import com.example.backend.entity.User;
 import com.example.backend.entity.UserData;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,5 +16,8 @@ public interface UserDataService {
 
     UserData updateUserData(UpdateUserDataDTO userData, String token);
 
+    UserData getUserInfo(Long userdataId);
 
+
+    List<UserData> getUsersData();
 }
