@@ -1,11 +1,12 @@
-<mat-toolbar *ngIf="!isUser && !isSeller && !isAdmin" style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
+<mat-toolbar *ngIf="!isUser && !isSeller && !isAdmin" style="width: 100%; background-color: #403f3f; color: #fff;" class="mat-elevation-z5">
   <a mat-button routerLink="/home"><mat-icon class="logo">menu_book</mat-icon>Księgarnia</a>
 
-  <h1>Witaj</h1>
+  <h1 style="margin-left: 20px;">Strona główna</h1>
+  <input style="margin: 0 0 0 25%; text-align: center" type="text" placeholder="Wyszukaj książkę..." [(ngModel)]="bookName" (input)="bookSearch()"/>
     <div class="breaker"></div>
-    <a mat-button routerLink="wishlist">Lista życzeń</a>
-    <a mat-button routerLink="home">Home</a>
-    <button mat-raised-button color="dark" routerLink="/login">Zaloguj się!</button>
+    <button mat-raised-button color="dark" routerLink="/aboutus" >O nas</button>
+    <button mat-raised-button color="dark" routerLink="/login" style="margin-left: 10px;">Zaloguj się!</button>
+    <button mat-raised-button color="dark" routerLink="/register" style="margin: 10px">Zarejestruj się!</button>
 </mat-toolbar>
 
 
@@ -16,9 +17,15 @@
   <input style="margin: 0 0 0 25%; text-align: center" type="text" placeholder="Wyszukaj książkę..." [(ngModel)]="bookName" (input)="bookSearch()"/>
       <div class="breaker"></div>
 
+      <a mat-button routerLink="/aboutus">O nas<mat-icon>book</mat-icon></a>
       <a mat-button routerLink="/basket">Zamówienia<mat-icon matBadge="{{ length }}" matBadgeSize="small">shopping_cart</mat-icon></a>
-      <a mat-button routerLink="/history">Historia zamówień<mat-icon matBadge="{{ length }}" matBadgeSize="small">shopping_cart</mat-icon></a>
-        <button mat-raised-button color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się!</button>
+      <a mat-button routerLink="/history">Historia zamówień<mat-icon matBadgeSize="small">menu_book</mat-icon></a>
+<!--      <button mat-raised-button color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się!</button>-->
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+      <mat-menu #menu="matMenu" >
+        <button mat-menu-item color="dark" routerLink="/update-password">Zmień hasło</button>
+        <button mat-menu-item color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się</button>
+      </mat-menu>
 </mat-toolbar>
 
 
@@ -28,10 +35,15 @@
   <div style="margin-left: 150px">Witaj {{username}}!</div>
 <!--  <input style="margin: 0 0 0 25%; text-align: center" type="text" placeholder="Wyszukaj książkę..." [(ngModel)]="bookName" (input)="bookSearch()"/>-->
   <div class="breaker"></div>
-
-  <a mat-button routerLink="/checkouts">Moja Sprzedaż<mat-icon matBadgeSize="small">shopping_cart</mat-icon></a>
+  <a mat-button routerLink="/home">Wystawione książki<mat-icon matBadgeSize="small">menu_book</mat-icon></a>
+  <a mat-button routerLink="/checkouts">Zakupione książki<mat-icon matBadgeSize="small">shopping_cart</mat-icon></a>
   <a mat-button (click)="addBook()" >Sprzedaj Książkę<mat-icon matBadgeSize="small">book</mat-icon></a>
-  <button mat-raised-button color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się!</button>
+<!--  <button mat-raised-button color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się!</button>-->
+  <button mat-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item color="dark" routerLink="/update-password">Zmień hasło</button>
+    <button mat-menu-item color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się</button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-toolbar *ngIf="isAdmin" style="width: 100%; background-color: #403f3f; color: #fff;;" class="mat-elevation-z5">
@@ -40,8 +52,13 @@
   <div style="margin-left: 150px">Witaj {{username}}!</div>
 <!--  <input style="margin: 0 0 0 25%; text-align: center" type="text" placeholder="Wyszukaj książkę..." [(ngModel)]="bookName" (input)="bookSearch()"/>-->
   <div class="breaker"></div>
-
-  <a mat-button routerLink="/checkouts">Książki sprzedane<mat-icon matBadgeSize="small">shopping_cart</mat-icon></a>
+  <a mat-button routerLink="/home">Wystawione na sprzedaż<mat-icon matBadgeSize="small">shopping_cart</mat-icon></a>
+  <a mat-button routerLink="/checkouts">Złożone zamówienia<mat-icon matBadgeSize="small">shopping_cart</mat-icon></a>
   <a mat-button (click)="addBook()" >Sprzedaj Książkę<mat-icon matBadgeSize="small">book</mat-icon></a>
-  <button mat-raised-button color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się!</button>
+
+  <button mat-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item color="dark" routerLink="/update-password">Zmień hasło</button>
+    <button mat-menu-item color="dark" (click)="logout($event)" routerLink="/login">Wyloguj się</button>
+  </mat-menu>
 </mat-toolbar>

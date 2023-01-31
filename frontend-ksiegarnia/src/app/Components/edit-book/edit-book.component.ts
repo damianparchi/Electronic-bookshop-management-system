@@ -1,9 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {Book} from "../../Model/book.model";
 import {BookService} from "../../Services/book/book.service";
 import {ActivatedRoute} from "@angular/router";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-edit-book',
@@ -13,13 +14,14 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 export class EditBookComponent implements OnInit {
   bookName = new FormControl(this.editBook.bookName, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]);
   author = new FormControl(this.editBook.author, [Validators.required, Validators.pattern("[a-zA-Z ]*"), Validators.minLength(5), Validators.maxLength(25)]);
-  cost = new FormControl(this.editBook.cost, [Validators.required, Validators.pattern("[0-9 ]*"), Validators.minLength(1)]);
+  cost = new FormControl(this.editBook.cost, [Validators.required, Validators.pattern("^[0-9].*$"), Validators.minLength(1)]);
   quantityOfBooks = new FormControl(this.editBook.quantityOfBooks, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(1)]);
-  bookDesc = new FormControl(this.editBook.bookDesc, [Validators.required,  Validators.pattern("[a-zA-Z ]*"), Validators.minLength(10), Validators.maxLength(100)]);
+  bookDesc = new FormControl(this.editBook.bookDesc, [Validators.minLength(10), Validators.maxLength(255), Validators.required]);
 
   updatebook: Book = new Book();
+  private imageFile: string;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public editBook: any, private bookService: BookService, private activeRoute: ActivatedRoute, private dialogRef: MatDialogRef<EditBookComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public editBook: any, private bookService: BookService, private dialogRef: MatDialogRef<EditBookComponent>, private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -32,23 +34,33 @@ export class EditBookComponent implements OnInit {
     this.updatebook.quantityOfBooks = this.editBook.quantityOfBooks;
     this.updatebook.bookDesc = this.editBook.bookDesc;
 
+
     setTimeout(() => {
       this.bookService.updateBook(this.editBook.bookId, this.updatebook).subscribe(
         (response: any) => {
           if (response.statusCode === 200) {
             this.dialogRef.close({ data: this.updatebook });
-            console.log("Edytowano pomyślnie!")
+            // setTimeout(function(){
+            //   window.location.reload();
+            // }, 500);
+            this.matSnackBar.open("Ksiazka edytowana pomyślnie!", 'ok', {duration: 10000});
+
+
           } else {
-            this.dialogRef.close();
-            console.log('Nie udało się edytować')
+            // this.matSnackBar.open("Nie udało się edytować książki!", 'ok', {duration: 4000});
+            // this.dialogRef.close(1);
+            // setTimeout(function(){
+            //   window.location.reload();
+            // }, 1000);
           }
         },
         (error: any) => {
-          this.dialogRef.close();
+          // this.dialogRef.close();
+
           console.log('coś nie tak')
         }
       );
-    }, 3000);
+    });
   }
 
   bookNameVal() {
@@ -75,7 +87,14 @@ export class EditBookComponent implements OnInit {
   bookDescVal() {
     return this.bookDesc.hasError("required") ? "Krótki opis książki jest wymagany! " :
       this.bookDesc.hasError("minlength") ? "Opis wymaga minimum 10 znaków!" :
-        this.bookDesc.hasError("maxlength") ? "Opis to maksimum 100 znaków!" : "";
+        this.bookDesc.hasError("maxlength") ? "Opis to maksimum 255 znaków!" : "";
+  }
+
+  PictureOn(event) {
+    if (event.target.files.length > 0) {
+      const image = event.target.files[0];
+      this.imageFile = image.name;
+    }
   }
 
 }

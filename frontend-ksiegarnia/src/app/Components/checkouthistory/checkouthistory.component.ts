@@ -3,6 +3,8 @@ import {BookService} from "../../Services/book/book.service";
 import {AdminServiceService} from "../../Services/admin/admin-service.service";
 import {UserServiceService} from "../../Services/user/user-service.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-checkouthistory',
@@ -11,7 +13,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class CheckouthistoryComponent implements OnInit {
 
-  constructor(private bookService: BookService, private userService: UserServiceService, private adminService: AdminServiceService, private matSnackBar: MatSnackBar) { }
+  constructor(private bookService: BookService, private userService: UserServiceService, private adminService: AdminServiceService, private matSnackBar: MatSnackBar, private dialog: MatDialog) { }
 
   orderList = Array<any>();
 
@@ -64,10 +66,11 @@ export class CheckouthistoryComponent implements OnInit {
       console.log('All orderbooks for order status= :  ', this.orderedBooks);
       console.log("no of orders "+response.obj.length);
 
+
       for (let i = 0; i < response.obj.length; i++) {
         console.log("Block statement execution no." + i);
         console.log("orderId : " + response.obj[i].checkoutId);
-        console.log("orderStatus : " + response.obj[i].checkoutStatus);
+        console.log("orderStatus : " + response.obj[i].checkoutStatuss);
         console.log("bookName : " + response.obj[i].booksList[0].bookName);
         console.log("bookDetails : " + response.obj[i].booksList[0].bookDesc);
         console.log("authorName : " + response.obj[i].booksList[0].author);
@@ -139,5 +142,36 @@ export class CheckouthistoryComponent implements OnInit {
       //   }
       // );
     }
+
+  deleteFromHistory(checkoutId:any) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,{
+      data:{
+        message: 'Jesteś pewien, że chcesz usunąć?',
+        buttonText: {
+          ok: 'Tak',
+          cancel: 'Nie'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.adminService.deleteCheckoutFromHistory(checkoutId).subscribe((message) => {
+          if (message.statusCode === 202) {
+            console.log("usunięto")
+            this.matSnackBar.open('Usunięto zamówienie z historii zamówień!', 'ok', {
+              duration: 5000
+
+            });
+            setTimeout(function(){
+              window.location.reload();
+            }, 1500);
+          } else {
+            console.log("error")
+          }
+        });
+      }
+    });
+  }
 
 }

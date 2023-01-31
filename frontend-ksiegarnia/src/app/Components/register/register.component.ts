@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     email: null,
     password: null,
     confirmPassword: null,
-    phoneNumber: null,
+    // phoneNumber: null,
     role: null,
   };
 
@@ -49,8 +49,10 @@ export class RegisterComponent implements OnInit {
     //przejdz na localhost/login
     this.route.navigateByUrl('/login');
     //message
-    this.matSnakeBar.open('Zarejestrowano pomyślnie! Możesz się zalogować!', 'ok', {
-      duration: 5000
+    this.matSnakeBar.open('Zarejestrowano pomyślnie! Potwierdź swoje konto klikając w link wysłany na podany adres e-mail.', 'ok', {
+      duration: 5000,
+      verticalPosition: 'top'
+
     });
 
   }

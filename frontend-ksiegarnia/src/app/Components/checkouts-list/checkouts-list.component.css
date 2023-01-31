@@ -1,6 +1,6 @@
 .cartdetails {
   display: inline-block;
-  margin-left: 5%;
+  margin-left: auto;
   position: static;
   padding-top: 30px;
 }
@@ -51,30 +51,17 @@ mat-card:hover {
 }
 
 .matcard2 {
-  margin: auto;
-  display: flex;
+
+
   flex-direction: column;
-  width: 50%;
+  width: 80%;
+
   border: 4px solid #b9b6b6;
   border-radius: 5px;
-}
-
-.confirmbutton {
-  font-size: 19px;
-  text-align: center;
-  color: white;
-  background-color: #20cb0b;
-  margin-top: 32px;
-  margin-left: 10px;
-}
-
-.deniedbutton {
-  font-size: 19px;
-  text-align: center;
-  color: white;
-  background-color: #ec1212;
-  margin-top: 32px;
-  margin-left: 10px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
 }
 
 .bookCover {

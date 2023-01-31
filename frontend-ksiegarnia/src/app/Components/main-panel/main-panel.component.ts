@@ -86,7 +86,8 @@ addBook() {
     this.token.signedIn();
     this.route.navigateByUrl('/login');
     this.matsnackbar.open('Wylogowano pomyślnie!', 'ok', {
-      duration: 5000
+      duration: 5000,
+      verticalPosition: "top"
     });
   }
 

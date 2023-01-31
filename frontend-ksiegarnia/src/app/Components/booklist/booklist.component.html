@@ -16,28 +16,34 @@
           </mat-card-title>
           <mat-card-content>
             <div class="brak" *ngIf="!book.quantityOfBooks">Obecnie brak na stanie</div>
+
             <div class="bookName">Tytuł: {{ book.bookName }}</div>
             <span class="tooltiptext"><h2>Opis książki</h2>{{ book.bookDesc }}</span>
             <div class="author">Autor: {{ book.author }}</div>
             <div class="cost">Cena:  {{ book.cost }}zł</div>
             <div class="quantityofBooks" *ngIf="book.quantityOfBooks < 5 && book.quantityOfBooks; else elsecondition ">
-              Zostały tylko {{ book.quantityOfBooks }} sztuki. Spiesz się!
+              <b>Zostały tylko {{ book.quantityOfBooks }} sztuki. Spiesz się!</b>
             </div>
             <ng-template #elsecondition>
               <div class="sztuk">Sztuk: </div>
               <div class="quantity" *ngIf="book.quantityOfBooks "> {{ book.quantityOfBooks }}</div>
               <div *ngIf="!book.quantityOfBooks "></div>
             </ng-template>
+            <div *ngFor="let rate of results" >
+              <div *ngIf="rate.name == book.bookId && rate.rate > 0">
+              <button class="single" fxLayout="row" style="background-color: rgb(16,13,16)">
+                <div *ngIf="rate.name == book.bookId" >{{rate.rate}}</div>
+                <mat-icon style="font-size: 14px; padding-top: 1.8px; color: yellow; ">star</mat-icon>
+              </button>
+              </div>
+            </div>
             <div class="cart-buttons" *ngIf="book.quantityOfBooks && value[book.bookId] !=book.bookId ">
               <div>
                 <button class="addtobag" (click) ="addingToBasket(book.bookId)" mat-button>Do koszyka</button>
               </div>
-              <div>
-                <button mat-button class="wishlist">Życzenia</button>
-              </div>
             </div>
             <div class="addedbtn " *ngIf="!book.quantityOfBooks">
-              <button class="addedbtn" mat-button>Życzenia</button>
+              <button class="addedbtn"  mat-raised-button>Do koszyka</button>
             </div>
           </mat-card-content>
         </mat-card>
@@ -45,7 +51,7 @@
     </div>
     <div class="title">
         <span style="font-size: 17px; color: gray;">
-              ({{ size }} dostępnych książek)
+              (dostępnych książek)
         </span>
     </div>
     <div class="container text-center" >

@@ -23,13 +23,12 @@ export class BookaddComponent implements OnInit {
     Validators.required,
   ]);
   author = new FormControl(this.addbook.author, [
-    Validators.pattern("[a-zA-Z ]*"),
     Validators.minLength(5),
     Validators.maxLength(25),
     Validators.required,
   ]);
   cost = new FormControl(this.addbook.cost, [
-    Validators.pattern("[0-9 ]*"),
+    Validators.pattern("^[0-9].*$"),
     Validators.minLength(1),
     Validators.required,
   ]);
@@ -39,9 +38,11 @@ export class BookaddComponent implements OnInit {
     Validators.required,
   ]);
   bookDesc = new FormControl(this.addbook.bookDesc, [
-    Validators.pattern("[a-zA-Z ]*"),
     Validators.minLength(10),
-    Validators.maxLength(100),
+    Validators.maxLength(255),
+    Validators.required,
+  ]);
+  image = new FormControl(this.addbook.bookCover, [
     Validators.required,
   ]);
 
@@ -54,23 +55,30 @@ export class BookaddComponent implements OnInit {
   }
 
   confirmAddBook() {
-    this.bookService.addBook(this.addbook, this.imageFile).subscribe(
-      (user) => {
-        if (user.statusCode === 200) {
-          this.matsnackbar.open("Ksiazka nie dodana!" + user.response, 'ok', {duration: 4000});
-          this.dialogRef.close(1);
-          window.location.reload();
-        }
-      },
-      (error: any) => {
-        this.matsnackbar.open("Ksiazka nie dodana!" + error.error, 'ok', {duration: 4000});
-        console.log(error)
+    if(this.imageFile != null) {
+      this.bookService.addBook(this.addbook, this.imageFile).subscribe(
+        (user) => {
+          if (user.statusCode === 200) {
+            this.matsnackbar.open("Książka dodania pomyślnie i wysłana do weryfikacji przez administratora! Sprawdzaj status na bieżąco." , 'ok', {duration: 4000});
+            this.dialogRef.close(1);
+            setTimeout(function(){
+              window.location.reload();
+            }, 1000);
+          } else {
+            this.matsnackbar.open("Dodanie książki nie powiodło się!", 'ok', {duration: 4000});
+          }
+        },
+        (error: any) => {
+          this.matsnackbar.open("Ksiazka nie dodana! " + error.error.message+".", 'ok', {duration: 4000});
+          console.log(error)
 
+        }
+      );
+      if (this.bookForm.invalid) {
+        return;
       }
-    );
-    if (this.bookForm.invalid) {
-      return;
     }
+
   }
 
   PictureOn(event) {
@@ -104,7 +112,11 @@ export class BookaddComponent implements OnInit {
   bookDescVal() {
     return this.bookDesc.hasError("required") ? "Krótki opis książki jest wymagany! " :
       this.bookDesc.hasError("minlength") ? "Opis wymaga minimum 10 znaków!" :
-        this.bookDesc.hasError("maxlength") ? "Opis to maksimum 100 znaków!" : "";
+        this.bookDesc.hasError("maxlength") ? "Opis to maksimum 255 znaków!" : "";
+  }
+
+  bookImageVal() {
+    return this.image.hasError("required") ? "Zdjęcie okładki książki jest wymagane!" : "";
   }
 
 }

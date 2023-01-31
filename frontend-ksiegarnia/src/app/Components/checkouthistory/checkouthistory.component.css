@@ -2,9 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 1%;
-  margin-left: 10%;
   height: auto;
-  margin-right: 10%;
 }
 
 .allBooks{
@@ -30,35 +28,35 @@
 
 .list-books {
   display: flex;
-  flex-direction: column;
-   /*width: 20rem;*/
- /*justify-content: space-around;*/
-  align-items: flex-start;
- /*z-index: 3001;*/
-}
-mat-card {
-  display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  width: auto;
-  padding-right: 2em;
-  border: 1px solid;
+  width: 100%;
+  column-gap: 20px;
+  margin:auto;
+
+}
+
+mat-card {
+
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+
+  border: 5px solid;
   border-color: rgb(240, 238, 238);
-  margin-bottom: 20px;
+  margin: 20px;
+  width: 100%;
 }
-.mat-card.mat-card {
-  padding: 0px;
+
+mat-card:hover {
+  box-shadow: 0px 0px 25px 25px rgba(0, 0, 0, 0.25) !important;
 }
+
+
 mat-card-title {
   background: #f5f5f5 0% 0% no-repeat padding-box;
 }
-.mat-card-title.mat-card-title {
-  display: flex;
-  height: 171px auto;
-  width: 233px;
-  align-items: center;
-  align-content: center;
-}
+
 .bookname {
 
   margin-left: 20px;
@@ -67,20 +65,20 @@ mat-card-title {
   font-weight: bolder;
   font-size: 1.5rem;
 }
-.authorname {
+.author {
   margin-left: 20px;
   margin-bottom: 7px;
   font-size: 1rem;
   color: gray;
 }
-.price {
+.cost {
   margin-left: 20px;
   margin-bottom: 5px;
   font-size: 1rem;
   /*font-weight: bolder;*/
   color: rgb(8, 8, 8);
 }
-.noofbooks {
+.quantityofBooks {
   margin-left: 20px;
   margin-bottom: 10px;
   font-size: 1rem;
@@ -92,7 +90,7 @@ mat-card-title {
   /*margin-bottom: 10px;*/
   font-size: 1rem;
 }
-.description{
+.desc{
   margin-left: 20px;
   margin-bottom: 10px;
   font-size: 1rem;

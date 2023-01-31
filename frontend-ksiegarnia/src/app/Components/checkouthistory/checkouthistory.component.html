@@ -9,31 +9,42 @@
     <div class="list-books">
       <div *ngFor="let book of orderList">
         <div *ngIf="isUser">
-          <mat-card  style="display: flex;flex-direction: row;  padding: 1rem;" matTooltip="{{ book.bookDetails }}">
+          <mat-card style="display: flex;flex-direction: row;  padding: 1rem;" matTooltip="{{ book.bookDetails }}">
 
             <div>
-              <mat-card-title style="padding: 1rem;"  matTooltip="Update Image">
-                <img src="assets\okladki\{{book.bookCover}}" style="height: 13rem; width: 10rem; padding: 16px 0px 16px 16px ;" />
+              <mat-card-title style="padding: 1rem;" matTooltip="Update Image">
+                <img src="assets\okladki\{{book.bookCover}}"
+                     style="height: 13rem; width: 10rem; padding: 16px 0px 16px 16px ;"/>
               </mat-card-title>
             </div>
             <div style="width: 20rem;">
-              <mat-card-content style="display: flex;flex-direction: column;flex-wrap: nowrap;width: auto; margin-top: 10px; margin-bottom: 0px;">
+              <mat-card-content
+                style="display: flex;flex-direction: column;flex-wrap: nowrap;width: auto; margin-top: 10px; margin-bottom: 0px;">
 
-                <div class="noofbooks">Zamówienie numer: {{ book.checkoutId }}</div>
+                <div class="quantityofBooks">Zamówienie numer: {{ book.checkoutId }}</div>
                 <div class="bookname">Tytuł Książki: {{ book.bookName }}</div>
-                <div class="authorname">Autor: {{ book.author }}</div>
-                <div class="description">Opis: {{ book.bookDesc }}</div>
-                <div class="description">Ilość zamówionych sztuk: {{ book.amountOfBooks }}</div>
-                <div class="price">Koszt: {{book.totalCost +"zł"}}</div>
+                <div class="author">Autor: {{ book.author }}</div>
+                <div class="desc" style="width: 100%;">Opis: {{ book.bookDesc }}</div>
+                <div class="desc">Ilość zamówionych sztuk: {{ book.amountOfBooks }}</div>
+                <div class="cost">Koszt: {{book.totalCost + "zł"}}</div>
 
-                <div class="status" >Status zamówienia: <label style="color: green;">{{ book.checkoutStatus }}</label> </div>
+                <div class="status">Status zamówienia: <label style="color: green; width: 100%;">{{ book.checkoutStatus }}</label>
+                </div>
 
                 <div style="display: flex; justify-content: flex-start; margin-left: 20px;">
+                  <button id="deleteBtn" [disabled]="book.checkoutStatus != 'Dostarczone'"  (click)="deleteFromHistory(book.checkoutId)" mat-raised-button color="warn">
+                    Usuń z historii
+                  </button>
+
+
 
 
                   <div *ngIf="isAdmin">
-                    <button id="updateOrderStatusBtn" [disabled]="book.orderStatus === 'in shipment' || book.orderStatus === 'delivered' || book.orderStatus === 'in progress'"
-                            [hidden]="book.orderStatus === 'in shipment' || book.orderStatus === 'delivered' || book.orderStatus === 'in progress'" style="width: 8rem; margin-left: 0px; margin-top:auto; color: white; outline: none; border-radius: 0px; background-color: rgba(131, 4, 4, 0.8);"  (click)="updateOrderAdmin(book.orderId,'in progress')"  mat-button>
+                    <button id="updateOrderStatusBtn"
+                            [disabled]="book.orderStatus === 'Wysłane' || book.orderStatus === 'Dostarczone' || book.orderStatus === 'W trakcie realizacji'"
+                            [hidden]="book.orderStatus === 'Wysłane' || book.orderStatus === 'Dostarczone' || book.orderStatus === 'W trakcie realizacji'"
+                            style="width: 8rem; margin-left: 0px; margin-top:auto; color: white; outline: none; border-radius: 0px; background-color: rgba(131, 4, 4, 0.8);"
+                            (click)="updateOrderAdmin(book.orderId,'W trakcie realizacji')" mat-button>
                       Update-Order
                     </button>
 
@@ -45,36 +56,45 @@
         </div>
 
         <div *ngIf="isSeller">
-          <mat-card *ngIf="book.orderStatus !='delivered' && book.orderStatus !='pending' " style="display: flex;flex-direction: row;  padding: 1rem;" matTooltip="{{ book.bookDetails }}">
+
+
+          <mat-card *ngIf="book.orderStatus !='Dostarczone' && book.orderStatus !='pending' "
+                    style="display: flex;flex-direction: row;  padding: 1rem;" matTooltip="{{ book.bookDetails }}">
 
             <div>
-              <mat-card-title style="padding: 1rem;"  matTooltip="Update Image">
-                <img src="assets\bookimage\{{book.image}}" style="height: 13rem; width: 10rem; padding: 16px 0px 16px 16px ;" />
+              <mat-card-title style="padding: 1rem;" matTooltip="Update Image">
+                <img src="assets\okladki\{{book.bookCover}}"
+                     style="height: 13rem; width: 10rem; padding: 16px 0px 16px 16px ;"/>
               </mat-card-title>
             </div>
             <div style="width: 20rem;">
-              <mat-card-content style="display: flex;flex-direction: column;flex-wrap: nowrap;width: auto; margin-top: 10px; margin-bottom: 0px;">
+              <mat-card-content
+                style="display: flex;flex-direction: column;flex-wrap: nowrap;width: auto; margin-top: 10px; margin-bottom: 0px;">
 
-                <div class="noofbooks">Order Number : {{ book.orderId }}</div>
-                <div class="bookname">Book Name : {{ book.bookName }}</div>
-                <div class="authorname">Author name : {{ book.authorName }}</div>
-                <div class="description">Description : {{ book.bookDetails }}</div>
-                <div class="description">Quantity of book : {{ book.quantityOfBook }}</div>
-                <div class="price">Total Price : {{"₹ "+book.totalprice }}</div>
+                <div class="noofbooks">Numer zamówienia: {{ book.checkoutId }}</div>
+                <div class="bookname">Tytuł książki: {{ book.bookName }}</div>
+                <div class="authorname">Nazwa autora: {{ book.author }}</div>
+                <div class="description">Opis książki: {{ book.bookDesc }}</div>
+                <div class="description">Ilość sprzedanych sztuk: {{ book.amountOfBooks }}</div>
+                <div class="price">Całkowita cena: {{"₹ " + book.totalprice }}</div>
 
-                <div class="status" >Order Status : <label style="color: green;">{{ book.orderStatus }}</label> </div>
+                <div class="status">Status zamówienia: <label style="color: green;">{{ book.orderStatus }}</label></div>
 
                 <div style="display: flex; justify-content: flex-start; margin-left: 20px;">
 
 
-
-                  <div *ngIf="book.orderStatus != 'delivered'" >
+                  <div *ngIf="book.orderStatus != 'delivered'">
                     <mat-form-field>
                       <mat-label>Update Order Status</mat-label>
-<!--                      <mat-select disableRipple>-->
-<!--                        <mat-option [disabled]="book.orderStatus === 'in shipment' || book.orderStatus === 'delivered'" (click)="updateOrderSeller(book.orderId,'in shipment')" >In Shipment</mat-option>-->
-<!--                        <mat-option [disabled]="book.orderStatus === 'in progress' || book.orderStatus === 'delivered'  " (click)="updateOrderSeller(book.orderId,'delivered')">Delivered</mat-option>-->
-<!--                      </mat-select>-->
+                      <mat-select disableRipple>
+                        <mat-option [disabled]="book.orderStatus === 'in shipment' || book.orderStatus === 'delivered'"
+                                    (click)="updateOrderSeller(book.orderId,'in shipment')">Wysłane
+                        </mat-option>
+                        <mat-option
+                          [disabled]="book.orderStatus === 'in progress' || book.orderStatus === 'delivered'  "
+                          (click)="updateOrderSeller(book.orderId,'delivered')">Dostarczone
+                        </mat-option>
+                      </mat-select>
                     </mat-form-field>
                   </div>
                 </div>

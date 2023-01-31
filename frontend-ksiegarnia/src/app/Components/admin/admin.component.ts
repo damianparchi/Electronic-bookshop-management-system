@@ -68,7 +68,7 @@ export class AdminComponent implements OnInit {
   deniedBooks(bookId: number, status: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent,{
       data:{
-        message: 'Jesteś pewien, że chcesz odrzucić?',
+        message: 'Jesteś pewien, że chcesz aby książka została poprawiona przez sprzedawcę?',
         buttonText: {
           ok: 'Tak',
           cancel: 'Nie'
@@ -78,7 +78,7 @@ export class AdminComponent implements OnInit {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.adminService.deniedBooks(bookId, status).subscribe(() => {
-            this.matsnackbar.open('Książka została odrzucona!', 'success', {duration: 3000});
+            this.matsnackbar.open('Książka została wysłana do ponownego sprawdzenia!', 'success', {duration: 3000});
             setTimeout(function(){
               window.location.reload();
             }, 2000);

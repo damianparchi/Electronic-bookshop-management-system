@@ -6,7 +6,7 @@
   <form style="text-align: center">
 
     <mat-form-field appearance="outline">
-      <mat-label>Nazwa Książki</mat-label>
+      <mat-label>Tytuł Książki</mat-label>
       <mat-error *ngIf="bookName.invalid">{{bookNameVal()}}</mat-error>
       <input type="name" matInput id="bookName" [(ngModel)]="addbook.bookName" [formControl]="bookName" autocomplete="off" required>
       <mat-icon matSuffix>book</mat-icon>
@@ -36,17 +36,19 @@
     <mat-form-field appearance="outline">
       <mat-label>Krótki opis książki</mat-label>
       <mat-error *ngIf="bookDesc.invalid">{{bookDescVal()}}</mat-error>
-      <input type="text" id="desc" matInput [(ngModel)]="addbook.bookDesc" [formControl]="bookDesc" autocomplete="off" required>
+      <textarea type="text" id="desc" style="height: 50px;" matInput [(ngModel)]="addbook.bookDesc" [formControl]="bookDesc" autocomplete="off" required></textarea>
       <mat-icon matSuffix>description</mat-icon>
     </mat-form-field>
 
     <div class="book-details">
-      <input type="file" name="image" (change)="PictureOn($event)"/>
+      <mat-label>Zdjęcie okładki książki</mat-label>
+      <input type="file" name="image" [(ngModel)]="addbook.bookCover" [formControl]="image" (change)="PictureOn($event)"/>
+      <mat-error *ngIf="image.invalid">{{bookImageVal()}}</mat-error>
     </div>
 
 
     <div class="submit">
-      <button mat-raised-button [disabled] = "cost.invalid || author.invalid ||  bookName.invalid || quantityOfBooks.invalid"  color="dark" type="submit" (click)="confirmAddBook()">
+      <button mat-raised-button [disabled] = "cost.invalid || author.invalid ||  bookName.invalid || quantityOfBooks.invalid || bookDesc.invalid || image.invalid"  color="dark" type="submit" (click)="confirmAddBook()">
         Dodaj
       </button>
     </div>

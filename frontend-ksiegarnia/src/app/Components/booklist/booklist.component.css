@@ -39,6 +39,20 @@ mat-card-title {
   float: left;
 }
 
+.single {
+  font-size: 14px;
+  text-align: center;
+  height: 20px;
+  width: fit-content !important;
+  padding-right: 1px;
+  border-radius: 3px;
+  border: none;
+  color: white !important;
+  margin: auto;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
 .mat-card-title.mat-card-title {
   display: flex;
   height: auto;
@@ -74,7 +88,7 @@ mat-card-title {
 }
 
 .quantityofBooks {
-  margin-bottom: 12px;
+  margin-bottom: 7px;
   font-size: 13px;
   color: rgba(255, 0, 0, 0.9);
 }
@@ -95,22 +109,25 @@ mat-card-title {
 }
 
 .cart-buttons {
-  display: flex;
-  flex-direction: row;
-  margin-left: 20px;
-  margin-right: 20px;
-  justify-content: space-between;
+  /*display: flex;*/
+  /*flex-direction: row;*/
+  /*margin: auto;*/
+  /*margin-right: 20px;*/
+  /*justify-content: space-between;*/
 }
 
 .addtobag {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
   color: white;
   background-color: #3a3838;
-  height: 40px;
-  width: 100px;
   font-size: small;
   cursor: pointer;
   border: 1px solid black;
   border-radius: 3px;
+
+
 }
 
 .wishlist {
@@ -125,11 +142,11 @@ mat-card-title {
   z-index: 599;
 }
 
-.addedbtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/*.addedbtn {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*}*/
 
 .brak {
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -195,13 +212,9 @@ h2{
 }
 
 .addedbtn {
-  height: 34px;
-  width: 191px;
-  margin: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #e0d6d6;
+  margin-left: auto;
+  margin-right: auto;
   outline: none;
   border-radius: 2px;
 }

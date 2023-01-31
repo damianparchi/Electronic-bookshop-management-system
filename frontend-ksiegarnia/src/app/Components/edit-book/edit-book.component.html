@@ -1,12 +1,12 @@
 <div class="container">
   <div style="background-color: #403f3f; width: 100%; margin-bottom: 10px;">
-    <h2 style="color: white; text-align: center;padding-top: 10px;">Edycja Książki</h2>
+    <h2 style="color: white; text-align: center;padding-top: 10px;">Edycja książki</h2>
   </div>
 
   <form style="text-align: center">
 
     <mat-form-field appearance="outline">
-      <mat-label>Nazwa Książki</mat-label>
+      <mat-label>Tytuł Książki</mat-label>
       <mat-error *ngIf="bookName.invalid">{{bookNameVal()}}</mat-error>
       <input type="name" matInput id="bookName" [(ngModel)]="editBook.bookName" [formControl]="bookName" autocomplete="off" required>
       <mat-icon matSuffix>book</mat-icon>
@@ -36,13 +36,17 @@
     <mat-form-field appearance="outline">
       <mat-label>Krótki opis książki</mat-label>
       <mat-error *ngIf="bookDesc.invalid">{{bookDescVal()}}</mat-error>
-      <input type="text" id="desc" matInput [(ngModel)]="editBook.bookDesc" [formControl]="bookDesc" autocomplete="off" required>
+      <textarea type="text" id="desc" style="height: 50px;" matInput [(ngModel)]="editBook.bookDesc" [formControl]="bookDesc" autocomplete="off" required></textarea>
       <mat-icon matSuffix>description</mat-icon>
     </mat-form-field>
 
+<!--    <div class="book-details">-->
+<!--      <input type="file" name="image" (change)="PictureOn($event)"/>-->
+<!--    </div>-->
+
     <div class="submit">
       <button mat-raised-button color="dark" type="submit" [disabled]="!editBook.bookName || !editBook.author || !editBook.cost || !editBook.quantityOfBooks || !editBook.bookDesc" (click)="updateBook()">
-        UPDATE
+        Aktualizuj
       </button>
     </div>
 

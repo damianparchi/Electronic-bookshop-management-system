@@ -27,6 +27,7 @@ mat-card {
   border: 5px solid;
   border-color: rgb(240, 238, 238);
   margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 mat-card-content {
@@ -90,10 +91,10 @@ mat-card-title {
 
 #verifyBtn{
   margin-left: 10px;
-  width: 80px;
+  width: 90px;
   color: white;
   border-radius: 5px;
-  background-color: rgba(47,47,112,0.8);
+  /*background-color: rgba(47,47,112,0.8);*/
 
 }
 

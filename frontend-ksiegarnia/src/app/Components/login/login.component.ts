@@ -36,7 +36,8 @@ export class LoginComponent implements OnInit {
       console.log('brak polaczenia z baza');
     }
     this.matSnackBar.open(error.error.message, 'ok', {
-      duration: 5000
+      duration: 5000,
+      verticalPosition: 'top'
     });
     console.log(error);
   }
@@ -52,11 +53,11 @@ export class LoginComponent implements OnInit {
     this.token.handle(data);
     this.token.signedIn();
     this.matSnackBar.open('Zalogowano pomyślnie!', 'ok', {
-      
+
       duration: 5000
     });
-    
-    
+
+
     this.user.getUserInfo(this.roletoken).subscribe( response => {
       this.userinfo = response.obj;
       console.log('UserRole: ', response.obj);
@@ -78,13 +79,13 @@ export class LoginComponent implements OnInit {
         this.route.navigateByUrl('home');
         return;
       }
-      
+
     }
-    
-    
+
+
   );
-  
-  
-    
+
+
+
   }
 }

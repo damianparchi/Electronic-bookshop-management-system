@@ -5,7 +5,7 @@
       <div class="addIcon" style="margin: auto" *ngIf="sellerBooks">
         <!-- <button mat-raised-button color="accent" style="margin: 10px;font-size: 16px;padding: 20px;" (click)="addBook()" >Dodaj książkę</button> -->
       </div>
-      <div class="alert alert-danger text-justify" *ngIf="books.length==0">Brak dostępnych książek. Wystaw swoje książki na sprzedaż!</div>
+      <div class="alert alert-danger text-justify" style="margin: auto; display: flex; width: 50%; margin-top: 20px;" *ngIf="books.length==0">Brak dostępnych książek. Wystaw swoje książki na sprzedaż!</div>
       <div class="list-books">
         <div *ngFor=" let book of books" [className]="">
           <mat-card  style="display: flex;flex-direction: row; width: auto; padding: 1rem;" matTooltip="{{ book.bookName }}">
@@ -17,12 +17,12 @@
 
             <div>
               <mat-card-content>
-                <div *ngIf="book.status == 'W oczekiwaniu...'" class="status">Status : <label style="color: #f1c80a;">{{ book.status }}</label> </div>
-                <div *ngIf="book.status == 'Zatwierdzono...'" class="status">Status : <label style="color: #25d225;">{{ book.status }}</label> </div>
-                <div *ngIf="book.status == 'Odrzucono...'" class="status">Status : <label style="color: #ff0000;">{{ book.status }}</label> </div>
-                <div *ngIf="!book.quantityOfBooks" class="quantityofBooks">Brak w magazynie</div>
+                <div *ngIf="book.status == 'W oczekiwaniu...'" class="status">Decyzja administratora: <label style="color: #f1c80a;">{{ book.status }}</label> </div>
+                <div *ngIf="book.status == 'Zatwierdzono...'" class="status">Decyzja administratora: <label style="color: #25d225;">{{ book.status }}</label> </div>
+                <div *ngIf="book.status == 'Odrzucono...'" class="status">Decyzja administratora: <label style="color: #ff0000;">{{ book.status }}</label> </div>
+                <div *ngIf="!book.quantityOfBooks" class="quantityofBooks"><b>Brak w magazynie</b></div>
                 <div class="bookname">Tytuł książki:<br><div class="bookTitle"> {{ book.bookName }}</div></div>
-                <div class="author">Autor: {{ book.author }}</div>
+                <div class="author">Autor: {{ book.author }} </div>
                 <div class="cost">Cena: {{ book.cost }}</div>
                 <div class="quantityofBooks">Ilość dostępnych książek: {{ book.quantityOfBooks }}</div>
                 <div class="desc">Krótki opis: {{ book.bookDesc }}</div>
@@ -34,8 +34,8 @@
                       Usuń
                     </button>
 
-                    <button *ngIf="book.status != 'Zatwierdzono...' && book.status != 'W oczekiwaniu...' " matTooltip="*W każdej chwili możesz przywrócić status do 'Wstrzymanego' produktu i po edycji przesłać go do ponownego sprawdzenia." id="verifyBtn" (click)="sendAgain(book.bookId)" mat-raised-button>
-                      Verify
+                    <button *ngIf="(book.status != 'Zatwierdzono...' && book.status != 'W oczekiwaniu...')" matTooltip="*W każdej chwili możesz edytować książkę i następnie klikając przycisk 'Weryfikuj' wysłać książkę do ponownego sprawdzenia i przywrócić status do 'W oczekiwaniu...'." id="verifyBtn" (click)="verifyBook(book)" mat-raised-button color="primary">
+                      Weryfikuj
                     </button>
                 </div>
               </mat-card-content>

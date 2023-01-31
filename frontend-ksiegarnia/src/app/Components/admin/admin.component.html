@@ -1,35 +1,39 @@
 <div role="combobox">
+  <div class="alert alert-danger text-justify" style="margin: auto; display: flex; width: 50%; margin-top: 20px;" *ngIf="books.length==0">Brak książek do zatwierdzenia!</div>
   <div *ngFor="let book of books">
     <div>
       <mat-card class="matcard2">
-        <div class="cartdetails" fxLayout="row" fxLayoutAlign="start start">
-          <img class="bookCover" alt="" src="assets\okladki\{{book.bookCover}}" />
-          <div class="bookcontainer">
-            <div class="booktitle">
-              Tytuł Książki: {{book.bookName}}
-            </div>
+        <div *ngIf="books.length!=0">
 
-            <div class="author">
-              Autor: {{book.author}}
-            </div>
+          <div class="cartdetails" fxLayout="row" fxLayoutAlign="start start">
+            <img class="bookCover" alt="" src="assets\okladki\{{book.bookCover}}" />
+            <div class="bookcontainer">
+              <div class="booktitle">
+                Tytuł Książki: {{book.bookName}}
+              </div>
 
-            <div class="quantity">
-              Ilość książek: {{book.quantityOfBooks}}
-            </div>
+              <div class="author">
+                Autor: {{book.author}}
+              </div>
 
-            <div class="cost">
-              Cena: {{book.cost}} zł
-            </div>
+              <div class="quantity">
+                Ilość książek: {{book.quantityOfBooks}}
+              </div>
 
-            <div class="bookdesc">
-              Opis książki:
-            </div><div>{{book.bookDesc}}</div>
+              <div class="cost">
+                Cena: {{book.cost}} zł
+              </div>
+
+              <div class="bookdesc">
+                Opis książki:
+              </div><div>{{book.bookDesc}}</div>
+            </div>
           </div>
-        </div>
 
-        <div fxLayout="row wrap" fxLayoutAlign="end end">
-          <button mat-raised-button class="confirmbutton" (click)="confirmBooks(book.bookId, 'Zatwierdzono...')">Zatwierdź</button>
-          <button mat-raised-button class="deniedbutton" (click)="deniedBooks(book.bookId, 'Odrzucono...')">Odrzuć</button>
+          <div fxLayout="row wrap" fxLayoutAlign="end end">
+            <button mat-raised-button class="confirmbutton" (click)="confirmBooks(book.bookId, 'Zatwierdzono...')">Zatwierdź</button>
+            <button mat-raised-button class="deniedbutton" (click)="deniedBooks(book.bookId, 'Odrzucono...')">Odrzuć</button>
+          </div>
         </div>
       </mat-card>
     </div>

@@ -17,16 +17,6 @@
             <small><mat-error>Hasło musi zawierać conajmniej jedną litere, conajmniej jedną cyfrę.</mat-error></small>
           </div>
         </div>
-
-        <div *ngIf="phoneNumber.touched && !phoneNumber.valid">
-          <div *ngIf="phoneNumber.errors?.['maxlength']">
-            <small><mat-error>Numer telefonu musi mieć 9 cyfr.</mat-error></small>
-          </div>
-          <div *ngIf="phoneNumber.errors?.['pattern']">
-            <small><mat-error>Numer telefonu musi mieć 9 cyfr</mat-error></small>
-          </div>
-        </div>
-<!--        backenderror-->
         <div style="color: #a03037;" [hidden]="!error">{{error}}</div>
 
         <mat-form-field appearance="outline">
@@ -63,20 +53,6 @@
 
         </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Numer Telefonu</mat-label>
-              <input #phoneNumber="ngModel" pattern="^[2-9]\d{8}$" [(ngModel)]="userr.phoneNumber" minlength="9" maxlength="9" name="phoneNumber" matInput placeholder="Numer telefonu" required>
-          <mat-error>Podaj numer telefonu </mat-error>
-          <mat-icon style="color: #e1e4e4;" matSuffix>phone</mat-icon>
-        </mat-form-field>
-
-        <!-- <h4 style="width: 35%; margin: auto">Zarejestruj jako:</h4> -->
-
-        <!-- <mat-radio-group [(ngModel)]="userr.role" name="role" style="height: 25%; margin: auto">
-          <mat-radio-button value="user" required="required"> Nabywca </mat-radio-button> &nbsp;
-          <mat-radio-button value="seller" required="required"> Sprzedawca </mat-radio-button> &nbsp;
-        </mat-radio-group> -->
-
         <mat-form-field appearance="fill">
           <mat-label>Zarejestruj jako:</mat-label>
           <select matNativeControl required aria-label="Select an option" [(ngModel)]="userr.role" name="role" style="height: 25%; margin: auto">
@@ -89,6 +65,6 @@
 
       </form>
       Posiadasz konto?
-      <a [routerLink]="['/login']">Zaloguj się!</a>
+      <a [routerLink]="['/login']" style="text-decoration: none;">Zaloguj się!</a>
     </mat-card>
   </div>

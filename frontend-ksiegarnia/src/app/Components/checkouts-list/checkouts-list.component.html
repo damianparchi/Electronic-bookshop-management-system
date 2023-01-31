@@ -2,13 +2,18 @@
 <div class="main-container">
   <div class="container">
     <div class="list-books">
-      <div *ngFor=" let book of orderdetails">
+      <div class="alert alert-danger text-justify" style="margin: auto; display: flex; width: 70%; margin-top: 20px;" *ngIf="orderdetails.length==0">Brak książek w historii zamówień.</div>
+      <div *ngFor="let book of orderdetails">
         <div *ngIf="isAdmin">
-
+          <div class="alert alert-danger text-justify" *ngIf="orderdetails.length==0">Brak złożonych zamówień.</div>
+          <div *ngIf="orderdetails.length!=0">
           <mat-card class="matcard2">
             <div class="cartdetails" fxLayout="row" fxLayoutAlign="start start">
               <img class="bookCover" alt="" src="assets\okladki\{{book.bookCover}}" />
               <div class="bookcontainer">
+                <div class="booktitle">
+                  Numer zamówienia: {{book.checkoutId}}
+                </div>
                 <div class="booktitle">
                   Tytuł Książki: {{book.bookName}}
                 </div>
@@ -18,11 +23,11 @@
                 </div>
 
                 <div class="quantity">
-                  Ilość książek: {{book.quantityOfBooks}}
+                  Ilość zamówionych książek: {{book.amountOfBooks}}
                 </div>
 
                 <div class="cost">
-                  Cena: {{book.cost}} zł
+                  Cena: {{book.totalCost}} zł
                 </div>
 
                 <div class="bookdesc">
@@ -33,85 +38,103 @@
               </div>
             </div>
 
-            <div fxLayout="row wrap" fxLayoutAlign="end end">
-<!--              <button mat-raised-button class="confirmbutton" (click)="confirmBooks(book.bookId, 'Zatwierdzono...')">Zatwierdź</button>-->
-<!--              <button mat-raised-button class="deniedbutton" (click)="deniedBooks(book.bookId, 'Odrzucono...')">Odrzuć</button>-->
+            <div style="display: flex; justify-content: flex-start; margin-left: 20px;">
+
+
+              <div *ngIf="isAdmin">
+                <button id="updateOrderStatusBtn" [disabled]="book.checkoutStatus === 'Wysłane' || book.checkoutStatus === 'Dostarczone' || book.checkoutStatus === 'W trakcie realizacji'"
+                        [hidden]="book.checkoutStatus === 'Wysłane' || book.checkoutStatus === 'Dostarczone' || book.checkoutStatus === 'W trakcie realizacji'" type="submit" style="width: 160px; margin-left: 20px; margin: 10px;"  (click)="updateOrderAdmin(book.checkoutId,'W trakcie realizacji')"  mat-raised-button color="primary">
+                  Przyjmij zamówienie
+                </button>
+                <button *ngIf="book.checkoutStatus == 'W oczekiwaniu na przyjęcie...'" type="submit" style="width: 160px; margin-left: 20px; margin: 10px;"  (click)="deleteOrderAdmin(book.checkoutId)"  mat-raised-button color="warn">
+                  Odrzuć zamówienie
+                </button>
+                <button *ngIf="book.checkoutStatus != 'W oczekiwaniu na przyjęcie...'" type="submit" style="width: 160px; margin-left: 20px; margin: 10px;"  (click)="deleteOrderAdmin(book.checkoutId)"  mat-raised-button color="warn">
+                  Usuń zamówienie
+                </button>
+
+              </div>
             </div>
+            <mat-card-content style="display: flex;flex-direction: row; flex-wrap: nowrap; margin-top: 10px; margin-bottom: 0px;"  *ngFor="let user of adresdetails">
+              <div style="text-align: left; " *ngIf="book.userdataId == user.userdataId">
+                <div style="text-align: left; font-size: 21px;"> <b>Dane adresowe<br> zamawiającego:</b></div><hr>
+
+                {{user.name}} {{ user.surname }}<br>
+                ul. {{user.street}} {{user.houseApartmentNr}}<br>
+                {{user.city}}, {{user.postcode}} <br>
+                woj. {{user.province}}<br>
+                Tel: {{user.mobilePhone}}<br>
+              </div>
+              <div style="text-align: right; width: 100%;" *ngIf="book.userdataId == user.userdataId">
+                <div style="text-align: right; font-size: 21px; "> <b>Dane płatności <br> zamawiającego:</b></div><hr>
+
+                Numer karty: {{user.cardNumber}}<br>
+                Data ważności karty: {{user.expirationDate}}<br>
+                Numer CVC karty: {{user.cvvnumber}}
+              </div>
+
+            </mat-card-content>
           </mat-card>
-<!--          <mat-card  style="display: flex;flex-direction: row;  padding: 1rem;" matTooltip="{{ book.bookDetails }}">-->
-
-<!--            <div>-->
-<!--              <mat-card-title style="padding: 1rem;"  matTooltip="Update Image">-->
-<!--                <img src="assets\okladki\{{book.bookCover}}" style="height: 13rem; width: 10rem; padding: 16px 0px 16px 16px ;" />-->
-<!--              </mat-card-title>-->
-<!--            </div>-->
-<!--            <div style="width: 20rem;">-->
-<!--              <mat-card-content style="display: flex;flex-direction: column;flex-wrap: nowrap;width: auto; margin-top: 10px; margin-bottom: 0px;">-->
-
-<!--                <div class="noofbooks">Order Number : {{ book.checkoutId }}</div>-->
-<!--                <div class="bookname">Book Name : {{ book.bookName }}</div>-->
-<!--                <div class="authorname">Author name : {{ book.author }}</div>-->
-<!--                <div class="description">Description : {{ book.bookDesc }}</div>-->
-<!--                <div class="description">Quantity of book : {{ book.amountOfBook }}</div>-->
-<!--                <div class="price">Total Price : {{"₹ "+book.totalCost }}</div>-->
-
-<!--                <div class="status" >Order Status : <label style="color: green;">{{ book.checkoutStatus }}</label> </div>-->
-
-<!--                <div style="display: flex; justify-content: flex-start; margin-left: 20px;">-->
-
-
-<!--                  <div *ngIf="isAdmin">-->
-<!--                    <button id="updateOrderStatusBtn" [disabled]="book.orderStatus === 'in shipment' || book.orderStatus === 'delivered' || book.orderStatus === 'in progress'"-->
-<!--                            [hidden]="book.orderStatus === 'in shipment' || book.orderStatus === 'delivered' || book.orderStatus === 'in progress'" style="width: 8rem; margin-left: 0px; margin-top:auto; color: white; outline: none; border-radius: 0px; background-color: rgba(131, 4, 4, 0.8);"  mat-button>-->
-<!--&lt;!&ndash;                            (click)="updateOrderAdmin(book.orderId,'in progress')" &ndash;&gt;-->
-
-<!--                      Update-Order-->
-<!--                    </button>-->
-
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </mat-card-content>-->
-<!--            </div>-->
-<!--          </mat-card>-->
+        </div>
         </div>
 
-        <div *ngIf="isSeller">
-          <mat-card *ngIf="book.orderStatus !='delivered' && book.orderStatus !='pending' " style="display: flex;flex-direction: row;  padding: 1rem;" matTooltip="{{ book.bookDetails }}">
+        <div *ngIf="isSeller" >
+          <div *ngIf="orderdetails.length!=0">
+
+          </div>
+          <br>
+          <div class="alert alert-danger text-justify" *ngIf="orderdetails.length==0">Brak zakupionych książek</div>
+
+          <mat-card *ngIf="book.checkoutStatus != 'Dostarczone'" class="matcard2" style="display: flex;flex-direction: row;  padding: 1rem;" matTooltip="{{ book.bookDesc }}">
+
 
             <div>
               <mat-card-title style="padding: 1rem;"  matTooltip="Update Image">
-                <img alt="" src="assets\bookimage\{{book.image}}" style="height: 13rem; width: 10rem; padding: 16px 0px 16px 16px ;" />
+                <img alt="" src="assets\okladki\{{book.bookCover}}" style="height: 300px; width: 250px; padding: 16px 0px 16px 16px ;" />
               </mat-card-title>
             </div>
             <div style="width: 20rem;">
-              <mat-card-content style="display: flex;flex-direction: column;flex-wrap: nowrap;width: auto; margin-top: 10px; margin-bottom: 0px;">
+              <mat-card-content style="display: flex;flex-direction: column;flex-wrap: nowrap;width: auto;margin-left:20px; margin-top: 10px; margin-bottom: 0px;">
 
-                <div class="noofbooks">Order Number : {{ book.checkoutId }}</div>
-                <div class="bookname">Book Name : {{ book.bookName }}</div>
-                <div class="authorname">Author name : {{ book.author }}</div>
-                <div class="description">Description : {{ book.bookDesc }}</div>
-                <div class="description">Quantity of book : {{ book.amountOfBook }}</div>
-                <div class="price">Total Price : {{"₹ "+book.totalCost }}</div>
+                <div class="noofbooks" style="font-size: 21px;"><b>Numer zamówienia: {{ book.checkoutId }}</b></div><br>
+                <div class="bookname" style="font-size: 17px;">Tytuł książki: <b>{{ book.bookName }}</b></div>
+                <div class="author">Autor: <b>{{ book.author }}</b></div>
+                <div class="desc"><b>Opis książki:</b> {{ book.bookDesc }}</div>
+                <div class="quantityofBooks">Ilość sprzedanych sztuk: {{ book.amountOfBooks }}</div>
+                <div class="cost">Całkowity koszt: {{book.totalCost + " zł"}}</div>
 
-                <div class="status" >Order Status : <label style="color: green;">{{ book.checkoutStatus }}</label> </div>
+                <div class="status" >Status zamówienia: <label style="color: green;"><b>{{ book.checkoutStatus }}</b></label> </div>
 
                 <div style="display: flex; justify-content: flex-start; margin-left: 20px;">
 
-
-
-                  <div *ngIf="book.orderStatus != 'delivered'" >
-                    <mat-form-field>
-                      <mat-label>Update Order Status</mat-label>
-<!--                      <mat-select disableRipple>-->
-<!--                        <mat-option [disabled]="book.orderStatus === 'in shipment' || book.orderStatus === 'delivered'" (click)="updateOrderSeller(book.orderId,'in shipment')" >In Shipment</mat-option>-->
-<!--                        <mat-option [disabled]="book.orderStatus === 'in progress' || book.orderStatus === 'delivered'  " (click)="updateOrderSeller(book.orderId,'delivered')">Delivered</mat-option>-->
-<!--                      </mat-select>-->
+                  <div *ngIf="book.checkoutStatus != 'W oczekiwaniu na przyjęcie...'" >
+                    <mat-form-field style="width: 220px;">
+                      <mat-label >Aktualizuj status zamówienia</mat-label>
+                      <mat-select disableRipple>
+                        <mat-option [disabled]="book.checkoutStatus === 'Wysłane' || book.checkoutStatus === 'Dostarczone'" (click)="updateOrderSeller(book.checkoutId,'Wysłane')" >Wysłane</mat-option>
+                        <mat-option [disabled]="book.checkoutStatus === 'W trakcie realizacji' || book.checkoutStatus === 'Dostarczone'  " (click)="updateOrderSeller(book.checkoutId,'Dostarczone')">Dostarczone</mat-option>
+                      </mat-select>
                     </mat-form-field>
                   </div>
                 </div>
+
               </mat-card-content>
+
+
             </div>
+            <mat-card-content style="display: flex;flex-direction: column;flex-wrap: nowrap; margin-top: 10px; margin-bottom: 0px;"  *ngFor="let user of adresdetails">
+              <div style="text-align: left; " *ngIf="book.userdataId == user.userdataId">
+              <div style="text-align: center; font-size: 21px;"> <b>Dane zamawiającego:</b></div><hr>
+
+              {{user.name}} {{ user.surname }}<br>
+              ul. {{user.street}} {{user.houseApartmentNr}}<br>
+              {{user.city}}, {{user.postcode}} <br>
+                woj. {{user.province}}<br>
+                Tel: {{user.mobilePhone}}<br>
+              </div>
+            </mat-card-content>
           </mat-card>
+
         </div>
       </div>
     </div>

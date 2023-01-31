@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {BookaddComponent} from "../bookadd/bookadd.component";
 import {BookService} from "../../Services/book/book.service";
@@ -14,22 +14,24 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class SellerComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private service: BookService,
-              private _route:ActivatedRoute, private matsnackbar: MatSnackBar) { }
+  constructor(private dialog: MatDialog, private service: BookService, private matsnackbar: MatSnackBar) { }
 
   sellerBooks: boolean = false;
   orderBooks: boolean = false;
   wasEdited: boolean = false;
+  cos: any;
 
   name: any;
   books: any[] = [];
   status: string;
 
+
   ngOnInit(): void {
     this.getallBooks();
     this.getUserName();
-    this.wasEdited = false;
-
+    // console.log(this.updateBook);
+    this.wasEdited = true;
+    this.cos = localStorage.getItem("0");
   }
 
   deleteBook(bookId) {
@@ -46,11 +48,26 @@ export class SellerComponent implements OnInit {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.service.deleteBook(bookId).subscribe((message) => {
+          console.log(message)
           if (message.statusCode === 202) {
-            console.log("usunięto")
+            this.matsnackbar.open('Książka została usunięta z listy wystawionych na sprzedaż książek!', 'OK', {
+              duration: 4000,
+            });
+
+            setTimeout(function(){
+              // window.location.reload();
+            }, 1000);
           } else {
-            console.log("error")
+            this.matsnackbar.open('Książka nie może zostać usunięta, ponieważ została zakupiona przez użytkownika!', 'OK', {
+              duration: 4000,
+            });
+            setTimeout(function(){
+              // window.location.reload();
+            }, 1000);
           }
+        });
+        this.matsnackbar.open('Książka nie może zostać usunięta, ponieważ została zakupiona przez użytkownika!', 'OK', {
+          duration: 4000,
         });
       }
     });
@@ -70,8 +87,8 @@ export class SellerComponent implements OnInit {
     });
   }
 
-  editBook(book: any): void {
-    this.wasEdited = true;
+  verifyBook(book:any):void {
+    this.wasEdited = false;
     const dialogRef = this.dialog.open(EditBookComponent, {
       width: '25rem',
       height: 'auto',
@@ -86,9 +103,34 @@ export class SellerComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      window.location.reload();
+      setTimeout(function()
+      { window.location.reload();
+      }, 2000);
+        this.sendAgain(book.bookId)
+    });
+  }
 
+  editBook(book: any): void {
+
+    this.wasEdited = false;
+    const dialogRef = this.dialog.open(EditBookComponent, {
+      width: '25rem',
+      height: 'auto',
+      panelClass: 'custom-dialog-container',
+      data: {
+        bookName: book.bookName,
+        author: book.author,
+        cost: book.cost,
+        quantityOfBooks: book.quantityOfBooks,
+        bookDesc: book.bookDesc,
+        bookId: book.bookId,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      setTimeout(function()
+      { window.location.reload();
+        }, 2000);
+    //   this.sendAgain(book.bookId)
     });
   }
 
