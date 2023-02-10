@@ -2,9 +2,12 @@ package com.example.backend.implementation;
 
 import com.example.backend.dto.BookDto;
 import com.example.backend.dto.BookEditDTO;
+import com.example.backend.dto.RateDTO;
+import com.example.backend.entity.Rate;
 import com.example.backend.entity.User;
 import com.example.backend.entity.Book;
 import com.example.backend.exception.BookisExisting;
+import com.example.backend.repo.implementation.RateRepository;
 import com.example.backend.service.IBookService;
 import com.example.backend.repo.implementation.BookImplementation;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +39,9 @@ public class BookServiceImplementation implements IBookService {
 
     @Autowired
     BookImplementation bookImplementation;
+
+    @Autowired
+    RateRepository rateRepository;
 
     @Transactional
     @Override
@@ -90,14 +96,16 @@ public class BookServiceImplementation implements IBookService {
         if (userInfo != null) {
             String userRole = userInfo.getRole();
 
-            if (userRole.equals("seller") ) {
+            if (userRole.equals("seller") || (userRole.equals("admin")) ) {
                 Book info = bookImplementation.fetchbyId(bookId);
                 if (info != null) {
                     bookImplementation.deleteByBookId(bookId);
+//                    bookImplementation.deleteByBookIdd(bookId);
+//                    bookImplementation.deleteByBookIddd(bookId);
                     return true;
                 }
             } else {
-                throw new UserException("Twoje konto nie posiada roli sprzedawcy!");
+                throw new UserException("Twoje konto nie posiada roli sprzedawcy lub admina!");
             }
         } else {
             throw new UserException("User nie istnieje");
@@ -117,7 +125,7 @@ public class BookServiceImplementation implements IBookService {
             String userRole = userInfo.getRole();
             String fetchRole = userRole;
 
-            if (fetchRole.equals("seller") )
+            if (fetchRole.equals("seller") || (fetchRole.equals("admin")))
             {
                 Book info = bookImplementation.fetchbyId(bookId);
                 if(info!=null)
@@ -135,7 +143,7 @@ public class BookServiceImplementation implements IBookService {
             }
             else
             {
-                throw new UserException("Twoje konto nie posiada roli sprzedawcy!");
+                throw new UserException("Twoje konto nie posiada roli sprzedawcy lub admina!");
             }
         }
         else {
@@ -195,5 +203,83 @@ public class BookServiceImplementation implements IBookService {
             throw new UserException("User nie istnieje!");
         }
         return false;
+    }
+
+    @Override
+    public boolean rateBook(String token, RateDTO rateDTO, Long bookId) {
+        Long userId = generator.parseJWT(token);
+        User user = iUserRepository.getUserById(userId);
+        Rate rate = rateRepository.getBookReview(bookId, user.getUsername());
+        if(rate==null) {
+            Rate rate1 = new Rate(rateDTO);
+            rate1.setBookId(bookId);
+            rate1.setRate(rateDTO.getRate());
+            rate1.setComment(rateDTO.getComment());
+            rate1.setUsername(user.getUsername());
+            rateRepository.save(rate1);
+            return true;
+
+        } else {
+            throw new UserException("Możesz ocenić i skomentować tylko raz!");
+        }
+//        return false;
+
+    }
+
+    @Override
+    public List<Rate> getRate(Long bookId) {
+        return rateRepository.getreviews(bookId);
+    }
+
+    @Override
+    public double averageRate(long bookId) {
+        double ocena=0.0;
+        try {
+            ocena = bookImplementation.averageRate(bookId);
+            System.out.println("rate getted:"+ocena);
+        }catch(Exception e)
+        {
+            System.out.println("No rating");
+        }
+        return ocena;
+    }
+
+    @Override
+    public Book getBookbyId(Long bookId) {
+        Book book = bookImplementation.fetchbyId(bookId);
+        if (book != null) {
+            return book;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Rate> getRatingsOfBook() {
+        return rateRepository.getreviewss();
+    }
+
+    @Override
+    public double averageRateOfAll() {
+        double ocena=0.0;
+
+        try {
+            ocena = bookImplementation.averageRatee();
+            System.out.println("rate getted:"+ocena);
+        }catch(Exception e)
+        {
+            System.out.println("No rating");
+        }
+        return ocena;
+    }
+
+    @Override
+    public List<Book> getBookConfirmm() {
+        List<Book> approvedBooks = bookImplementation.getAllConfirmedBooks();
+        return approvedBooks;
+    }
+
+    @Override
+    public List<Rate> getRatingssOfBook(Long bookId) {
+        return rateRepository.getreviews(bookId);
     }
 }

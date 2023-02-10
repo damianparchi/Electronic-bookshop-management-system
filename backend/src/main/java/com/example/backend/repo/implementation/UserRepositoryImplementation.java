@@ -3,6 +3,7 @@ package com.example.backend.repo.implementation;
 
 import com.example.backend.entity.User;
 import com.example.backend.repo.IUserRepository;
+import com.example.backend.request.ChangePassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -50,6 +51,37 @@ public class UserRepositoryImplementation implements IUserRepository {
         query.setParameter("userId", userId);
         return (User) query.uniqueResult();
 
+    }
+
+    @Override
+    public boolean verify(Long id) {
+        Session session = entityManager.unwrap(Session.class);
+        Query q = session.createQuery("update User set is_verified=:p" + " " + " " + "where id=:i");
+        q.setParameter("p", true);
+        q.setParameter("i", id);
+
+        int status = q.executeUpdate();
+        if (status > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean changePassword(ChangePassword information, Long id) {
+        Session session = entityManager.unwrap(Session.class);
+        Query q = session.createQuery("update User set password=:p" + " " + " " + "where id=:i");
+        q.setParameter("p", information.getConfirmPassword());
+        q.setParameter("i", id);
+
+        int status = q.executeUpdate();
+        if (status > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

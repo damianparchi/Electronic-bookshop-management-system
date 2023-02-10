@@ -2,7 +2,6 @@ package com.example.backend.repo.implementation;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +35,11 @@ public interface BookImplementation extends JpaRepository<Book, Long> {
     @Modifying
     @Query("update from Book set status=:status where book_id=:id")
     int updateBookStatusByBookId(String status,long id);
+
+    @Query( value = "select avg(rate) from Rate where book_id=:id and rate>0.1", nativeQuery = true)
+    double averageRate(long id);
+
+    @Query( value = "select avg(rate) from Rate where book_id=:id", nativeQuery = true)
+    double averageRatee();
+
 }

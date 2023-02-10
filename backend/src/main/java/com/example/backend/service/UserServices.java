@@ -2,7 +2,9 @@ package com.example.backend.service;
 
 import com.example.backend.dto.UserDto;
 import com.example.backend.entity.User;
+import com.example.backend.request.ChangePassword;
 import com.example.backend.request.LoginInfo;
+import com.example.backend.request.NewPassword;
 
 import java.util.List;
 
@@ -21,6 +23,11 @@ public interface UserServices {
     String getUserInfo(String token);
 
     User login(LoginInfo information);
+
+    boolean isUserAlive(String email);
+    boolean verify(String token);
+
+    boolean updatePassword(ChangePassword credentials, String token);
 
     //List<User> getUserInfo(String information);
     //User getSingleUser(String token);
