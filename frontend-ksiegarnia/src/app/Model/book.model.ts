@@ -21,6 +21,13 @@ export class Book {
   bookCover: string;
   status: string;
 
+  bookNamee: string;
+  authorr: string;
+  costt: string;
+  quantityOfBookss: string;
+  bookDescc: string;
+
+
 
 
 }

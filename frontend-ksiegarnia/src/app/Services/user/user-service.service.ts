@@ -22,7 +22,7 @@ export class UserServiceService {
   public logIn(data: any) {
     console.log(data);
     return this.httpClient.post(`${this.baseUrl}/user/login`, data);
-    
+
   }
 
   public addUserData(userData: any) {
@@ -42,5 +42,33 @@ export class UserServiceService {
     console.log(this.httpClient.get(`${this.baseUrl}/userbooks/${token}`, {headers: new HttpHeaders({token: localStorage?.['token']})}));
     return this.httpClient.get(`${this.baseUrl}/userbooks/${token}`, {headers: new HttpHeaders({token: localStorage?.['token']})});
   }
+
+  remindPassword(data) {
+    return this.httpClient.post(`${this.baseUrl}/user/remindpassword`, data);
+  }
+
+  public changePassword(changePassword: any, token: string): Observable<any> {
+    return this.httpClient.put(`${this.baseUrl}/user/updatepassword/${token}`,
+      changePassword,
+    );
+  }
+
+  public getUserDataa(userdataId: number): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}/userdatainfo/${userdataId}`, {headers: new HttpHeaders({'content-type': 'application/json'})});
+  }
+
+  public getUsersData(): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}/usersdata/info`,{headers: new HttpHeaders({'content-type': 'application/json'})});
+  }
+
+  verifyUser(token) {
+    return this.httpClient.post(`${this.baseUrl}/user/verify/${token}`, token);
+  }
+
+
+
+
+
+
 
 }

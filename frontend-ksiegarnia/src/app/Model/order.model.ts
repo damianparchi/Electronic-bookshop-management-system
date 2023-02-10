@@ -4,6 +4,6 @@ export class Order {
   bookDesc: string;
   image: string;
   totalCost: number;
-  orderId: number;
-  orderStatus: string;
+  checkoutId: number;
+  checkoutStatus: string;
 }

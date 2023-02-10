@@ -33,13 +33,26 @@ export class AdminServiceService {
   }
 
   getCheckouts(): Observable<any> {
-    return this.httpService.get(this.baseUrl + "/admin/checkouts/", {});
+    console.log(this.httpService.get(this.baseUrl + "/ksiegarnia/checkouts/", this.httpOptions));
+    return this.httpService.get(this.baseUrl + "/ksiegarnia/checkouts/", {});
   }
   private _autoRefresh$ = new Subject();
 
   get autoRefresh$() {
     return this._autoRefresh$;
   }
+
+  updateCheckoutStatus(checkoutId: any, status: any): Observable<any> {
+    console.log(this.baseUrl + "/ksiegarnia/updateOrderStatusByAdmin" + "?checkoutId="+checkoutId +"&status="+status, '',this.httpOptions);
+    return this.httpService.put(this.baseUrl + "/ksiegarnia/updateOrderStatusByAdmin" + "?checkoutId="+checkoutId +"&status="+status, '',this.httpOptions);
+  }
+
+  deleteCheckoutFromHistory(checkoutId:any): Observable<any> {
+    return this.httpService.delete(`${this.baseUrl}/ksiegarnia/deleteOrderFromHistory/${checkoutId}`,{headers: new HttpHeaders({token: localStorage?.['token']})});
+  }
+
+
+
 
 
 
