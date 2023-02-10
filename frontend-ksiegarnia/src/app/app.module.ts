@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {FlexLayoutModule} from "@angular/flex-layout"
 import { MatRadioModule } from '@angular/material/radio';
 import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
 import { RegisterComponent } from './Components/register/register.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HomePageComponent } from './Components/home-page/home-page.component';
@@ -32,11 +33,20 @@ import { BasketComponent } from './Components/basket/basket.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatTableModule} from "@angular/material/table";
 import { CheckoutInfoComponent } from './Components/checkout-info/checkout-info.component';
-import { SearchbooksComponent } from './Components/searchbooks/searchbooks.component';
 import { SearchPipe } from './Components/searchbooks/search.pipe';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { CheckoutsListComponent } from './Components/checkouts-list/checkouts-list.component';
 import { CheckouthistoryComponent } from './Components/checkouthistory/checkouthistory.component';
+import { AdminSellComponent } from './Components/admin-sell/admin-sell.component';
+import { NewPasswordComponent } from './Components/new-password/new-password.component';
+import { RemindPasswordComponent } from './Components/remind-password/remind-password.component';
+import {MatMenuModule} from "@angular/material/menu";
+import { BookrateComponent } from './Components/bookrate/bookrate.component';
+import { UserrateComponent } from './Components/userrate/userrate.component';
+import { MatDatepickerModule} from "@angular/material/datepicker";
+import { UserdatadetailsComponent } from './Components/userdatadetails/userdatadetails.component';
+import { UserVerifyComponent } from './Components/user-verify/user-verify.component';
+import { AboutusComponent } from './Components/aboutus/aboutus.component';
 
 @NgModule({
   declarations: [
@@ -54,34 +64,44 @@ import { CheckouthistoryComponent } from './Components/checkouthistory/checkouth
     AdminComponent,
     BasketComponent,
     CheckoutInfoComponent,
-    SearchbooksComponent,
     SearchPipe,
     CheckoutsListComponent,
     CheckouthistoryComponent,
+    AdminSellComponent,
+    NewPasswordComponent,
+    RemindPasswordComponent,
+    BookrateComponent,
+    UserrateComponent,
+    UserdatadetailsComponent,
+    UserVerifyComponent,
+    AboutusComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatRadioModule,
-    MatInputModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    MatSnackBarModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatTooltipModule,
-    MatBadgeModule,
-    MatTableModule,
-    MatPaginatorModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatRadioModule,
+        MatInputModule,
+        MatSelectModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        MatSnackBarModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatTooltipModule,
+        MatBadgeModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatMenuModule,
+        MatDatepickerModule
+    ],
   providers: [],
   bootstrap: [AppComponent],
 })
