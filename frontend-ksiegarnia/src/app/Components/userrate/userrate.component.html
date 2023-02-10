@@ -1,0 +1,100 @@
+<app-main-panel></app-main-panel>
+<div role="combobox" flex="column" class="rating-container">
+  <div class="singlecard">
+    <mat-card>
+      <div fxLayout="row" class="singlecard">
+        <div>
+          <img class="bookimg" src="assets\okladki\{{bookCover}}" />
+        </div>
+        <div fxLayout="column" style="margin-left: 20px;">
+          <div class="booktitle" style="word-wrap: break-word; margin-bottom: 2%; font-size: 20px;">
+            <b>{{ bookName }}</b>
+          </div>
+          <div class="sub" style="word-wrap: break-word; margin-bottom: 1%;">
+            napisane przez: <b style="color: gray">{{ Author }}</b>
+          </div>
+          <div class="sub" style="word-wrap: break-word; margin-bottom: 1%;">
+            dostępnych sztuk: <b> {{ sztuk }} </b>
+          </div>
+          <div class="sub" style="margin-bottom: 1%;">
+            Cena za sztuke: <b style="color: #4b8848">{{ cena }} zł</b>
+          </div>
+          <div class="sub" style="margin-bottom: 1%; width: 95%">
+              {{opis}}
+          </div>
+          <div>
+            <b>Oceń książkę!</b>
+            <button *ngIf="totalRate > 0" class="single" fxLayout="row" [ngStyle]="{ 'background-color': color }">
+              <div>
+                <b style="color: black;"> Średnia ocen:</b> <b style="color: gold;"> {{ totalRate }}</b>
+              </div>
+               <mat-icon style="font-size: 14px; padding-top: 1.8px; color: gold;">star</mat-icon>
+            </button>
+            <div>
+              <b style="color: darkred">Pamiętaj,</b> że ocene możesz oddać tylko raz a skomentować<br> lub zrecenzować książkę tylko dwa razy!
+
+            </div>
+
+
+            <div fxLayout="row" class="rating">
+              <button mat-icon-button [color]="color" *ngFor="let ratingId of ratingArr; index as i" [id]="'star_' + i" (click)="onClick(i + 1)" fxLayout="row" [matTooltip]="ratingId + 1" matTooltipPosition="above">
+                <mat-icon>
+                  <input [disabled] = "!ratingArr" type="text" hidden matInput id="rateText" [(ngModel)]="addcomment.rate" [formControl]="rateText" autocomplete="off" required>
+                  {{ showIcon(i) }}
+                </mat-icon>
+              </button>
+
+            </div>
+
+            <mat-error *ngIf="rate == null || rate == 0" (click)="submitRate()">
+              <span *ngIf="comment"><b>Oceń książkę przy oddawaniu komentarza, <strong>ocena nie może być równa 0!</strong></b></span>
+
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+
+  </div>
+  <form>
+  <div fxLayout="column" class="singlecard">
+    <mat-card>
+      <div style="margin-bottom: 2%;">
+        <strong>Skomentuj książkę: </strong>
+      </div>
+      <div class="reviewtext">
+
+      </div>
+      <mat-form-field appearance="outline" style="width:100%; !important">
+        <mat-label>Dodaj komentarz</mat-label>
+        <mat-error *ngIf="commentText.invalid">{{commentVal()}}</mat-error>
+        <input type="text" matInput id="commentText" [(ngModel)]="comment" [formControl]="commentText" autocomplete="off" required>
+        <span *ngIf="comment"><b>Pamiętaj aby ocenić książkę!</b></span>
+        <mat-icon matSuffix>library_books</mat-icon>
+      </mat-form-field>
+      <div style="align-items: flex-end;">
+        <button mat-raised-button class="rate-submit" [disabled]="commentText.invalid || rate == 0 || rate == null" type="submit" (click)="submitRate()">
+          Zatwierdź
+        </button>
+      </div>
+
+    </mat-card>
+    <div *ngFor="let book of comments" >
+    <mat-card style="margin-top: 5%;" *ngIf="book.bookElo == bookId && book.commentt != 0">
+      <div >
+      <div style="margin-top: 2%;">
+        <strong *ngIf="book.bookElo == bookId && book.commentt != 0">Komentarze użytkowników: </strong><br><br>
+      </div>
+      <div class="commenttext">
+        <div *ngIf="book.bookElo == bookId && book.commentt != 0">Użytkownik <b>{{book.user}}</b> skomentował:</div>
+        <textarea style="height: 10px;" *ngIf="book.bookElo == bookId && book.commentt != 0">{{book.commentt}}</textarea>
+      </div>
+      </div>
+
+    </mat-card>
+    </div>
+  </div>
+  </form>
+</div>
+<app-bottom-bar></app-bottom-bar>
