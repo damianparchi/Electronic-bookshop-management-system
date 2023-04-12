@@ -1,0 +1,71 @@
+<div class="main-container">
+  <div class="container">
+    <div *ngIf="bookList.length!=0">
+
+    </div>
+    <br>
+    <div class="alert alert-danger text-justify" *ngIf="bookList.length==0">Nie ma książek na sprzedaż! Zaloguj się jako sprzedawca żeby wystawić książkę na sprzedaż.</div>
+
+    <div class="list-books">
+
+      <div *ngFor="let book of bookList | search: bookSearch">
+
+        <mat-card class="tooltip1">
+          <mat-card-title matTooltip="{{book.bookName}}" (click)="Detail(book.bookId)">
+            <img alt="" class="bookCover" src="assets\okladki\{{book.bookCover}}" />
+          </mat-card-title>
+          <mat-card-content>
+            <div class="brak" *ngIf="!book.quantityOfBooks">Obecnie brak na stanie</div>
+
+            <div class="bookName">Tytuł: {{ book.bookName }}</div>
+            <span class="tooltiptext"><h2>Opis książki</h2>{{ book.bookDesc }}</span>
+            <div class="author">Autor: {{ book.author }}</div>
+            <div class="cost">Cena:  {{ book.cost }}zł</div>
+            <div class="quantityofBooks" *ngIf="book.quantityOfBooks < 5 && book.quantityOfBooks; else elsecondition ">
+              <b>Zostały tylko {{ book.quantityOfBooks }} sztuki. Spiesz się!</b>
+            </div>
+            <ng-template #elsecondition>
+              <div class="sztuk">Sztuk: </div>
+              <div class="quantity" *ngIf="book.quantityOfBooks "> {{ book.quantityOfBooks }}</div>
+              <div *ngIf="!book.quantityOfBooks "></div>
+            </ng-template>
+            <div *ngFor="let rate of results" >
+              <div *ngIf="rate.name == book.bookId && rate.rate > 0">
+              <button class="single" fxLayout="row" style="background-color: rgb(16,13,16)">
+                <div *ngIf="rate.name == book.bookId" >{{rate.rate}}</div>
+                <mat-icon style="font-size: 14px; padding-top: 1.8px; color: yellow; ">star</mat-icon>
+              </button>
+              </div>
+            </div>
+            <div class="cart-buttons" *ngIf="book.quantityOfBooks && value[book.bookId] !=book.bookId ">
+              <div>
+                <button class="addtobag" (click) ="addingToBasket(book.bookId)" mat-button>Do koszyka</button>
+              </div>
+            </div>
+            <div class="addedbtn " *ngIf="!book.quantityOfBooks">
+              <button class="addedbtn"  mat-raised-button>Do koszyka</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div class="title">
+        <span style="font-size: 17px; color: gray;">
+              (dostępnych książek)
+        </span>
+    </div>
+    <div class="container text-center" >
+      <div class="pagination" *ngIf="bookList.length!=0">
+        <a (click)="previos($event)">
+          <mat-icon *ngIf="this.page == 0 ? false : true" style="color: #403f3f; margin-top: -1px">keyboard_arrow_left</mat-icon>
+        </a>
+        <div style="font-size: 17px; color: gray;">strona {{this.page + 1}}</div>
+        <a (click)="next($event)"  href="#">
+          <mat-icon *ngIf="this.page < 1 ? true : false" style="color: #403f3f; margin-top: -1px">keyboard_arrow_right</mat-icon>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+</div>

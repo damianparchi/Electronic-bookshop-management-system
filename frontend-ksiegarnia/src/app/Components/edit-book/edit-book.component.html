@@ -1,0 +1,55 @@
+<div class="container">
+  <div style="background-color: #403f3f; width: 100%; margin-bottom: 10px;">
+    <h2 style="color: white; text-align: center;padding-top: 10px;">Edycja książki</h2>
+  </div>
+
+  <form style="text-align: center">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tytuł Książki</mat-label>
+      <mat-error *ngIf="bookName.invalid">{{bookNameVal()}}</mat-error>
+      <input type="name" matInput id="bookName" [(ngModel)]="editBook.bookName" [formControl]="bookName" autocomplete="off" required>
+      <mat-icon matSuffix>book</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" >
+      <mat-label>Autor książki</mat-label>
+      <mat-error *ngIf="author.invalid">{{bookAuthorVal()}}</mat-error>
+      <input type="name" matInput id="bookAuthor" [(ngModel)]="editBook.author" [formControl]="author" autocomplete="off" required>
+      <mat-icon matSuffix>person_outline</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="example-full-width3">
+      <mat-label >Cena książki</mat-label>
+      <mat-error *ngIf="cost.invalid">{{bookCostVal()}}</mat-error>
+      <input type="number" matInput id="cost" autocomplete="off" [(ngModel)]="editBook.cost" [formControl]="cost" required>
+      <mat-icon matSuffix>attach_money</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="example-full-width4" >
+      <mat-label>Ilość książek</mat-label>
+      <mat-error *ngIf="quantityOfBooks.invalid">{{quantityOfBooksVal()}}</mat-error>
+      <input type="number" matInput id="qty" [(ngModel)]="editBook.quantityOfBooks" [formControl]="quantityOfBooks" autocomplete="off" required>
+      <mat-icon matSuffix>library_books</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Krótki opis książki</mat-label>
+      <mat-error *ngIf="bookDesc.invalid">{{bookDescVal()}}</mat-error>
+      <textarea type="text" id="desc" style="height: 50px;" matInput [(ngModel)]="editBook.bookDesc" [formControl]="bookDesc" autocomplete="off" required></textarea>
+      <mat-icon matSuffix>description</mat-icon>
+    </mat-form-field>
+
+<!--    <div class="book-details">-->
+<!--      <input type="file" name="image" (change)="PictureOn($event)"/>-->
+<!--    </div>-->
+
+    <div class="submit">
+      <button mat-raised-button color="dark" type="submit" [disabled]="!editBook.bookName || !editBook.author || !editBook.cost || !editBook.quantityOfBooks || !editBook.bookDesc" (click)="updateBook()">
+        Aktualizuj
+      </button>
+    </div>
+
+  </form>
+
+</div>

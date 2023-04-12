@@ -1,0 +1,148 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1%;
+  height: auto;
+}
+
+.allBooks{
+  display: flex;
+  flex-direction: column;
+
+}
+.icon-display{
+  transform: scale(2);
+  color: white;
+  background-color: rgba(131, 4, 4, 0.8);
+  border-radius: 2rem;
+  cursor: pointer;
+}
+
+.plus{
+  background-color: rgba(131, 4, 4, 0.8);
+  border-radius: 3rem;
+
+  /*padding: 10px;*/
+}
+
+
+.list-books {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  column-gap: 20px;
+  margin:auto;
+
+}
+
+mat-card {
+
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+
+  border: 5px solid;
+  border-color: rgb(240, 238, 238);
+  margin: 20px;
+  width: 100%;
+}
+
+mat-card:hover {
+  box-shadow: 0px 0px 25px 25px rgba(0, 0, 0, 0.25) !important;
+}
+
+
+mat-card-title {
+  background: #f5f5f5 0% 0% no-repeat padding-box;
+}
+
+.bookname {
+
+  margin-left: 20px;
+  margin-bottom: 7px;
+  font-size:larger;
+  font-weight: bolder;
+  font-size: 1.5rem;
+}
+.author {
+  margin-left: 20px;
+  margin-bottom: 7px;
+  font-size: 1rem;
+  color: gray;
+}
+.cost {
+  margin-left: 20px;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  /*font-weight: bolder;*/
+  color: rgb(8, 8, 8);
+}
+.quantityofBooks {
+  margin-left: 20px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  /*color: rgba(87, 25, 25, 0.904);*/
+}
+
+.status{
+  margin-left: 20px;
+  /*margin-bottom: 10px;*/
+  font-size: 1rem;
+}
+.desc{
+  margin-left: 20px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+ /*color: gray;*/
+}
+
+
+.btn-addbook {
+  height: 50px;
+  width: 120px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  color: white;
+  background-color: rgba(87, 25, 25, 0.904);
+}
+
+
+.addedbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.out-of-stock {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  text-align: center;
+  padding: 8px 0px;
+  font-size: medium;
+  position: absolute;
+  font-weight: bold;
+  top: 100px;
+  left: 30px;
+  right: 30px;
+  box-shadow: 0px 3px 8px #00000029;
+  border-radius: 2px;
+  opacity: 0.9;
+  text-transform: uppercase;
+}
+
+.out-of-stock {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  text-align: center;
+  padding: 8px 0px;
+  font-size: medium;
+  position: absolute;
+  top: 100px;
+  left: 30px;
+  right: 30px;
+  box-shadow: 0px 3px 8px #00000029;
+  border-radius: 2px;
+  opacity: 0.9;
+  text-transform: uppercase;
+}

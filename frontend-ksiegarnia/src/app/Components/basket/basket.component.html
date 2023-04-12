@@ -1,0 +1,210 @@
+<app-main-panel></app-main-panel>
+<div class="main-container">
+  <div class="row">
+    <div class="alert alert-danger text-justify" *ngIf="length==0">Brak książek w koszyku.</div>
+    <div *ngIf="length!=0">
+    <div class="column1" *ngIf="!change">
+      <mat-label class="matlabel">
+        Koszyk({{length}} art.)
+      </mat-label>
+      <hr>
+      <div fxLayout="row" fxLayoutAlign="space-around center"  *ngFor="let books of book">
+        <mat-card-title>
+          <img alt="" class="bookCover" src="assets\okladki\{{books.booksList[0].bookCover}}">
+        </mat-card-title>
+        <div fxLayout="column" fxLayoutAlign="center center">
+        <div class="details">
+          <div class="tytuł">{{books.booksList[0].bookName}}</div><br>
+          <div class="desc">{{books.booksList[0].bookDesc}}</div><br>
+          <div class="autor">Autor: {{books.booksList[0].author}}</div>
+          <div class="autor" style="color: #49983e">Dostępnych sztuk: <b>{{books.booksList[0].quantityOfBooks}}</b></div>
+          <div class="cena">Cena całkowita: {{(books.booksAmount[0].totalCost * 10)/10}}</div>
+
+        </div>
+    </div>
+        <div>
+          <div style="display: flex; flex-direction: row;margin-bottom: 10px; ">
+            <div style="height: 20px; width: 20px;">
+              <button class="addAmountButton" (click)="plusBtn(books.booksList[0].bookId, books.booksAmount[0])" [disabled]="books.booksAmount[0].booksAmount >= books.booksList[0].quantityOfBooks">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div class="bookAmount">
+              {{books.booksAmount[0].booksAmount}}
+              <div style="font-weight: lighter; font-size: 14px">szt.</div>
+            </div>
+              <button class="minusAmountButton" [disabled]="books.booksAmount[0].booksAmount < 2" (click)="minusBtn(books.booksList[0].bookId, books.booksAmount[0])">
+                <mat-icon>remove</mat-icon>
+              </button>
+
+          </div>
+        </div>
+        <div style="margin-left: 50px;">
+          <button class="deleteBookButton" (click)="removeBookFromBasket(books.booksList[0].bookId)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+      </div>
+      <hr>
+
+
+
+  </div>
+    <div *ngIf="!change">
+      <button class="button" [disabled] = "length==0" (click)="changeView2()">Dalej</button>
+    </div>
+  <div class="form-conatiner">
+
+    <div fxLayoutAlign="center center" fxLayout="column" *ngIf="!change1">
+
+      <form>
+        <div *ngIf="change" >
+          <mat-label class="matlabel">
+            Uzupełnij dane adresowe
+          </mat-label>
+          <mat-card-content>
+          <hr>
+          <div class="dane">
+            <div fxFlex="45">
+              <mat-form-field appearance="outline">
+                <mat-label>Imie</mat-label>
+                <input matInput [formControl]="name" placeholder="Imie" autocomplete="off" required>
+                <mat-error>Proszę podać poprawne imię</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="45">
+              <mat-form-field appearance="outline">
+                <mat-label>Nazwisko</mat-label>
+                <input [formControl]="surname" matInput required/>
+                <mat-error>Proszę podać poprawne nazwisko</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="dane">
+            <div fxFlex="45">
+              <mat-form-field appearance="outline">
+                <mat-label>Numer Telefonu</mat-label>
+                <input [formControl]="mobilePhone" maxlength="9" matInput autocomplete="off" required/>
+                <mat-error>Proszę podać poprawny numer telefonu</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="45">
+              <mat-form-field appearance="outline">
+                <mat-label>Miasto</mat-label>
+                <input [formControl]="city" matInput autocomplete="off" required/>
+                <mat-error>Proszę podać poprawne miasto</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="dane">
+            <div fxFlex="45">
+              <mat-form-field appearance="outline">
+                <mat-label>Nr Mieszkania/Domu</mat-label>
+                <input [formControl]="houseApartmentNr" matInput required/>
+                <mat-error>Proszę podać poprawny nr mieszkania/domu</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="45">
+              <mat-form-field appearance="outline">
+                <mat-label>Ulica</mat-label>
+                <input [formControl]="street" matInput autocomplete="off" required/>
+                <mat-error>Proszę podać poprawną ulicę</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="dane">
+            <div fxFlex="45">
+              <mat-form-field appearance="outline">
+                <mat-label>Kod pocztowy</mat-label>
+                <input onkeydown="this.value=this.value.replace(/^(\d\d)(\d)$/g,'$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g,'$1/$2').replace(/[^\d\/]/g,'')" [formControl]="postcode" matInput autocomplete="off" required/>
+                <mat-error>Proszę podać poprawny kod pocztowy</mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="45">
+              <mat-form-field appearance="outline">
+                <mat-label>Województwo</mat-label>
+                <input [formControl]="province" matInput autocomplete="off" required/>
+                <mat-error>Proszę podać poprawne województwo</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+            <hr>
+            <mat-label class="matlabel">
+              Uzupełnij dane płatności
+            </mat-label>
+
+            <div>
+
+              <div>
+                <mat-form-field appearance="outline">
+                  <mat-label>Numer karty</mat-label>
+                  <input [formControl]="cardNumber" type="tel" matInput autocomplete="off" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;" required>
+                  <mat-error>Proszę podać poprawny numer karty</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="dane">
+                  <div fxFlex="45">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Data ważności karty</mat-label>
+                      <input onkeydown="this.value=this.value.replace(/^(\d\d)(\d)$/g,'$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g,'$1/$2').replace(/[^\d\/]/g,'')" [formControl]="expirationDate" matInput type="tel" autocomplete="off" placeholder="&bull;&bull; / &bull;&bull;" required>
+                      <mat-error>Proszę podać poprawną datę ważności</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex="45">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Numer CVC karty</mat-label>
+                      <input [formControl]="cvvnumber" matInput type="tel" autocomplete="off" placeholder="&bull;&bull;&bull;" required>
+                      <mat-error>Proszę podać poprawny numer CVV karty</mat-error>
+                    </mat-form-field>
+                  </div>
+            </div>
+          </mat-card-content>
+          <hr>
+          <div fxLayoutAlign="space-around center" *ngIf="!change1" (click)="dwieFun()">
+            <button class="btnadres" (click)="goback2()">Powróć</button>
+            <button class="btnadres" (click)="saveData()" [disabled] = "name.invalid || surname.invalid ||  mobilePhone.invalid || city.invalid || street.invalid || houseApartmentNr.invalid || postcode.invalid || cvvnumber.invalid || cardNumber.invalid || expirationDate.invalid || province.invalid">Dalej </button>
+
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+    <div class = "podsumowanie" *ngIf="change2">
+      <mat-label class="matlabel">
+        Podsumowanie zamówienia
+      </mat-label>
+      <hr>
+        <div *ngFor="let books of book " fxLayout="row" fxLayoutAlign="space-around center">
+          <mat-card-title>
+            <img alt="" class="bookCover" src="assets\okladki\{{books.booksList[0].bookCover}}">
+          </mat-card-title>
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <div class="tytuł">
+              <div>{{books.booksList[0].bookName}}</div></div>
+            <div class="autor">
+              <div>by: {{books.booksList[0].author}}</div>
+            </div>
+            <div class="cena">
+              <div>Całkowita cena: {{books.booksAmount[0].totalCost}}</div>
+            </div>
+          </div>
+          <div>
+            <button class="button" (click)="confirmOrder(books.booksList[0].bookId)">Płatność</button>
+          </div>
+        </div>
+      <hr>
+        <button class="button" (click)="goback3()">Cofnij</button>
+      </div>
+  </div>
+  </div>
+  </div>
+  <router-outlet></router-outlet>
+  <app-bottom-bar></app-bottom-bar>
+
+
+

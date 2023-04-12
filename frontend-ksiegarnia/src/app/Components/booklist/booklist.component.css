@@ -1,0 +1,224 @@
+.main-container {
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  flex-direction: row;
+  text-align: center;
+}
+
+.list-books {
+  display: flex;
+  margin-left: -20px;
+  width: 105%;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-bottom: -10px;
+
+}
+
+mat-card {
+  display: flex;
+  flex-wrap: wrap;
+  width: 16.4rem;
+  padding-right: 2em;
+  border: 2px solid;
+  border-color: rgb(155, 150, 150);
+  margin-bottom: 20px;
+}
+
+.mat-card.mat-card {
+  padding: 0px;
+}
+
+mat-card-title {
+  background: #cecece 0% 0% no-repeat padding-box;
+}
+
+.title {
+  text-align: left;
+  float: left;
+}
+
+.single {
+  font-size: 14px;
+  text-align: center;
+  height: 20px;
+  width: fit-content !important;
+  padding-right: 1px;
+  border-radius: 3px;
+  border: none;
+  color: white !important;
+  margin: auto;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
+.mat-card-title.mat-card-title {
+  display: flex;
+  height: auto;
+  width: auto;
+  align-items: center;
+  align-content: center;
+}
+
+.bookCover {
+  height: 200px;
+  width: 150px;
+  margin-left: 55px;
+  margin-right: 55px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.bookName {
+  margin-bottom: 7px;
+  font-weight: bolder;
+  font-size: 18px;
+}
+
+.author {
+  font-size: 12px;
+  color: gray;
+}
+
+.cost {
+  font-size: 14px;
+  font-weight: bolder;
+  color: rgb(8, 8, 8);
+}
+
+.quantityofBooks {
+  margin-bottom: 7px;
+  font-size: 13px;
+  color: rgba(255, 0, 0, 0.9);
+}
+
+.sztuk{
+  color: black;
+  margin-left: 20px;
+  margin-bottom: 12px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.quantity{
+  display: inline;
+  color: rgba(23, 190, 0, 0.8);
+  font-size: 20px;
+}
+
+.cart-buttons {
+  /*display: flex;*/
+  /*flex-direction: row;*/
+  /*margin: auto;*/
+  /*margin-right: 20px;*/
+  /*justify-content: space-between;*/
+}
+
+.addtobag {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  background-color: #3a3838;
+  font-size: small;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 3px;
+
+
+}
+
+.wishlist {
+  border: 1px solid #e0d6d6;
+  outline: none;
+  height: 40px;
+  margin-left: -5px;
+  width: auto;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 3px;
+  z-index: 599;
+}
+
+/*.addedbtn {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*}*/
+
+.brak {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  text-align: center;
+  padding: 8px 0px;
+  font-size: medium;
+  position: absolute;
+  font-weight: bold;
+  top: 100px;
+  left: 30px;
+  right: 30px;
+  box-shadow: 0px 3px 8px #00000029;
+  border-radius: 2px;
+  opacity: 0.9;
+  text-transform: uppercase;
+}
+
+mat-card:hover {
+  box-shadow: 0 0px 25px 25px rgba(0, 0, 0, 0.25) !important;
+}
+
+.tooltip1 {
+  height: 380px;
+  width: 230px;
+  margin-right: 40px;
+  position: relative;
+  display: inline-block;
+}
+
+h2{
+  text-align: left;
+  padding-left: -15px;
+}
+
+.tooltip1 .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: rgb(176, 170, 170);
+  opacity: 0.9;
+  color: rgb(61, 60, 60);
+  text-align: center;
+  border-radius: 5px;
+  padding-left: 10px;
+  position: absolute;
+  z-index: 1;
+  top: 15px;
+  left: 105%;
+  padding-top: 5%;
+  border: 1px #424242 solid;
+  padding-bottom: 25%;
+}
+
+.tooltip1 .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+}
+
+.tooltip1:hover .tooltiptext {
+  visibility: visible;
+}
+
+.addedbtn {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  outline: none;
+  border-radius: 2px;
+}
+
+.pagination{
+  float: right;
+}

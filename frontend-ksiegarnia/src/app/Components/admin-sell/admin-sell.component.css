@@ -1,0 +1,156 @@
+.container {
+  display: grid;
+  flex-direction: row;
+  margin: auto;
+}
+
+.allBooks{
+  display: inline-grid;
+  flex-direction: row;
+}
+
+
+.list-books {
+  display: inline-block;
+  margin: auto;
+  width: 55%;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+mat-card {
+  text-align: right;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  width: auto;
+  border: 5px solid;
+  border-color: rgb(240, 238, 238);
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 25rem;
+  margin-top: 10px;
+}
+mat-card-title {
+  background: #f5f5f5 0% 0% no-repeat padding-box;
+}
+.mat-card-title.mat-card-title {
+  display: flex;
+  height: 230px;
+  width: 215px;
+}
+.bookname {
+  margin-bottom: 7px;
+  font-size: 25px;
+}
+
+.bookTitle {
+  font-size:larger;
+  font-weight: bolder;
+  margin-top: 5px;
+}
+.author {
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: gray;
+}
+.cost {
+  margin-bottom: 5px;
+  font-size: 1rem;
+  font-weight: bolder;
+  color: rgb(8, 8, 8);
+}
+.quantityofBooks {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: rgba(231, 13, 13, 0.9);
+}
+
+.status{
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+.desc{
+  margin-left: 20px;
+  word-wrap: break-word;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.CardButtons{
+  display: flex;
+  margin: auto;
+  padding-left: 140px
+}
+
+#verifyBtn{
+  margin-left: 10px;
+  width: 80px;
+  color: white;
+  border-radius: 5px;
+  background-color: rgba(47,47,112,0.8);
+
+}
+
+#deleteBtn{
+  margin-left: 10px;
+  width: 80px;
+  color: white;
+  border-radius: 5px;
+  background-color: rgba(255,0,0,0.8);
+}
+
+#editBtn {
+  width: 80px;
+  color: white;
+  border-radius: 5px;
+  background-color: rgba(245,197,20,0.8);
+}
+
+.out-of-stock {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  text-align: center;
+  padding: 8px 0px;
+  font-size: medium;
+  position: absolute;
+  font-weight: bold;
+  top: 100px;
+  left: 30px;
+  right: 30px;
+  box-shadow: 0px 3px 8px #00000029;
+  border-radius: 2px;
+  opacity: 0.9;
+  text-transform: uppercase;
+}
+
+.bookCover {
+  height: 13rem;
+  width: 10rem;
+  padding: 16px 0px 16px 16px;
+}
+
+.out-of-stock {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  text-align: center;
+  padding: 8px 0px;
+  font-size: medium;
+  position: absolute;
+  top: 100px;
+  left: 30px;
+  right: 30px;
+  box-shadow: 0px 3px 8px #00000029;
+  border-radius: 2px;
+  opacity: 0.9;
+  text-transform: uppercase;
+}
+
+mat-card:hover {
+  box-shadow: 0px 0px 25px 25px rgba(0, 0, 0, 0.25) !important;
+}
+

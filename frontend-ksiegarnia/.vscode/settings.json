@@ -1,0 +1,6 @@
+{
+  "prettier.htmlWhitespaceSensitivity": "css",
+  "prettier.singleQuote": false,
+  "prettier.proseWrap": "never",
+  "prettier.tabWidth": 20
+}
